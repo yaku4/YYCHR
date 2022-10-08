@@ -23,7 +23,8 @@ internal static class Program
 				SystemFonts.StatusFont
 			};
 			int num = 0;
-			using (InstalledFontCollection installedFontCollection = new InstalledFontCollection())
+			using (InstalledFontCollection installedFontCollection =
+				new InstalledFontCollection())
 			{
 				FontFamily[] families = installedFontCollection.Families;
 				Font[] array2 = array;
@@ -41,10 +42,8 @@ internal static class Program
 				}
 			}
 			if (num < array.Length)
-			{
-				CultureInfo cultureInfoByIetfLanguageTag = CultureInfo.GetCultureInfoByIetfLanguageTag("iv");
-				Thread.CurrentThread.CurrentUICulture = cultureInfoByIetfLanguageTag;
-			}
+				Thread.CurrentThread.CurrentUICulture =
+					CultureInfo.GetCultureInfoByIetfLanguageTag("iv");
 		}
 		Application.EnableVisualStyles();
 		Application.SetCompatibleTextRenderingDefault(defaultValue: false);

@@ -49,633 +49,375 @@ public class MainForm : Form
 	}
 
 	private const string APP_NAME = "YY-CHR.NET";
-
 	private const string APP_VER = "Ver.1.00 ";
-
 	private const string URL_WEB = "https://www45.atwiki.jp/yychr/";
-
 	private const string URL_WIKI = "https://www45.atwiki.jp/yychr/";
-
 	private const string URL_BOARD = "https://jbbs.shitaraba.net/bbs/read.cgi/computer/41853/1231162374/l50";
-
 	private const string URL_WIKI_HINT = "http://www45.atwiki.jp/yychr/?page=";
-
 	private const string DEFAULT_FILENAME = ".\\Resources\\yychr.chr";
 
 	private static Type ResourceType = typeof(Resources);
-
-	private FormatManager mFormatManager = FormatManager.GetInstance();
-
-	private DataFileManager mDataFileManager = DataFileManager.GetInstance();
-
-	private EditFunctionManager mPenManager = EditFunctionManager.GetInstance();
-
 	private Settings mSetting = Settings.GetInstance();
 
+	private FormatManager mFormatManager = FormatManager.GetInstance();
+	private DataFileManager mDataFileManager = DataFileManager.GetInstance();
+	private EditFunctionManager mPenManager = EditFunctionManager.GetInstance();
+
 	private Bitmap mRomBitmap = new Bitmap(128, 128, PixelFormat.Format8bppIndexed);
-
 	private Bytemap mRomBytemap = new Bytemap(128, 128);
-
-	private Bitmap mBmpBitmap = new Bitmap(256, 256, PixelFormat.Format8bppIndexed);
-
-	private Bytemap mBmpBytemap = new Bytemap(256, 256);
-
-	private Bytemap mSourceBytemap;
-
-	private Bitmap mSourceBitmap;
-
-	private Rectangle mSourceRect = new Rectangle(0, 0, 1, 1);
-
-	private UndoManager mBmpUndoManager = new UndoManager();
-
-	private CellSelector mActiveSelector;
-
-	private static Font GuiFont = new Font("Marlett", 16f);
-
-	private static string CheckText = "a";
-
-	private ToolStripButton tbPenColSet;
-
-	private ToolStripMenuItem miPenColSet;
-
-	private static byte mLastKeyState = 0;
-
-	private EditFunctionBase mLastPen;
-
-	private bool mShowClipboard;
-
-	private Bitmap mClipboardImage;
-
-	private MouseButtons mEditingMouseButton;
-
-	private PaletteEditorForm mPaletteEditorForm = new PaletteEditorForm();
-
-	private string mOpenedBmpFilename = "";
-
-	private bool mOpenedBmpModified;
-
 	private PaletteMode mRomTabPalMode;
-
-	private PaletteMode mBmpTabPalMode;
-
 	private byte mRomTabPalIndex;
 
+	private Bitmap mBmpBitmap = new Bitmap(256, 256, PixelFormat.Format8bppIndexed);
+	private Bytemap mBmpBytemap = new Bytemap(256, 256);
+	private UndoManager mBmpUndoManager = new UndoManager();
+	private PaletteMode mBmpTabPalMode;
 	private byte mBmpTabPalIndex;
 
+	private Bitmap mSourceBitmap;
+	private Bytemap mSourceBytemap;
+	private Rectangle mSourceRect = new Rectangle(0, 0, 1, 1);
+	
+	private CellSelector mActiveSelector;
+	private static Font GuiFont = new Font("Marlett", 16f);
+	private static string CheckText = "a";
+	private ToolStripButton tbPenColSet;
+	private ToolStripMenuItem miPenColSet;
+	private static byte mLastKeyState = 0;
+	private EditFunctionBase mLastPen;
+	private bool mShowClipboard;
+	private Bitmap mClipboardImage;
+	private MouseButtons mEditingMouseButton;
+	private PaletteEditorForm mPaletteEditorForm = new PaletteEditorForm();
+	private string mOpenedBmpFilename = "";
+	private bool mOpenedBmpModified;
+
 	private byte[] mFindData;
-
 	private int mFindAddr;
-
 	private int mFindAddAddr;
-
 	private int mFindingAddr;
-
 	private int mFindSize;
-
 	private int mFoundAddr;
-
 	private bool mFindAdvanceSearch;
 
 	private Bytemap mBytemapForFind;
-
 	private ToolStripMenuItem miJumpListAdd;
-
 	private ToolStripMenuItem miJumpListRemove;
-
 	private ToolStripSeparator miJumpListSeparator;
-
 	private List<string> NaviList = new List<string>();
-
 	private PropertyEditorForm mPropertyEditorForm;
-
 	private FormatBase mFormat;
-
 	private bool mSuppressRedraw = true;
-
 	private Control _LastNavigateControl;
-
 	private int mDebugCounter;
-
 	private IContainer components;
-
 	private StatusStrip statusStrip;
-
 	private OneClickMenuStrip menuStripMain;
-
 	private ToolStripMenuItem miFile;
-
 	private ToolStripMenuItem miFileExit;
-
 	private OneClickToolStrip toolStripView;
-
 	private Panel rightPanel;
-
 	private PaletteSelector datPaletteSelector;
-
 	private PaletteSelector palPaletteSelector;
 
 	private ToolStripMenuItem miEdit;
-
 	private ToolStripMenuItem miPalette;
-
 	private ToolStripMenuItem miPalettePalOpen;
-
 	private ToolStripMenuItem miPalettePalSave;
-
 	private ToolStripSeparator miPaletteSep1;
-
 	private ToolStripMenuItem miPaletteDatOpen;
-
 	private ToolStripMenuItem miPaletteDatSave;
 
 	private ToolStripMenuItem optionToolStripMenuItem;
-
 	private ToolStripMenuItem configurationToolStripMenuItem;
-
 	private ToolStripMenuItem miHelp;
-
 	private ToolStripMenuItem miHelpAbout;
-
 	private ToolStripMenuItem miFileNew;
-
 	private ToolStripMenuItem miFileOpenRom;
-
 	private ToolStripMenuItem miFileReload;
-
 	private ToolStripMenuItem miFileSaveRom;
-
 	private ToolStripMenuItem miFileSaveAsRom;
-
 	private ToolStripSeparator miFileSep2;
 
 	private ToolStripMenuItem miEditUndo;
-
 	private ToolStripMenuItem miEditRedo;
-
 	private ToolStripSeparator miEditSep0;
 
 	private ToolStripMenuItem miEditCut;
-
 	private ToolStripMenuItem miEditCopy;
-
 	private ToolStripMenuItem miEditPaste;
-
 	private ToolStripMenuItem miEditClear;
-
 	private ToolStripMenuItem miEditSelectAll;
-
 	private ToolStripSeparator miEditSep2;
 
 	private OneClickToolStrip toolStripMain;
-
 	private Panel panelEdit;
-
 	private OneClickToolStrip toolStripPen;
-
 	private EditPanel editPanel;
 
 	private ToolStripButton tbViewGridBank;
-
 	private ToolStripButton tbViewGridEditor;
-
 	private ToolStripButton tbFileNew;
-
 	private ToolStripButton tbFileOpenRom;
-
 	private ToolStripButton tbFileSaveRom;
-
 	private ToolStripButton tbEditUndo;
-
 	private ToolStripButton tbEditRedo;
-
 	private ToolStripButton tbEditCut;
-
 	private ToolStripSeparator tbEditSep0;
 
 	private ToolStripButton tbEditCopy;
-
 	private ToolStripButton tbEditPaste;
-
 	private ToolStripButton tbEditClear;
-
 	private ToolStripSeparator tbEditSep1;
 
 	private ToolStripButton tbEditMirrorHorizontal;
-
 	private ToolStripButton tbEditMirrorVertical;
-
 	private ToolStripButton tbEditRotateLeft;
-
 	private ToolStripButton tbEditRotateRight;
-
 	private ToolStripSeparator tbFileSep0;
 
 	private ToolStripButton tbEditShiftUp;
-
 	private ToolStripButton tbEditShiftDown;
-
 	private ToolStripButton tbEditShiftLeft;
-
 	private ToolStripButton tbEditShiftRight;
-
 	private ToolStripButton tbEditReplaceColor;
-
 	private ToolStripSeparator tbEditSep2;
 
 	private ToolStripMenuItem miHelpPropertyEditor;
-
 	private ToolStripSeparator miHelpSep1;
 
 	private ToolStripMenuItem miEditMirrorHorizontal;
-
 	private ToolStripMenuItem miEditMirrorVertical;
-
 	private ToolStripSeparator miEditSep3;
 
 	private ToolStripMenuItem miEditRotateLeft;
-
 	private ToolStripMenuItem miEditRotateRight;
-
 	private ToolStripSeparator miEditSep4;
 
 	private ToolStripMenuItem miEditShiftLeft;
-
 	private ToolStripMenuItem miEditShiftRight;
-
 	private ToolStripMenuItem miEditShiftUp;
-
 	private ToolStripMenuItem miEditShiftDown;
-
 	private ToolStripSeparator miEditSep5;
 
 	private ToolStripMenuItem miEditReplaceColor;
-
 	private ToolStripMenuItem miPaletteLoadEmulatorState;
-
 	private ToolStripSeparator miPaletteSep0;
 
 	private TabControl tabControl;
-
 	private TabPage tabPageBitmap;
-
 	private TabPage tabPageChrRom;
 
 	private OpenFileDialog openDataFileDialog;
-
 	private SaveFileDialog saveDataFileDialog;
-
 	private OpenFileDialog openBitmapDialog;
-
 	private SaveFileDialog saveBitmapDialog;
 
 	private ToolStripSeparator miFileSep1;
-
 	private ToolStripMenuItem miFileOpenBmp;
-
 	private ToolStripMenuItem miFileSaveBmp;
 
 	private Panel panelChr;
 
 	private OpenFileDialog openFileDialog;
-
 	private ToolStripSeparator tbFileSep1;
-
 	private ToolStripButton tbPaletteLoadEmulatorState;
-
 	private ComboBoxEx comboBoxFormat;
 
 	private ToolStripMenuItem miAddress;
-
 	private ToolStripMenuItem miAddress0;
-
 	private ToolStripMenuItem miAddress1;
-
 	private ToolStripMenuItem miAddress2;
-
 	private ToolStripMenuItem miAddress3;
-
 	private ToolStripMenuItem miAddress4;
-
 	private ToolStripMenuItem miAddress5;
-
 	private ToolStripMenuItem miAddress6;
-
 	private ToolStripMenuItem miAddress7;
-
 	private ToolStripMenuItem miAddress8;
-
 	private ToolStripMenuItem miAddress9;
-
 	private ToolStripSeparator miAddressSep0;
-
 	private ToolStripMenuItem miAddressInputAddress;
 
 	private ToolStripStatusLabel slAddr;
-
 	private ScrollPanel scrollPanelRom;
-
 	private OneClickToolStrip toolStripAddress;
 
 	private ToolStripButton tbAddres0;
-
 	private ToolStripButton tbAddres1;
-
 	private ToolStripButton tbAddres2;
-
 	private ToolStripButton tbAddres3;
-
 	private ToolStripButton tbAddres4;
-
 	private ToolStripButton tbAddres5;
-
 	private ToolStripButton tbAddres6;
-
 	private ToolStripButton tbAddres7;
-
 	private ToolStripButton tbAddres8;
-
 	private ToolStripButton tbAddres9;
-
 	private ToolStripSeparator tbAddresSep0;
-
 	private ToolStripButton tbAddresInputAddress;
 
 	private ComboBoxEx comboBoxRotate;
-
 	private ComboBoxEx comboBoxMirror;
-
 	private ComboBoxEx comboBoxPattern;
 
 	private Panel panelToolStripAddress;
-
 	private CellSelector cellSelectorRom;
-
 	private CellSelector cellSelectorBmp;
-
 	private ScrollPanelHV scrollPanelBmp;
-
 	private ToolStripStatusLabel slXY;
 
 	private SaveFileDialog saveFileDialog;
-
 	private ToolStripSeparator miPaletteSep2;
-
 	private ToolStripMenuItem miPaletteOpenADF;
-
 	private ToolStripMenuItem miPaletteSaveADF;
-
 	private ToolStripMenuItem miHelpOpenWebsite;
-
 	private ToolStripMenuItem miHelpReportBugs;
-
 	private ToolStripSeparator miHelpSep2;
 
 	private Panel panelPalette;
-
 	private OneClickToolStrip toolStripPalette;
-
 	private ToolStripButton tbPaletteTypePal;
-
 	private ToolStripButton tbPaletteTypeDat;
-
 	private ToolStripMenuItem miPalettePaletteType;
-
 	private ToolStripSeparator miPaletteSep3;
-
 	private ToolStripMenuItem miPaletteTypeDat;
-
 	private ToolStripMenuItem miPaletteTypePal;
-
 	private ToolStripStatusLabel slRightSpace;
-
 	private ToolStripSeparator tbEditSep3;
 
 	private Label labelPattern;
-
 	private Label labelMirror;
-
 	private Label labelRotate;
-
 	private Label labelFormat;
 
 	private ToolStripMenuItem miPaletteSelectPalette;
-
 	private ToolStripMenuItem miPalettePrev;
-
 	private ToolStripMenuItem miPaletteNext;
-
 	private ToolStripSeparator miPaletteSelectSep0;
 
 	private ToolStripMenuItem miPaletteSelect0;
-
 	private ToolStripMenuItem miPaletteSelect1;
-
 	private ToolStripMenuItem miPaletteSelect2;
-
 	private ToolStripMenuItem miPaletteSelect3;
-
 	private ToolStripMenuItem miPaletteSelect4;
-
 	private ToolStripMenuItem miPaletteSelect5;
-
 	private ToolStripMenuItem miPaletteSelect6;
-
 	private ToolStripMenuItem miPaletteSelect7;
-
 	private ToolStripMenuItem miPaletteSelect8;
-
 	private ToolStripMenuItem miPaletteSelect9;
-
 	private ToolStripMenuItem miPaletteSelectA;
-
 	private ToolStripMenuItem miPaletteSelectB;
-
 	private ToolStripMenuItem miPaletteSelectC;
-
 	private ToolStripMenuItem miPaletteSelectD;
-
 	private ToolStripMenuItem miPaletteSelectE;
-
 	private ToolStripMenuItem miPaletteSelectF;
 
 	private ToolStripMenuItem miOption;
-
 	private ToolStripMenuItem miOptionSetting;
-
 	private ToolStripMenuItem miOptionExecuteFile;
-
 	private ButtonNoFocus buttonFormatInfo;
-
 	private ToolStripMenuItem miHelpOpenWiki;
-
 	private ToolStripSeparator miHelpSep0;
-
 	private ToolStripButton tbFileQuickSaveBitmap;
-
 	private ToolStripMenuItem miFileQuickSaveBitmap;
-
 	private ButtonNoFocus buttonPatternEdit;
-
 	private ToolStripStatusLabel slChr;
-
 	private ToolStripSeparator miPaletteSep4;
-
 	private ToolStripMenuItem miPaletteLoadDefaultSetting;
-
 	private ToolStripMenuItem miPaletteQuickSaveRGBPalette;
-
 	private ToolStripMenuItem miPaletteQuickSavePaletteTable;
-
 	private ToolStripMenuItem miPaletteQuickSaveADFPattern;
-
 	private ToolStripSeparator tbPaletteSep0;
-
 	private ToolStripButton tbWorkspaceAdd;
-
 	private TabPage tabWorkSpace;
-
 	private Panel panelWorkSpace;
-
 	private WorkSpaceSelector workSpaceSelector1;
-
 	private ToolTip toolTip;
-
 	private ToolStripSeparator tbPaletteSep1;
-
 	private ToolStripButton tbPaletteOpenState;
 
 	private ToolStripMenuItem miPaletteLoadRGBPaletteFromCommon;
-
 	private ToolStripMenuItem miPaletteLoadPaletteTableFromCommon;
-
 	private ToolStripMenuItem miPaletteLoadADFPatternFromCommon;
 
 	private ToolStripSeparator miAddressSep1;
-
 	private ToolStripMenuItem miAddressFindPrevious;
-
 	private ToolStripMenuItem miAddressFindNext;
 
 	private ToolStripButton tbWorkspaceLoad;
-
 	private ToolStripButton tbWorkspaceSave;
-
 	private ToolStripButton tbWorkspaceRemovePattern;
-
 	private ToolStripButton tbAddressFindPrevious;
-
 	private ToolStripButton tbAddressFindNext;
-
 	private ToolStripButton tbAddressJumpList;
 
 	private ContextMenuStrip popupJumpListMenu;
-
 	private OneClickToolStrip tsWoekSpace;
 
 	private Panel panelChrSetting;
-
 	private Panel panelWorkSpaceTS;
 
 	private ToolStripSeparator tbAddresSep1;
-
 	private BackgroundWorker mFindWorker;
-
 	private ContextMenuStrip contextMenuStripChr;
 
 	private ToolStripMenuItem cmiEditCut;
-
 	private ToolStripMenuItem cmiEditCopy;
-
 	private ToolStripMenuItem cmiEditPaste;
-
 	private ToolStripMenuItem cmiEditClear;
-
 	private ToolStripMenuItem cmiEditSelectAll;
-
 	private ToolStripMenuItem miEditPasteOptimizedImage;
 
 	private ToolStripStatusLabelEx slHintMouseButtonR;
-
 	private ToolStripStatusLabelEx slHintMouseButtonL;
-
 	private ToolStripStatusLabelEx slHintMouseWheel;
-
 	private ToolStripStatusLabelEx slKeyCtrl;
-
 	private ToolStripStatusLabelEx slKeyShift;
-
 	private ToolStripStatusLabelEx slKeyAlt;
 
 	private Label lVersion;
-
 	private ToolStripSeparator miEditSep1;
-
 	private ToolStripMenuItem miEditClearClipboard;
-
 	private ToolStripSeparator miOptionSep0;
-
 	private ToolStripMenuItem miPen;
-
 	private ToolStripMenuItem miOptionShowAllMenu;
-
 	private Panel panelForPlugin;
 
 	private ToolStripMenuItem miOptionLanguage;
-
 	private ToolStripMenuItem miLanguageEnglish;
-
 	private ToolStripMenuItem miLanguageJapanese;
-
 	private ToolStripMenuItem miLanguageSystem;
-
 	private ToolStripSeparator miLanguageSep0;
 
 	private ToolStripSeparator tbFileSep3;
-
 	private ToolStripButton tbOptionExecuteFile;
 
 	private ToolStripButton tbPaletteTypeBmp;
-
 	private ToolStripMenuItem miPaletteTypeBmp;
 
 	private ToolStripButton tbFileOpenBmp;
-
 	private ToolStripButton tbFileSaveBmp;
 
 	private ToolStripButton tbAddressJumpListPrev;
-
 	private ToolStripButton tbAddressJumpListNext;
 
 	private ToolStripSeparator miLanguageSep1;
-
 	private ToolStripMenuItem miLanguageExportLng;
-
 	private ToolStripMenuItem miLanguageLngFile;
-
 	private ToolStripSeparator miLanguageSep2;
-
 	private ToolStripMenuItem miLanguageSettingAutoLoadLng;
 
 	private ToolStripDropDownButton tbViewGuiRate;
-
 	private ToolStripDropDownButton tbViewEditSize;
-
 	private ToolStripDropDownButton tbViewGridStyle;
 
 	private ToolStripMenuItem tbViewEditorSize8;
-
 	private ToolStripMenuItem tbViewEditorSize16;
-
 	private ToolStripMenuItem tbViewEditorSize32;
-
 	private ToolStripMenuItem tbViewEditorSize64;
-
 	private ToolStripMenuItem tbViewEditorSize128;
 
 	private ToolStripSeparator toolStripSeparator1;
-
 	private ToolStripSeparator toolStripSeparator2;
-
 	private ToolStripSeparator toolStripSeparator3;
 
 	private int Address
@@ -699,21 +441,13 @@ public class MainForm : Form
 		set
 		{
 			panelWorkSpaceTS.Visible = value;
-			if (value)
-			{
-				tabControl.TabPages.Add(tabWorkSpace);
-			}
-			else
-			{
-				tabControl.TabPages.Remove(tabWorkSpace);
-			}
+			if (value) tabControl.TabPages.Add(tabWorkSpace);
+			else tabControl.TabPages.Remove(tabWorkSpace);
 		}
 	}
 
 	public bool TabIsRom => tabControl.SelectedTab == tabPageChrRom;
-
 	public bool TabIsBmp => tabControl.SelectedTab == tabPageBitmap;
-
 	public bool TabIsWorkspace => tabControl.SelectedTab == tabWorkSpace;
 
 	public bool IsColMode
@@ -721,9 +455,7 @@ public class MainForm : Form
 		get
 		{
 			if (TabIsRom)
-			{
 				return mDataFileManager.ColSetData.IsColMode;
-			}
 			return false;
 		}
 	}
@@ -735,55 +467,70 @@ public class MainForm : Form
 		InitializeComponent();
 		InitializeControlLang();
 		InitializeJumpList();
+
 		Text = "YY-CHR.NET";
 		string[] commandLineArgs = Environment.GetCommandLineArgs();
 		string directoryName = Path.GetDirectoryName(commandLineArgs[0]);
+
 		InitializeFormat();
 		UpdateContextMenu();
 		SetMouseWheelScrollRate();
+
 		AddComboBoxMirror(MirrorType.None);
 		AddComboBoxRotate(RotateType.None);
 		AddComboBoxGridStyle(mSetting.GridStyle);
 		AddComboBoxGuiRate();
+
 		mDataFileManager.RomData.CreateNew(16384);
-		string filename = directoryName + "\\Resources\\chr001.bmp";
-		LoadBitmapTabBmp(filename, enableNoExistMsg: false);
+		LoadBitmapTabBmp(
+			directoryName + "\\Resources\\chr001.bmp",
+			enableNoExistMsg: false);
+
 		mSourceBitmap = mRomBitmap;
 		mSourceBytemap = mRomBytemap;
 		cellSelectorRom.Image = mRomBitmap;
 		cellSelectorBmp.Image = mBmpBitmap;
 		mActiveSelector = cellSelectorRom;
+
 		UpdateFormSize();
 		UpdateGuiRateToolStripButtonChecked();
+
 		mDataFileManager.RomData.DataLoaded += RomData_DataLoaded;
 		mDataFileManager.AdfPattern.DataLoaded += AdfPattern_DataLoaded;
 		mDataFileManager.PalInfoNes.DataLoaded += PalInfo_DataLoaded;
 		mDataFileManager.PalInfo256.DataLoaded += PalInfo_DataLoaded;
 		mDataFileManager.DatInfoNes.DataLoaded += DatInfo_DataLoaded;
 		mDataFileManager.DatInfoNes.DataModified += DatInfo_DataModified;
+
 		LoadDefaultExtFiles();
 		CreatePenToolBar();
 		SelectEditPanelPen(mPenManager.SelectedFunction);
+
 		WorkSpaceVisible = false;
 		tabControl.SelectedIndex = 0;
+
 		try
 		{
-			if (commandLineArgs.Length >= 2 && (commandLineArgs[1].Length != 3 || !commandLineArgs[1].StartsWith("-")))
-			{
-				string filename2 = commandLineArgs[1];
-				OpenFile(filename2, initAddress: true);
-			}
+			if (commandLineArgs.Length >= 2 &&
+				(commandLineArgs[1].Length != 3 ||
+					!commandLineArgs[1].StartsWith("-")))
+				OpenFile(commandLineArgs[1], initAddress: true);
 			else if (File.Exists(".\\Resources\\yychr.chr"))
-			{
 				OpenFile(".\\Resources\\yychr.chr", initAddress: true);
-			}
 		}
 		catch
 		{
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleError");
-			string text = ResourceUtility.GetResourceString(ResourceType, "Resources.MessageCommandlineError").Replace("\\r", "\r").Replace("\\n", "\n") + commandLineArgs[1];
-			MsgBox.Show(this, text, resourceString, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.TitleError");
+			string text = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.MessageCommandlineError")
+					.Replace("\\r", "\r")
+					.Replace("\\n", "\n")
+						+ commandLineArgs[1];
+			MsgBox.Show(this, text, resourceString,
+				MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
+
 		SetControlFocus();
 		UpdateGrid();
 		UpdateEditRectSize();
@@ -791,46 +538,52 @@ public class MainForm : Form
 		UpdateStatusbarSelection(mSourceRect);
 		InitMenuCheckStateRenderer();
 		UpdateBuildDateLabel();
+
 		if (mSetting.StartupLanguageFromLng)
-		{
 			LoadLanguageFileIfExists();
-		}
+		
 		UpdateLanguageMenuState();
 		LoadNaviText();
+
 		if (mSetting.OptionSaveWindowPosition)
 		{
 			Rectangle bounds = Screen.FromControl(this).Bounds;
-			if (new Rectangle(bounds.Left, bounds.Top, bounds.Width - 300, bounds.Height - 150).Contains(mSetting.OptionSavedWindowPosition))
-			{
+			if (new Rectangle(bounds.Left, bounds.Top,
+				bounds.Width - 300, bounds.Height - 150)
+					.Contains(mSetting.OptionSavedWindowPosition))
 				base.Location = mSetting.OptionSavedWindowPosition;
-			}
 		}
 	}
 
 	private void SetControlFocus()
 	{
 		Control control = null;
-		control = ((mActiveSelector == null) ? this : ((mActiveSelector.Parent == null || !(mActiveSelector.Parent is ScrollPanel)) ? ((Control)mActiveSelector) : ((Control)(mActiveSelector.Parent as ScrollPanel))));
+		control = ((mActiveSelector == null)
+			? this
+			: ((mActiveSelector.Parent == null ||
+				!(mActiveSelector.Parent is ScrollPanel))
+				? ((Control)mActiveSelector)
+				: ((Control)(mActiveSelector.Parent as ScrollPanel))));
+
 		if (control != null)
 		{
 			if (base.ActiveControl != control)
-			{
 				base.ActiveControl = control;
-			}
 			if (!control.Focused && control.CanSelect)
-			{
 				control.Focus();
-			}
 		}
 	}
 
 	private void SetMainFormControlSize()
 	{
 		scrollPanelRom.ClientAreaSize = cellSelectorRom.Size;
+
 		panelToolStripAddress.Left = scrollPanelRom.Right + 3;
 		panelChrSetting.Top = scrollPanelRom.Top * 2 + scrollPanelRom.Height;
+
 		int num = panelChrSetting.Bottom - 20;
-		panelForPlugin.SetBounds(0, num, panelForPlugin.Width, panelChr.Height - num);
+		panelForPlugin.SetBounds(
+			0, num, panelForPlugin.Width, panelChr.Height - num);
 		panelPalette.Top = editPanel.Top * 2 + editPanel.Height;
 		UpdatePalettePanelHeight();
 	}
@@ -839,9 +592,8 @@ public class MainForm : Form
 	{
 		int bottom = palPaletteSelector.Bottom;
 		if (datPaletteSelector.Bottom > bottom)
-		{
 			bottom = datPaletteSelector.Bottom;
-		}
+
 		panelPalette.Height = bottom + 5;
 	}
 
@@ -849,9 +601,8 @@ public class MainForm : Form
 	{
 		ContextMenuStrip contextMenuStrip = null;
 		if (mSetting.EnableRightClickMenu)
-		{
 			contextMenuStrip = contextMenuStripChr;
-		}
+		
 		cellSelectorRom.ContextMenuStrip = contextMenuStrip;
 		cellSelectorBmp.ContextMenuStrip = contextMenuStrip;
 	}
@@ -859,18 +610,10 @@ public class MainForm : Form
 	private void SetMouseWheelScrollRate()
 	{
 		int num = mSetting.BankWheelScrollRate;
-		if (num < 1)
-		{
-			num = 1;
-		}
-		if (num > 16)
-		{
-			num = 16;
-		}
+		if (num < 1) num = 1;
+		if (num > 16) num = 16;
 		if (scrollPanelRom.WheelRate != num)
-		{
 			scrollPanelRom.WheelRate = num;
-		}
 	}
 
 	private void InitializeControlLang()
@@ -878,8 +621,11 @@ public class MainForm : Form
 		tabPageChrRom.ToolTipText = GetResourceText(tabPageChrRom.ToolTipText);
 		tabPageBitmap.ToolTipText = GetResourceText(tabPageBitmap.ToolTipText);
 		tabWorkSpace.ToolTipText = GetResourceText(tabWorkSpace.ToolTipText);
-		tbAddressFindPrevious.ToolTipText = GetResourceText(tbAddressFindPrevious.ToolTipText);
-		tbAddressFindNext.ToolTipText = GetResourceText(tbAddressFindNext.ToolTipText);
+
+		tbAddressFindPrevious.ToolTipText =
+			GetResourceText(tbAddressFindPrevious.ToolTipText);
+		tbAddressFindNext.ToolTipText =
+			GetResourceText(tbAddressFindNext.ToolTipText);
 	}
 
 	private string GetResourceText(string text)
@@ -892,55 +638,43 @@ public class MainForm : Form
 		try
 		{
 			if (base.DesignMode)
-			{
 				return;
-			}
+			
 			if (menuStripMain.Renderer != null)
-			{
-				menuStripMain.Renderer.RenderItemCheck += Render_RenderItemCheck;
-			}
+				menuStripMain.Renderer.RenderItemCheck +=
+					Render_RenderItemCheck;
 			if (contextMenuStripChr.Renderer != null)
-			{
-				contextMenuStripChr.Renderer.RenderItemCheck += Render_RenderItemCheck;
-			}
+				contextMenuStripChr.Renderer.RenderItemCheck +=
+					Render_RenderItemCheck;
 			if (tbViewGuiRate.DropDown.Renderer != null)
-			{
-				tbViewGuiRate.DropDown.Renderer.RenderItemCheck += Render_RenderItemCheck;
-			}
+				tbViewGuiRate.DropDown.Renderer.RenderItemCheck +=
+					Render_RenderItemCheck;
 			if (tbViewEditSize.DropDown.Renderer != null)
-			{
-				tbViewEditSize.DropDown.Renderer.RenderItemCheck += Render_RenderItemCheck;
-			}
+				tbViewEditSize.DropDown.Renderer.RenderItemCheck +=
+					Render_RenderItemCheck;
 			if (tbViewGridStyle.DropDown.Renderer != null)
-			{
-				tbViewGridStyle.DropDown.Renderer.RenderItemCheck += Render_RenderItemCheck;
-			}
+				tbViewGridStyle.DropDown.Renderer.RenderItemCheck +=
+					Render_RenderItemCheck;
 			if (mSetting.OptionShowToolbarAsButton)
 			{
 				if (toolStripMain.Renderer != null)
-				{
-					toolStripMain.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					toolStripMain.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 				if (toolStripAddress.Renderer != null)
-				{
-					toolStripAddress.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					toolStripAddress.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 				if (toolStripPen.Renderer != null)
-				{
-					toolStripPen.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					toolStripPen.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 				if (toolStripPalette.Renderer != null)
-				{
-					toolStripPalette.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					toolStripPalette.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 				if (toolStripView.Renderer != null)
-				{
-					toolStripView.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					toolStripView.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 				if (tsWoekSpace.Renderer != null)
-				{
-					tsWoekSpace.Renderer.RenderButtonBackground += RenderT_RenderItemBackground;
-				}
+					tsWoekSpace.Renderer.RenderButtonBackground +=
+						RenderT_RenderItemBackground;
 			}
 		}
 		catch
@@ -948,17 +682,21 @@ public class MainForm : Form
 		}
 	}
 
-	private void Render_RenderItemCheck(object sender, ToolStripItemImageRenderEventArgs e)
+	private void Render_RenderItemCheck(
+		object sender, ToolStripItemImageRenderEventArgs e)
 	{
 		try
 		{
 			Graphics graphics = e.Graphics;
-			if (!(e.Item is ToolStripMenuItem toolStripMenuItem) || !toolStripMenuItem.Checked)
-			{
+			if (!(e.Item is ToolStripMenuItem toolStripMenuItem) ||
+				!toolStripMenuItem.Checked)
 				return;
-			}
+
 			Rectangle imageRectangle = e.ImageRectangle;
-			Rectangle rect = new Rectangle(imageRectangle.Left - 2, imageRectangle.Top - 2, imageRectangle.Width + 3, imageRectangle.Height + 3);
+			Rectangle rect = new Rectangle(
+				imageRectangle.Left - 2, imageRectangle.Top - 2,
+				imageRectangle.Width + 3, imageRectangle.Height + 3);
+
 			if (toolStripMenuItem.Selected)
 			{
 				using Pen pen = new Pen(Color.Orange);
@@ -974,16 +712,19 @@ public class MainForm : Form
 				graphics.DrawRectangle(pen2, rect);
 			}
 			if (toolStripMenuItem.Image == null)
-			{
-				graphics.DrawString(point: new Point(rect.X - 3, rect.Y), s: CheckText, font: GuiFont, brush: SystemBrushes.MenuText);
-			}
+				graphics.DrawString(
+					point: new Point(rect.X - 3, rect.Y),
+					s: CheckText,
+					font: GuiFont,
+					brush: SystemBrushes.MenuText);
 		}
 		catch
 		{
 		}
 	}
 
-	private void RenderT_RenderItemBackground(object sender, ToolStripItemRenderEventArgs e)
+	private void RenderT_RenderItemBackground(
+		object sender, ToolStripItemRenderEventArgs e)
 	{
 		try
 		{
@@ -994,6 +735,7 @@ public class MainForm : Form
 				Pen pen2;
 				Pen pen3;
 				Pen pen4;
+
 				if (toolStripButton.Pressed || toolStripButton.Checked)
 				{
 					pen = SystemPens.ControlDarkDark;
@@ -1008,19 +750,32 @@ public class MainForm : Form
 					pen3 = SystemPens.ControlLight;
 					pen4 = SystemPens.ControlDark;
 				}
+
 				Rectangle contentRectangle = e.Item.ContentRectangle;
-				Point point = new Point(contentRectangle.Left - 2, contentRectangle.Top - 2);
-				Point point2 = new Point(contentRectangle.Right + 1, contentRectangle.Top - 2);
-				Point point3 = new Point(contentRectangle.Left - 2, contentRectangle.Bottom);
-				Point point4 = new Point(contentRectangle.Right + 1, contentRectangle.Bottom);
+
+				Point point = new Point(contentRectangle.Left - 2,
+					contentRectangle.Top - 2);
+				Point point2 = new Point(contentRectangle.Right + 1,
+					contentRectangle.Top - 2);
+				Point point3 = new Point(contentRectangle.Left - 2,
+					contentRectangle.Bottom);
+				Point point4 = new Point(contentRectangle.Right + 1,
+					contentRectangle.Bottom);
+
+				Point point5 = new Point(contentRectangle.Left - 1,
+					contentRectangle.Top - 1);
+				Point point6 = new Point(contentRectangle.Right,
+					contentRectangle.Top - 1);
+				Point point7 = new Point(contentRectangle.Left - 1,
+					contentRectangle.Bottom - 1);
+				Point point8 = new Point(contentRectangle.Right,	
+					contentRectangle.Bottom - 1);
+
 				graphics.DrawLine(pen, point3, point);
 				graphics.DrawLine(pen, point, point2);
 				graphics.DrawLine(pen2, point2, point4);
 				graphics.DrawLine(pen2, point4, point3);
-				Point point5 = new Point(contentRectangle.Left - 1, contentRectangle.Top - 1);
-				Point point6 = new Point(contentRectangle.Right, contentRectangle.Top - 1);
-				Point point7 = new Point(contentRectangle.Left - 1, contentRectangle.Bottom - 1);
-				Point point8 = new Point(contentRectangle.Right, contentRectangle.Bottom - 1);
+
 				graphics.DrawLine(pen3, point7, point5);
 				graphics.DrawLine(pen3, point5, point6);
 				graphics.DrawLine(pen4, point6, point8);
@@ -1059,7 +814,10 @@ public class MainForm : Form
 		{
 			int num = 128 * i;
 			int num2 = 128 * i;
-			ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem("x" + i + " (" + num + "x" + num2 + ")", null, ActionGuiRateSelected);
+			ToolStripMenuItem toolStripMenuItem =
+				new ToolStripMenuItem(
+					"x" + i + " (" + num + "x" + num2 + ")",
+					null, ActionGuiRateSelected);
 			toolStripMenuItem.Tag = i;
 			tbViewGuiRate.DropDownItems.Add(toolStripMenuItem);
 		}
@@ -1081,17 +839,14 @@ public class MainForm : Form
 		UpdateControlSizeFromGuiZoomRate();
 		UpdateFormSize();
 		UpdateStatusbarVisible();
+
 		foreach (ToolStripMenuItem dropDownItem in tbViewGuiRate.DropDownItems)
 		{
 			bool flag = (int)dropDownItem.Tag == mSetting.GuiSizeRate;
 			if (dropDownItem.Checked != flag)
-			{
 				dropDownItem.Checked = flag;
-			}
 			if (flag)
-			{
 				tbViewGuiRate.Text = dropDownItem.Text;
-			}
 		}
 	}
 
@@ -1105,27 +860,15 @@ public class MainForm : Form
 			{
 				string value = (string)toolStripItem.Tag;
 				if (!string.IsNullOrWhiteSpace(value))
-				{
-					num = Convert.ToInt32(value);
-				}
+					num = Convert.ToInt32(value);	
 			}
 			else if (toolStripItem.Tag is int)
-			{
 				num = (int)toolStripItem.Tag;
-			}
-			if (num < 8)
-			{
-				num = 8;
-			}
-			if (num >= 128)
-			{
-				num = 128;
-			}
+			if (num < 8) num = 8;
+			if (num >= 128) num = 128;
+
 			Size size = new Size(num, num);
-			if (mSetting.EditRectSize != size)
-			{
-				mSetting.EditRectSize = size;
-			}
+			if (mSetting.EditRectSize != size) mSetting.EditRectSize = size;
 		}
 		UpdateEditRectSize();
 	}
@@ -1133,10 +876,8 @@ public class MainForm : Form
 	private void SelectEditSizeItem(int delta)
 	{
 		int count = tbViewEditSize.DropDownItems.Count;
-		if (count < 1)
-		{
-			return;
-		}
+		if (count < 1) return;
+		
 		for (int i = 0; i < count; i++)
 		{
 			if ((tbViewEditSize.DropDownItems[i] as ToolStripMenuItem).Checked)
@@ -1153,12 +894,17 @@ public class MainForm : Form
 		if (mActiveSelector.DefaultSelectSize != mSetting.EditRectSize)
 		{
 			mActiveSelector.DefaultSelectSize = mSetting.EditRectSize;
-			mActiveSelector.SelectedRect = new Rectangle(mActiveSelector.SelectedRect.Location, mActiveSelector.DefaultSelectSize);
+			mActiveSelector.SelectedRect = new Rectangle(
+				mActiveSelector.SelectedRect.Location,
+				mActiveSelector.DefaultSelectSize);
 			mActiveSelector.Refresh();
 		}
+
 		mSourceRect = mActiveSelector.SelectedRect;
+
 		UpdateEditPanelSource();
 		UpdateStatusbarSelection(mSourceRect);
+
 		foreach (ToolStripMenuItem dropDownItem in tbViewEditSize.DropDownItems)
 		{
 			int num = 32;
@@ -1166,23 +912,14 @@ public class MainForm : Form
 			{
 				string value = (string)dropDownItem.Tag;
 				if (!string.IsNullOrWhiteSpace(value))
-				{
 					num = Convert.ToInt32(value);
-				}
 			}
 			else if (dropDownItem.Tag is int)
-			{
 				num = (int)dropDownItem.Tag;
-			}
+
 			bool flag = num == mSetting.EditRectSize.Width;
-			if (dropDownItem.Checked != flag)
-			{
-				dropDownItem.Checked = flag;
-			}
-			if (flag)
-			{
-				tbViewEditSize.Text = dropDownItem.Text;
-			}
+			if (dropDownItem.Checked != flag) dropDownItem.Checked = flag;
+			if (flag) tbViewEditSize.Text = dropDownItem.Text;
 		}
 	}
 
@@ -1191,7 +928,8 @@ public class MainForm : Form
 		tbViewGridStyle.DropDownItems.Clear();
 		foreach (GridStyle value in Enum.GetValues(typeof(GridStyle)))
 		{
-			ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(value.ToString(), null, ActionGridStyleSelected);
+			ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(
+				value.ToString(), null, ActionGridStyleSelected);
 			toolStripMenuItem.Tag = value;
 			tbViewGridStyle.DropDownItems.Add(toolStripMenuItem);
 		}
@@ -1204,26 +942,17 @@ public class MainForm : Form
 		{
 			ToolStripItem toolStripItem = sender as ToolStripItem;
 			GridStyle gridStyle = GridStyle.None;
+
 			if (toolStripItem.Tag is GridStyle)
-			{
 				gridStyle = (GridStyle)toolStripItem.Tag;
-			}
 			else if (toolStripItem.Tag is int)
-			{
 				gridStyle = (GridStyle)(int)toolStripItem.Tag;
-			}
-			if (gridStyle < GridStyle.None)
-			{
-				gridStyle = GridStyle.None;
-			}
-			if (gridStyle >= GridStyle.Line)
-			{
-				gridStyle = GridStyle.Line;
-			}
+
+			if (gridStyle < GridStyle.None) gridStyle = GridStyle.None;
+			if (gridStyle >= GridStyle.Line) gridStyle = GridStyle.Line;
+
 			if (mSetting.GridStyle != gridStyle)
-			{
 				mSetting.GridStyle = gridStyle;
-			}
 		}
 		UpdateGrid();
 	}
@@ -1236,35 +965,32 @@ public class MainForm : Form
 		editPanel.GridColor2 = mSetting.GridEditColor2;
 		editPanel.EditingRectColor = mSetting.EditingRectColor;
 		editPanel.Refresh();
+
 		cellSelectorRom.GridStyle = mSetting.GridStyle;
 		cellSelectorRom.GridVisible = mSetting.GridBankVisible;
 		cellSelectorRom.GridColor1 = mSetting.GridBankColor1;
 		cellSelectorRom.GridColor2 = mSetting.GridBankColor2;
 		cellSelectorRom.Refresh();
+
 		cellSelectorBmp.GridStyle = mSetting.GridStyle;
 		cellSelectorBmp.GridColor1 = mSetting.GridBankColor1;
 		cellSelectorBmp.GridColor2 = mSetting.GridBankColor2;
 		cellSelectorBmp.GridVisible = mSetting.GridBankVisible;
 		cellSelectorBmp.Refresh();
+
 		if (tbViewGridBank.Checked != mSetting.GridBankVisible)
-		{
 			tbViewGridBank.Checked = mSetting.GridBankVisible;
-		}
 		if (tbViewGridEditor.Checked != mSetting.GridEditVisible)
-		{
 			tbViewGridEditor.Checked = mSetting.GridEditVisible;
-		}
-		foreach (ToolStripMenuItem dropDownItem in tbViewGridStyle.DropDownItems)
+		
+		foreach (ToolStripMenuItem dropDownItem in
+			tbViewGridStyle.DropDownItems)
 		{
 			bool flag = (int)dropDownItem.Tag == (int)mSetting.GridStyle;
 			if (dropDownItem.Checked != flag)
-			{
 				dropDownItem.Checked = flag;
-			}
-			if (flag)
-			{
-				tbViewGridStyle.Text = dropDownItem.Text;
-			}
+			
+			if (flag) tbViewGridStyle.Text = dropDownItem.Text;
 		}
 	}
 
@@ -1273,17 +999,17 @@ public class MainForm : Form
 		foreach (ToolStripButton item in toolStripPen.Items)
 		{
 			if (item.Image != null)
-			{
 				item.Image.Dispose();
-			}
+
 			item.Image = null;
 		}
+
 		foreach (ToolStripMenuItem dropDownItem in miPen.DropDownItems)
-		{
 			dropDownItem.Image = null;
-		}
+		
 		miPen.DropDownItems.Clear();
 		toolStripPen.Items.Clear();
+
 		int num = 1;
 		foreach (EditFunctionBase function in mPenManager.FunctionList)
 		{
@@ -1300,6 +1026,7 @@ public class MainForm : Form
 				toolStripButton2 = new ToolStripButton();
 				toolStripButton2.Text = function.Name.Substring(0, 1);
 			}
+
 			toolStripButton2.AutoSize = false;
 			toolStripButton2.Name = "tbPen" + num;
 			toolStripButton2.Checked = false;
@@ -1310,22 +1037,27 @@ public class MainForm : Form
 			toolStripButton2.Tag = function;
 			toolStripButton2.CheckOnClick = true;
 			toolStripButton2.Click += ActionPenSelect;
+
 			toolStripPen.Items.Add(toolStripButton2);
+
 			ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem();
 			toolStripMenuItem.Name = "miPen" + num;
 			toolStripMenuItem.Checked = toolStripButton2.Checked;
 			toolStripMenuItem.Image = toolStripButton2.Image;
-			toolStripMenuItem.ImageTransparentColor = toolStripButton2.ImageTransparentColor;
+			toolStripMenuItem.ImageTransparentColor =
+				toolStripButton2.ImageTransparentColor;
 			toolStripMenuItem.Text = toolStripButton2.Text;
 			toolStripMenuItem.ToolTipText = toolStripButton2.ToolTipText;
 			toolStripMenuItem.Tag = toolStripButton2.Tag;
 			toolStripMenuItem.Click += ActionPenSelect;
+
 			if (num >= 1 && num <= 10)
-			{
-				toolStripMenuItem.ShortcutKeyDisplayString = (num % 10).ToString("D1");
-			}
+				toolStripMenuItem.ShortcutKeyDisplayString =
+					(num % 10).ToString("D1");
+
 			miPen.DropDownItems.Add(toolStripMenuItem);
 			num++;
+
 			if (function is ColSet)
 			{
 				tbPenColSet = toolStripButton2;
@@ -1341,21 +1073,21 @@ public class MainForm : Form
 		string text = "";
 		try
 		{
-			text = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+			text =
+				Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
 		}
-		catch (Exception)
-		{
-		}
+		catch (Exception) {}
+
 		string exeDirectory = Utility.GetExeDirectory();
 		string text2 = "\\Resources\\";
 		string text3 = "yychr";
 		string filename = exeDirectory + text2 + text3 + ".pal";
 		string filename2 = exeDirectory + text2 + text3 + ".dat";
 		string text4 = exeDirectory + text2 + text3 + "." + text + ".adf";
+
 		if (!File.Exists(text4))
-		{
 			text4 = exeDirectory + text2 + text3 + ".adf";
-		}
+
 		mDataFileManager.PalInfoNes.LoadFromFile(filename);
 		mDataFileManager.DatInfoNes.PalInfo = mDataFileManager.PalInfoNes;
 		mDataFileManager.PalInfo256.LoadFromFile(filename);
@@ -1390,9 +1122,7 @@ public class MainForm : Form
 	{
 		DatInfo datInfo = mDataFileManager.DatInfo;
 		for (int i = 0; i < datInfo.Data.Length; i++)
-		{
 			datPaletteSelector.Label[i] = datInfo.Data[i].ToString("X2");
-		}
 	}
 
 	private void PalInfo_DataLoaded(object sender, EventArgs e)
@@ -1436,45 +1166,41 @@ public class MainForm : Form
 	{
 		comboBoxPattern.Items.Clear();
 		AdfInfo[] adfPatterns = mDataFileManager.AdfPattern.AdfPatterns;
+
 		foreach (AdfInfo item in adfPatterns)
-		{
 			comboBoxPattern.Items.Add(item);
-		}
+
 		comboBoxPattern.SelectedIndex = 0;
 	}
 
-	private void comboBoxPattern_SelectedIndexChanged(object sender, EventArgs e)
+	private void comboBoxPattern_SelectedIndexChanged(
+		object sender, EventArgs e)
 	{
 		if (mFormat != null)
-		{
-			if (comboBoxPattern.SelectedIndex == -1)
-			{
-				mFormat.AdfPattern = null;
-			}
-			else
-			{
-				mFormat.AdfPattern = (AdfInfo)comboBoxPattern.SelectedItem;
-			}
-		}
+			mFormat.AdfPattern = (comboBoxPattern.SelectedIndex == -1)
+				? null
+				: (AdfInfo)comboBoxPattern.SelectedItem;
+
 		RedrawFormat();
 	}
 
 	private bool CheckSaveModifiedData()
 	{
 		bool result = false;
-		if (mDataFileManager.RomData.Modified && mSetting.ShowSaveModifiedDialog)
+		if (mDataFileManager.RomData.Modified &&
+			mSetting.ShowSaveModifiedDialog)
 		{
 			string caption = "YY-CHR.NET";
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.ConfirmModifiedSave");
-			DialogResult num = MsgBox.Show(this, resourceString, caption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.ConfirmModifiedSave");
+			DialogResult num = MsgBox.Show(this, resourceString, caption,
+				MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+
 			if (num == DialogResult.Cancel)
-			{
 				result = true;
-			}
 			if (num == DialogResult.Yes)
-			{
+
 				miFileSaveRom.PerformClick();
-			}
 		}
 		return result;
 	}
@@ -1485,11 +1211,13 @@ public class MainForm : Form
 		if (mDataFileManager.RomData.Modified)
 		{
 			string caption = "YY-CHR.NET";
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.ConfirmModifiedReload");
-			if (MsgBox.Show(this, resourceString, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
-			{
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.ConfirmModifiedReload");
+
+			if (MsgBox.Show(this, resourceString, caption,
+					MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) ==
+						DialogResult.Cancel)
 				result = false;
-			}
 		}
 		return result;
 	}
@@ -1497,10 +1225,15 @@ public class MainForm : Form
 	private void MainForm_Load(object sender, EventArgs e)
 	{
 		editPanel.MouseWheel += EditPanel_MouseWheel;
-		comboBoxFormat.SelectedIndexChanged += comboBoxFormat_SelectedIndexChanged;
-		comboBoxMirror.SelectedIndexChanged += comboBoxFormat_SelectedIndexChanged;
-		comboBoxRotate.SelectedIndexChanged += comboBoxFormat_SelectedIndexChanged;
-		comboBoxPattern.SelectedIndexChanged += comboBoxPattern_SelectedIndexChanged;
+		comboBoxFormat.SelectedIndexChanged +=
+			comboBoxFormat_SelectedIndexChanged;
+		comboBoxMirror.SelectedIndexChanged +=
+			comboBoxFormat_SelectedIndexChanged;
+		comboBoxRotate.SelectedIndexChanged +=
+			comboBoxFormat_SelectedIndexChanged;
+		comboBoxPattern.SelectedIndexChanged +=
+			comboBoxPattern_SelectedIndexChanged;
+
 		RefreshPalSelector();
 		AfterDatPaletteSelected();
 		UpdateUndoMenu();
@@ -1512,9 +1245,8 @@ public class MainForm : Form
 	private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 	{
 		if (mSetting.OptionSaveWindowPosition)
-		{
 			mSetting.OptionSavedWindowPosition = base.Location;
-		}
+
 		e.Cancel = CheckSaveModifiedData();
 	}
 
@@ -1530,11 +1262,16 @@ public class MainForm : Form
 			base.Activated -= MainForm_Activated;
 			bool num = mDataFileManager.RomData.CheckFileDateChanged();
 			mDataFileManager.RomData.LoadFileDate();
+
 			if (num && mSetting.ShowReloadExternalChangeDialog)
 			{
 				string caption = "YY-CHR.NET";
-				string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.ConfirmReloadChangedExternalChange");
-				if (MsgBox.Show(this, resourceString, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+				string resourceString = ResourceUtility.GetResourceString(
+					ResourceType, 
+					"Resources.ConfirmReloadChangedExternalChange");
+				if (MsgBox.Show(this, resourceString, caption,
+						MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) ==
+							DialogResult.Yes)
 				{
 					miFileReload.PerformClick();
 				}
@@ -1552,9 +1289,7 @@ public class MainForm : Form
 			}
 			SetControlFocus();
 		}
-		catch
-		{
-		}
+		catch {}
 		finally
 		{
 			base.Activated += MainForm_Activated;
@@ -1563,19 +1298,15 @@ public class MainForm : Form
 
 	private void MainForm_DragEnter(object sender, DragEventArgs e)
 	{
-		if (e.Data.GetDataPresent(DataFormats.FileDrop))
-		{
-			e.Effect = DragDropEffects.Copy;
-		}
-		else
-		{
-			e.Effect = DragDropEffects.None;
-		}
+		e.Effect = (e.Data.GetDataPresent(DataFormats.FileDrop))
+			? DragDropEffects.Copy
+			: DragDropEffects.None;
 	}
 
 	private void MainForm_DragDrop(object sender, DragEventArgs e)
 	{
-		string[] array = (string[])e.Data.GetData(DataFormats.FileDrop, autoConvert: false);
+		string[] array = (string[])e.Data.GetData(
+			DataFormats.FileDrop, autoConvert: false);
 		if (array != null && !string.IsNullOrEmpty(array[0]))
 		{
 			string filename = array[0];
@@ -1588,23 +1319,34 @@ public class MainForm : Form
 		long length = new FileInfo(filename).Length;
 		char[] trimChars = new char[3] { ' ', '\t', '.' };
 		string extension = Path.GetExtension(filename);
+
 		extension = extension.Trim(trimChars).ToLower();
 		if (extension == "bmp" || extension == "png")
 		{
 			LoadImageFile(filename);
 			return;
 		}
+
 		DataFileBase dataFileBase = null;
-		dataFileBase = ((extension == "dat" && length <= 256) ? mDataFileManager.DatInfoNes : ((!(extension == "pal")) ? mDataFileManager.GetFormatByFilename(filename) : mDataFileManager.PalInfo));
+		dataFileBase = ((extension == "dat" && length <= 256)
+			? mDataFileManager.DatInfoNes 
+			: ((!(extension == "pal")) 
+				? mDataFileManager.GetFormatByFilename(filename)
+				: mDataFileManager.PalInfo));
+
 		if (dataFileBase == mDataFileManager.RomData)
-		{
 			dataFileBase = null;
-		}
-		if (dataFileBase == null && mDataFileManager.DataFileCustom.CheckExtSupported(extension))
+		
+		if (dataFileBase == null &&
+			mDataFileManager.DataFileCustom.CheckExtSupported(extension))
 		{
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleConfirm");
-			string resourceString2 = ResourceUtility.GetResourceString(ResourceType, "Resources.ConfirmOpenStateAsRom");
-			switch (MsgBox.Show(this, resourceString2, resourceString, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.TitleConfirm");
+			string resourceString2 = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.ConfirmOpenStateAsRom");
+
+			switch (MsgBox.Show(this, resourceString2, resourceString,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question))
 			{
 			case DialogResult.Yes:
 				mDataFileManager.DataFileCustom.LoadFromFile(filename);
@@ -1616,6 +1358,7 @@ public class MainForm : Form
 			}
 			dataFileBase = null;
 		}
+
 		if (dataFileBase != null)
 		{
 			dataFileBase.LoadFromFile(filename);
@@ -1628,9 +1371,8 @@ public class MainForm : Form
 		else
 		{
 			if (CheckSaveModifiedData())
-			{
 				return;
-			}
+
 			OpenFile(filename, initAddress: true);
 		}
 		UpdateMenuPenColSetVisible();
@@ -1640,14 +1382,11 @@ public class MainForm : Form
 	{
 		UpdateKeyState(e);
 		UpdateKeyStatus();
+
 		if (DisableKeyInput)
-		{
 			e.Handled = true;
-		}
 		else
-		{
 			bool flag2 = (e.Handled = ProcessKey_Main(e.KeyData));
-		}
 	}
 
 	private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -1665,7 +1404,8 @@ public class MainForm : Form
 
 	private void UpdateKeyStateByControl()
 	{
-		KeyState.Control = (Control.ModifierKeys & Keys.Control) == Keys.Control;
+		KeyState.Control =
+			(Control.ModifierKeys & Keys.Control) == Keys.Control;
 		KeyState.Shift = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
 		KeyState.Alt = (Control.ModifierKeys & Keys.Alt) == Keys.Alt;
 	}
@@ -1674,26 +1414,27 @@ public class MainForm : Form
 	{
 		cellSelectorRom.PixelSelect = KeyState.Alt;
 		cellSelectorBmp.PixelSelect = KeyState.Alt;
-		Image image = (KeyState.Alt ? Resources.ControlKeyAltON : Resources.ControlKeyAlt);
-		Image image2 = (KeyState.Control ? Resources.ControlKeyControlON : Resources.ControlKeyControl);
-		Image image3 = (KeyState.Shift ? Resources.ControlKeyShiftON : Resources.ControlKeyShift);
-		if (slKeyAlt.Image != image)
-		{
-			slKeyAlt.Image = image;
-		}
-		if (slKeyCtrl.Image != image2)
-		{
-			slKeyCtrl.Image = image2;
-		}
-		if (slKeyShift.Image != image3)
-		{
-			slKeyShift.Image = image3;
-		}
+
+		Image image = (KeyState.Alt
+			? Resources.ControlKeyAltON
+			: Resources.ControlKeyAlt);
+		Image image2 = (KeyState.Control
+			? Resources.ControlKeyControlON
+			: Resources.ControlKeyControl);
+		Image image3 = (KeyState.Shift
+			? Resources.ControlKeyShiftON
+			: Resources.ControlKeyShift);
+
+		if (slKeyAlt.Image != image) slKeyAlt.Image = image;
+		if (slKeyCtrl.Image != image2) slKeyCtrl.Image = image2;
+		if (slKeyShift.Image != image3) slKeyShift.Image = image3;
+
 		if (mLastKeyState != KeyState.State)
 		{
 			mLastKeyState = KeyState.State;
 			ActionControlNavigationUpdate_MouseEnter(null, EventArgs.Empty);
 		}
+
 		if (KeyState.Control)
 		{
 			if (mLastPen == null)
@@ -1713,6 +1454,7 @@ public class MainForm : Form
 	private bool ProcessKey_Main(Keys keyData)
 	{
 		bool result = true;
+
 		switch (keyData)
 		{
 		case Keys.D0:
@@ -1735,24 +1477,19 @@ public class MainForm : Form
 		case Keys.NumPad7:
 		case Keys.NumPad8:
 		case Keys.NumPad9:
-		{
 			int num = 0;
 			if (keyData >= Keys.NumPad0 && keyData <= Keys.NumPad9)
-			{
 				num = (int)(keyData - 96);
-			}
 			if (keyData >= Keys.D0 && keyData <= Keys.D9)
-			{
 				num = (int)(keyData - 48);
-			}
 			num = (num + 9) % 10;
+
 			if (num >= 0 && num < mPenManager.FunctionList.Count)
 			{
 				EditFunctionBase pen = mPenManager.FunctionList[num];
 				ActionPenSelect(pen);
 			}
 			break;
-		}
 		case Keys.Z:
 			miPaletteSelect0.PerformClick();
 			break;
@@ -1773,8 +1510,8 @@ public class MainForm : Form
 			break;
 		default:
 			result = false;
-			break;
 		}
+
 		return result;
 	}
 
@@ -1786,6 +1523,7 @@ public class MainForm : Form
 	private bool ProcessKey_BankView(Keys keyData)
 	{
 		bool result = true;
+
 		switch (keyData)
 		{
 		case Keys.Home:
@@ -1838,8 +1576,8 @@ public class MainForm : Form
 			break;
 		default:
 			result = false;
-			break;
 		}
+
 		return result;
 	}
 
@@ -1870,12 +1608,15 @@ public class MainForm : Form
 			mSourceBitmap = mRomBitmap;
 			mActiveSelector = cellSelectorRom;
 		}
+
 		mActiveSelector.DefaultSelectSize = mSetting.EditRectSize;
 		mSourceRect = mActiveSelector.SelectedRect;
+
 		SetControlFocus();
 		UpdateUndoMenu();
 		UpdateAddressMenuEnabled();
 		UpdateFileMenuEnabled();
+
 		PaletteMode paletteMode = PaletteMode.Dat;
 		if (TabIsRom)
 		{
@@ -1887,19 +1628,20 @@ public class MainForm : Form
 			paletteMode = mBmpTabPalMode;
 			_ = mBmpTabPalIndex;
 		}
-		if (paletteMode == PaletteMode.Dat)
+
+		switch (paletteMode)
 		{
+		case PaletteMode.Dat:
 			miPaletteTypeDat.PerformClick();
-		}
-		if (paletteMode == PaletteMode.Pal)
-		{
+			break;
+		case PaletteMode.Pal:
 			miPaletteTypePal.PerformClick();
-		}
-		if (paletteMode == PaletteMode.Bmp)
-		{
+			break;
+		case PaletteMode.Bmp:
 			miPaletteTypeBmp.Enabled = true;
 			miPaletteTypeBmp.PerformClick();
 		}
+
 		UpdatePalMode(paletteMode);
 		UpdateFormSize();
 		UpdateStatusbarVisible();
@@ -1916,11 +1658,13 @@ public class MainForm : Form
 	{
 		mSourceRect = mActiveSelector.SelectedRect;
 		mShowClipboard = mActiveSelector.FreeSelect;
+
 		if (mShowClipboard && mActiveSelector.MouseDownNew)
 		{
 			mActiveSelector.SetMouseDownNew(state: false);
 			RefreshClipboardImage();
 		}
+
 		UpdateEditPanelSource();
 		UpdateStatusbarSelection(mSourceRect);
 		UpdateEditRotateMenu();
@@ -1930,13 +1674,10 @@ public class MainForm : Form
 	{
 		int delta = 0;
 		if (e.Delta < 0)
-		{
 			delta = -1;
-		}
 		if (e.Delta > 0)
-		{
 			delta = 1;
-		}
+
 		SelectEditSizeItem(delta);
 	}
 
@@ -1947,17 +1688,13 @@ public class MainForm : Form
 			mClipboardImage.Dispose();
 			mClipboardImage = null;
 		}
+
 		try
 		{
 			Bitmap bitmapFromClipboard = ClipboardEx.GetBitmapFromClipboard();
 			if (bitmapFromClipboard != null)
-			{
 				mClipboardImage = bitmapFromClipboard;
-			}
-			else
-			{
-				mClipboardImage = null;
-			}
+			else mClipboardImage = null;
 		}
 		catch
 		{
@@ -1968,29 +1705,21 @@ public class MainForm : Form
 	private void UpdateEditPanelSource()
 	{
 		editPanel.ShowClipboard = mShowClipboard;
+
 		if (mShowClipboard)
 		{
 			if (mClipboardImage != null)
-			{
 				editPanel.ClipboardBitmap = mClipboardImage;
-			}
-			else
-			{
-				editPanel.ClipboardBitmap = null;
-			}
+			else editPanel.ClipboardBitmap = null;
 		}
 		else
-		{
 			editPanel.ClipboardBitmap = null;
-		}
+
 		if (editPanel.SourceBytemap != mSourceBytemap)
-		{
 			editPanel.SourceBytemap = mSourceBytemap;
-		}
 		if (editPanel.SourceBitmap != mSourceBitmap)
-		{
 			editPanel.SourceBitmap = mSourceBitmap;
-		}
+
 		editPanel.SourceRect = mSourceRect;
 		editPanel.Refresh();
 	}
@@ -1999,25 +1728,20 @@ public class MainForm : Form
 	{
 		mEditingMouseButton |= e.Button;
 		if (mEditingMouseButton != 0)
-		{
 			DisableKeyInput = true;
-		}
-		if (e.Button == MouseButtons.Left && !scrollPanelRom.Focused && !scrollPanelBmp.Focused)
-		{
+
+		if (e.Button == MouseButtons.Left &&
+			!scrollPanelRom.Focused &&
+			!scrollPanelBmp.Focused)
 			SetControlFocus();
-		}
 	}
 
 	private void editPanel_MouseUp(object sender, MouseEventArgs e)
 	{
 		if ((mEditingMouseButton & e.Button) == e.Button)
-		{
 			mEditingMouseButton ^= e.Button;
-		}
 		if (mEditingMouseButton == MouseButtons.None)
-		{
 			DisableKeyInput = false;
-		}
 	}
 
 	private void Edited(object sender, EventArgs e)
@@ -2026,35 +1750,30 @@ public class MainForm : Form
 		{
 			ConvertBytemapToFile();
 			if (TabIsRom)
-			{
 				ConvertFileDataToBytemap();
-			}
 			ConvertBytemapToBitmap();
 		}
+
 		if (TabIsRom)
-		{
 			cellSelectorRom.Refresh();
-		}
 		if (TabIsBmp)
-		{
 			cellSelectorBmp.Refresh();
-		}
 	}
 
 	private void editPanel_OnPicked(object sender, EventArgs e)
 	{
 		int selectedPalette = editPanel.EditFunction.SelectedPalette;
 		int num;
-		if (IsColMode)
-		{
-			num = selectedPalette;
-		}
+
+		if (IsColMode) num = selectedPalette;
 		else
 		{
-			int num2 = datPaletteSelector.SelectedSet * datPaletteSelector.SetSize;
+			int num2 =
+				datPaletteSelector.SelectedSet * datPaletteSelector.SetSize;
 			int paletteIndexInSet = GetPaletteIndexInSet(selectedPalette);
 			num = (num2 + paletteIndexInSet) % 256;
 		}
+
 		datPaletteSelector.SelectedIndex = (byte)num;
 		RefreshDatSelector();
 		UpdatePalSelectorSelection();
@@ -2063,57 +1782,53 @@ public class MainForm : Form
 	private void EditPanel_MouseWheel(object sender, MouseEventArgs e)
 	{
 		int num = e.Delta;
+
 		if (num == 0)
-		{
 			return;
-		}
 		if (num > 0)
-		{
 			num = 1;
-		}
 		if (num < 0)
-		{
 			num = -1;
-		}
-		EditorMouseWheelFunction editorMouseWheelFunction = EditorMouseWheelFunction.None;
-		editorMouseWheelFunction = (KeyState.Control ? mSetting.EditorMouseWheelCtrl : (KeyState.Shift ? mSetting.EditorMouseWheelShift : ((!KeyState.Alt) ? mSetting.EditorMouseWheel : mSetting.EditorMouseWheelAlt)));
+
+		EditorMouseWheelFunction editorMouseWheelFunction =
+			EditorMouseWheelFunction.None;
+		editorMouseWheelFunction = (KeyState.Control
+			? mSetting.EditorMouseWheelCtrl
+			: (KeyState.Shift
+				? mSetting.EditorMouseWheelShift
+				: ((!KeyState.Alt)
+					? mSetting.EditorMouseWheel
+					: mSetting.EditorMouseWheelAlt)));
+
 		if (editorMouseWheelFunction == EditorMouseWheelFunction.PaletteSelect)
 		{
-			if (num > 0)
-			{
-				miPalettePrev.PerformClick();
-			}
-			else
-			{
-				miPaletteNext.PerformClick();
-			}
+			if (num > 0) miPalettePrev.PerformClick();
+			else miPaletteNext.PerformClick();
 		}
+
 		if (editorMouseWheelFunction == EditorMouseWheelFunction.PenSelect)
 		{
-			EditFunctionBase pen = mPenManager.SelectFunctionAdd(num, IsColMode);
+			EditFunctionBase pen =
+				mPenManager.SelectFunctionAdd(num, IsColMode);
 			ActionPenSelect(pen);
 		}
+
 		if (editorMouseWheelFunction == EditorMouseWheelFunction.BankScroll)
 		{
-			if (num > 0)
-			{
-				miAddress2.PerformClick();
-			}
-			else
-			{
-				miAddress7.PerformClick();
-			}
+			if (num > 0) miAddress2.PerformClick();
+			else miAddress7.PerformClick();
 		}
-		if (editorMouseWheelFunction == EditorMouseWheelFunction.EditorSizeSelect)
-		{
+
+		if (editorMouseWheelFunction ==
+			EditorMouseWheelFunction.EditorSizeSelect)
 			SelectEditSizeItem(num);
-		}
 	}
 
 	private void UpdatePalSelectorSelection()
 	{
 		DatInfo datInfo = mDataFileManager.DatInfo;
-		palPaletteSelector.SelectedIndex = datInfo.Data[datPaletteSelector.SelectedIndex];
+		palPaletteSelector.SelectedIndex =
+			datInfo.Data[datPaletteSelector.SelectedIndex];
 		RefreshPalSelector();
 	}
 
@@ -2121,6 +1836,7 @@ public class MainForm : Form
 	{
 		int selectedIndex = palPaletteSelector.SelectedIndex;
 		int selectedIndex2 = datPaletteSelector.SelectedIndex;
+
 		mDataFileManager.DatInfoNes.Data[selectedIndex2] = (byte)selectedIndex;
 		mDataFileManager.DatInfoNes.Modified = true;
 	}
@@ -2141,7 +1857,10 @@ public class MainForm : Form
 	{
 		int selectedSet = datPaletteSelector.SelectedSet;
 		int selectedIndex = datPaletteSelector.SelectedIndex;
-		int num = ((!IsColMode) ? GetPaletteIndexInSet(selectedIndex) : selectedIndex);
+		int num = ((!IsColMode)
+			? GetPaletteIndexInSet(selectedIndex)
+			: selectedIndex);
+
 		editPanel.EditFunction.SelectedPalette = (byte)num;
 		editPanel.EditFunction.SelectedPaletteSet = (byte)selectedSet;
 	}
@@ -2149,9 +1868,7 @@ public class MainForm : Form
 	private int GetPaletteIndexInSet(int index)
 	{
 		if (datPaletteSelector.SetSize != 0)
-		{
 			return index % datPaletteSelector.SetSize;
-		}
 		return index;
 	}
 
@@ -2166,36 +1883,44 @@ public class MainForm : Form
 		RefreshBitmapFromBytemap();
 	}
 
-	private void ActionPaletteSelector_MouseDown(object sender, MouseEventArgs e)
+	private void ActionPaletteSelector_MouseDown(
+		object sender, MouseEventArgs e)
 	{
-		if (e.Button == MouseButtons.Left && !scrollPanelRom.Focused && !scrollPanelBmp.Focused)
-		{
+		if (e.Button == MouseButtons.Left &&
+			!scrollPanelRom.Focused &&
+			!scrollPanelBmp.Focused)
 			SetControlFocus();
-		}
 	}
 
 	private void ActionPopupRgbEditorFromDat(object sender, EventArgs e)
 	{
 		int selectedIndex = datPaletteSelector.SelectedIndex;
 		int palIndex = mDataFileManager.DatInfo.Data[selectedIndex];
+
 		PopupPaletteEditor(palIndex, datPaletteSelector);
 	}
 
 	private void ActionPopupRgbEditorFromPal(object sender, EventArgs e)
 	{
 		int selectedIndex = palPaletteSelector.SelectedIndex;
+
 		PopupPaletteEditor(selectedIndex, palPaletteSelector);
 	}
 
 	private void PopupPaletteEditor(int palIndex, Control parentControl)
 	{
 		Point point = parentControl.PointToScreen(new Point(0, 0));
+
 		if (!mPaletteEditorForm.Visible)
 		{
-			mPaletteEditorForm.Location = new Point(point.X - 4, point.Y - 4 - mPaletteEditorForm.Height);
+			mPaletteEditorForm.Location = new Point(
+				point.X - 4, point.Y - 4 - mPaletteEditorForm.Height);
 			mPaletteEditorForm.Index = palIndex;
-			mPaletteEditorForm.ColorBit.CopyAllFrom(mDataFileManager.PalInfo.ColorBits[palIndex]);
-			mPaletteEditorForm.ReadOnly = !mSetting.EnableEditorForReadOnlyFile && mDataFileManager.PalInfo.ReadOnly;
+			mPaletteEditorForm.ColorBit.CopyAllFrom(
+				mDataFileManager.PalInfo.ColorBits[palIndex]);
+			mPaletteEditorForm.ReadOnly =
+				!mSetting.EnableEditorForReadOnlyFile &&
+				mDataFileManager.PalInfo.ReadOnly;
 			mPaletteEditorForm.DialogResult = DialogResult.None;
 			mPaletteEditorForm.VisibleChanged += mPaletteEditorForm_Closed;
 			mPaletteEditorForm.Show();
@@ -2205,18 +1930,18 @@ public class MainForm : Form
 	private void mPaletteEditorForm_Closed(object sender, EventArgs e)
 	{
 		if (mPaletteEditorForm.Visible)
-		{
 			return;
-		}
+
 		mPaletteEditorForm.VisibleChanged -= mPaletteEditorForm_Closed;
 		if (mPaletteEditorForm.DialogResult == DialogResult.OK)
 		{
 			int index = mPaletteEditorForm.Index;
-			mDataFileManager.PalInfo.ColorBits[index].CopyAllFrom(mPaletteEditorForm.ColorBit);
+			mDataFileManager.PalInfo.ColorBits[index]
+				.CopyAllFrom(mPaletteEditorForm.ColorBit);
+
 			if (mDataFileManager.PaletteMode == PaletteMode.Bmp)
-			{
-				UpdatePalette_BmpFromPal(mDataFileManager.PalInfoBmp, mBmpBytemap);
-			}
+				UpdatePalette_BmpFromPal(
+					mDataFileManager.PalInfoBmp, mBmpBytemap);
 			UpdatePalPalette();
 			UpdateDatPalette();
 			SetBytemapPalette();
@@ -2227,9 +1952,8 @@ public class MainForm : Form
 	private void ActionShowFormatInfo(object sender, EventArgs e)
 	{
 		if (mFormat != null)
-		{
-			MsgBox.Show(this, mFormat.GetFormatInfo(), mFormat.Name, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-		}
+			MsgBox.Show(this, mFormat.GetFormatInfo(), mFormat.Name,
+				MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 	}
 
 	private void UpdateMenuAll()
@@ -2249,6 +1973,7 @@ public class MainForm : Form
 		DataFileBase romData = mDataFileManager.RomData;
 		bool enabled = romData.Data != null;
 		miFileSaveAsRom.Enabled = enabled;
+
 		bool enabled2 = romData.Data != null && romData.Exist;
 		miFileReload.Enabled = enabled2;
 		miFileSaveRom.Enabled = enabled2;
@@ -2260,6 +1985,7 @@ public class MainForm : Form
 	private void UpdateFileMenuEnabled()
 	{
 		bool tabIsRom = TabIsRom;
+
 		miFileOpenRom.Enabled = tabIsRom;
 		tbFileOpenRom.Enabled = tabIsRom;
 		miFileReload.Enabled = tabIsRom;
@@ -2268,6 +1994,7 @@ public class MainForm : Form
 		miFileSaveAsRom.Enabled = tabIsRom;
 		tbFileQuickSaveBitmap.Enabled = tabIsRom;
 		miFileQuickSaveBitmap.Enabled = tabIsRom;
+
 		tbFileOpenRom.Visible = tabIsRom;
 		tbFileSaveRom.Visible = tabIsRom;
 		tbFileOpenBmp.Visible = !tabIsRom;
@@ -2276,19 +2003,35 @@ public class MainForm : Form
 
 	private void UpdateFilenameMenu()
 	{
-		string dataFilenameName = Utility.GetDataFilenameName(mDataFileManager.RomData.FileName, "bmp");
-		string dataFilenameName2 = Utility.GetDataFilenameName(mDataFileManager.RomData.FileName, "pal");
-		string dataFilenameName3 = Utility.GetDataFilenameName(mDataFileManager.RomData.FileName, "dat");
-		string dataFilenameName4 = Utility.GetDataFilenameName(mDataFileManager.RomData.FileName, "adf");
-		string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.MenuTextFileSaveBmp");
-		string resourceString2 = ResourceUtility.GetResourceString(ResourceType, "Resources.MenuTextPaletteSavePal");
-		string resourceString3 = ResourceUtility.GetResourceString(ResourceType, "Resources.MenuTextPaletteSaveDat");
-		string resourceString4 = ResourceUtility.GetResourceString(ResourceType, "Resources.MenuTextPaletteSaveAdf");
-		miFileQuickSaveBitmap.Text = resourceString.Replace("%F", dataFilenameName);
-		tbFileQuickSaveBitmap.Text = resourceString.Replace("%F", dataFilenameName);
-		miPaletteQuickSaveRGBPalette.Text = resourceString2.Replace("%F", dataFilenameName2);
-		miPaletteQuickSavePaletteTable.Text = resourceString3.Replace("%F", dataFilenameName3);
-		miPaletteQuickSaveADFPattern.Text = resourceString4.Replace("%F", dataFilenameName4);
+		string dataFilenameName = Utility.GetDataFilenameName(
+			mDataFileManager.RomData.FileName, "bmp");
+		string dataFilenameName2 = Utility.GetDataFilenameName(
+			mDataFileManager.RomData.FileName, "pal");
+		string dataFilenameName3 = Utility.GetDataFilenameName(
+			mDataFileManager.RomData.FileName, "dat");
+		string dataFilenameName4 = Utility.GetDataFilenameName(
+			mDataFileManager.RomData.FileName, "adf");
+
+		string resourceString = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.MenuTextFileSaveBmp");
+		string resourceString2 = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.MenuTextPaletteSavePal");
+		string resourceString3 = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.MenuTextPaletteSaveDat");
+		string resourceString4 = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.MenuTextPaletteSaveAdf");
+
+		miFileQuickSaveBitmap.Text = resourceString
+			.Replace("%F", dataFilenameName);
+		tbFileQuickSaveBitmap.Text = resourceString
+			.Replace("%F", dataFilenameName);
+		miPaletteQuickSaveRGBPalette.Text = resourceString2
+			.Replace("%F", dataFilenameName2);
+		miPaletteQuickSavePaletteTable.Text = resourceString3
+			.Replace("%F", dataFilenameName3);
+		miPaletteQuickSaveADFPattern.Text = resourceString4
+			.Replace("%F", dataFilenameName4);
+
 		CreateMenuCommonData();
 	}
 
@@ -2296,49 +2039,46 @@ public class MainForm : Form
 	{
 		string path = Utility.GetExeDirectory() + "\\CommonData";
 		bool flag = Directory.Exists(path);
+
 		miPaletteLoadRGBPaletteFromCommon.Enabled = flag;
 		miPaletteLoadPaletteTableFromCommon.Enabled = flag;
 		miPaletteLoadADFPatternFromCommon.Enabled = flag;
+
 		if (flag)
 		{
 			string[] files = Directory.GetFiles(path, "*.pal");
-			CreateChildMenuItem(miPaletteLoadRGBPaletteFromCommon, files);
 			string[] files2 = Directory.GetFiles(path, "*.dat");
-			CreateChildMenuItem(miPaletteLoadPaletteTableFromCommon, files2);
 			string[] files3 = Directory.GetFiles(path, "*.adf");
+
+			CreateChildMenuItem(miPaletteLoadRGBPaletteFromCommon, files);
+			CreateChildMenuItem(miPaletteLoadPaletteTableFromCommon, files2);
 			CreateChildMenuItem(miPaletteLoadADFPatternFromCommon, files3);
 		}
 	}
 
-	private void CreateChildMenuItem(ToolStripMenuItem menuItem, string[] fileList)
+	private void CreateChildMenuItem(
+		ToolStripMenuItem menuItem, string[] fileList)
 	{
 		if (fileList != null && fileList.Length >= 1)
 		{
 			menuItem.DropDownItems.Clear();
 			foreach (string text in fileList)
 			{
-				ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(Path.GetFileName(text));
+				ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(
+					Path.GetFileName(text));
 				toolStripMenuItem.Tag = text;
 				toolStripMenuItem.Click += ActionCommonDataLoad;
 				menuItem.DropDownItems.Add(toolStripMenuItem);
 			}
 		}
-		else
-		{
-			menuItem.Enabled = false;
-		}
+
+		else menuItem.Enabled = false;
 	}
 
 	private void ActionFileNew(object sender, EventArgs e)
 	{
-		if (TabIsBmp)
-		{
-			ActionFileNewBmp(sender, e);
-		}
-		else
-		{
-			ActionFileNewRom(sender, e);
-		}
+		if (TabIsBmp) ActionFileNewBmp(sender, e);
+		else ActionFileNewRom(sender, e);
 	}
 
 	private void ActionFileNewRom(object sender, EventArgs e)
@@ -2346,13 +2086,16 @@ public class MainForm : Form
 		if (!CheckSaveModifiedData())
 		{
 			mDataFileManager.RomData.CreateNew(16384);
-			Rectangle rect = new Rectangle(new Point(0, 0), mSourceBytemap.Size);
+			Rectangle rect = new Rectangle(
+				new Point(0, 0), mSourceBytemap.Size);
 			mSourceBytemap.FillRect(rect, 0);
+
 			SetFormat();
 			CheckMinimumFileBufferLength();
 			Address = 0;
 			RedrawFormat();
 			mDataFileManager.UnboundsFiles();
+
 			UpdateUndoMenu();
 			UpdateFilenameMenu();
 			UpdateMenuFileOpened();
@@ -2364,13 +2107,17 @@ public class MainForm : Form
 		Bitmap bitmap = mBmpBitmap;
 		Bytemap bytemap = mBmpBytemap;
 		bytemap.Clear(0);
+
 		mOpenedBmpFilename = Path.GetFullPath("NewFile.bmp");
 		mOpenedBmpModified = false;
+
 		BytemapConvertor.UpdateBitmapPaletteFromBytemap(bitmap, bytemap);
 		BytemapConvertor.UpdateBitmapFromBytemap(bitmap, bytemap);
+
 		UpdatePalette_PalFromBmp(mDataFileManager.PalInfoBmp, bytemap);
 		mBmpUndoManager.ClearUndoBuffer();
 		mBmpUndoManager.CreateUndoBuffer(bytemap.Data);
+
 		UpdatePalPalette();
 		UpdateDatPalette();
 		SetBytemapPalette();
@@ -2383,38 +2130,35 @@ public class MainForm : Form
 	private void ActionFileOpen(object sender, EventArgs e)
 	{
 		if (CheckSaveModifiedData())
-		{
 			return;
-		}
-		if (!string.IsNullOrEmpty(mSetting.RomPath) && Directory.Exists(mSetting.RomPath))
-		{
+
+		if (!string.IsNullOrEmpty(mSetting.RomPath) &&
+			Directory.Exists(mSetting.RomPath))
 			openFileDialog.InitialDirectory = mSetting.RomPath;
-		}
 		else
-		{
 			openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
-		}
+
 		string extension = mFormatManager.GetExtension();
-		openFileDialog.Filter = "ROM image|" + extension + "|All files (*.*)|*.*";
+		openFileDialog.Filter =
+			"ROM image|" + extension + "|All files (*.*)|*.*";
 		DialogResult dialogResult = DialogResult.Cancel;
+
 		try
 		{
 			base.Activated -= MainForm_Activated;
 			dialogResult = openFileDialog.ShowDialog();
 		}
-		catch
-		{
-		}
+		catch {}
 		finally
 		{
 			base.Activated += MainForm_Activated;
 		}
+
 		if (dialogResult == DialogResult.OK)
 		{
-			string fileName = openFileDialog.FileName;
-			OpenFile(fileName, initAddress: true);
-			string fullPath = Path.GetFullPath(fileName);
-			mSetting.RomPath = Path.GetDirectoryName(fullPath);
+			OpenFile(openFileDialog.FileName, initAddress: true);
+			mSetting.RomPath = Path.GetDirectoryName(
+				Path.GetFullPath(openFileDialog.FileName));
 		}
 		else
 		{
@@ -2423,15 +2167,14 @@ public class MainForm : Form
 			UpdateFilenameMenu();
 			UpdateMenuFileOpened();
 		}
+
 		UpdateMenuPenColSetVisible();
 	}
 
 	private void ActionFileReload(object sender, EventArgs e)
 	{
 		if (CheckReloadModifiedData())
-		{
 			OpenFile(mDataFileManager.RomData.FileName, initAddress: false);
-		}
 	}
 
 	private void OpenFile(string filename, bool initAddress)
@@ -2440,49 +2183,44 @@ public class MainForm : Form
 		{
 			mDataFileManager.RomData.LoadFromFile(filename);
 			bool enableDetectRomHeaderSize = mSetting.EnableDetectRomHeaderSize;
-			mDataFileManager.JumpListFile.DetectHeaderSize = enableDetectRomHeaderSize;
-			mDataFileManager.SettingInfo.DetectHeaderSize = enableDetectRomHeaderSize;
+			mDataFileManager.JumpListFile.DetectHeaderSize =
+				enableDetectRomHeaderSize;
+			mDataFileManager.SettingInfo.DetectHeaderSize =
+				enableDetectRomHeaderSize;
+
 			if (enableDetectRomHeaderSize)
 			{
 				int num = mSetting.DivisionSizeForDetectRomHeaderSize;
-				if (num > 65536)
-				{
-					num = 65536;
-				}
-				if (num < 256)
-				{
-					num = 256;
-				}
-				int romHeaderSize = (int)mDataFileManager.RomData.FileSize % num;
+				if (num > 65536) num = 65536;
+				if (num < 256) num = 256;
+
+				int romHeaderSize = 
+					(int)mDataFileManager.RomData.FileSize % num;
 				mDataFileManager.RomHeaderSize = romHeaderSize;
 			}
-			else
-			{
-				mDataFileManager.RomHeaderSize = 0;
-			}
+			else mDataFileManager.RomHeaderSize = 0;
+
 			mDataFileManager.UnboundsFiles();
 			mDataFileManager.AutoLoadFiles(filename);
-			FormatBase formatByFilename = mFormatManager.GetFormatByFilename(filename);
+
+			FormatBase formatByFilename =
+				mFormatManager.GetFormatByFilename(filename);
 			if (formatByFilename != null)
-			{
 				comboBoxFormat.SelectedItem = formatByFilename;
-			}
+
 			SetFormat();
 			CheckMinimumFileBufferLength();
+
 			if (initAddress)
-			{
 				Address = mFormat.GetDataAddress(mDataFileManager.RomData.Data);
-			}
-			else
-			{
-				Address = Address;
-			}
 		}
 		catch (Exception ex)
 		{
 			MsgBox.Show(this, ex.Message, "YY-CHR.NET");
 		}
+
 		workSpaceSelector1.Data = mDataFileManager.RomData.Data;
+
 		RedrawFormat();
 		SetPenPaletteFromDatSelector();
 		UpdateUndoMenu();
@@ -2494,13 +2232,9 @@ public class MainForm : Form
 	{
 		int num = 8192;
 		if (mFormat != null)
-		{
 			num = mFormat.GetBankByteSize();
-		}
 		if (mDataFileManager.RomData.Data.Length < num)
-		{
 			mDataFileManager.RomData.SetMinLength(num);
-		}
 	}
 
 	private void ActionFileSave(object sender, EventArgs e)
@@ -2511,11 +2245,16 @@ public class MainForm : Form
 	private void ActionFileSaveAs(object sender, EventArgs e)
 	{
 		string extension = mFormatManager.GetExtension();
-		saveFileDialog.Filter = "ROM image|" + extension + "|All files (*.*)|*.*";
+		saveFileDialog.Filter =
+			"ROM image|" + extension + "|All files (*.*)|*.*";
+
 		string fileName = Path.GetFileName(mDataFileManager.RomData.FileName);
 		saveFileDialog.FileName = fileName;
-		string directoryName = Path.GetDirectoryName(mDataFileManager.RomData.FileName);
+
+		string directoryName =
+			Path.GetDirectoryName(mDataFileManager.RomData.FileName);
 		saveFileDialog.InitialDirectory = directoryName;
+
 		if (saveFileDialog.ShowDialog() == DialogResult.OK)
 		{
 			string fileName2 = saveFileDialog.FileName;
@@ -2528,13 +2267,20 @@ public class MainForm : Form
 	private void SaveFile(string filename)
 	{
 		bool flag = false;
-		if (mFormat != null && mDataFileManager.RomData.FileSize < mFormat.GetBankByteSize())
+
+		if (mFormat != null && mDataFileManager.RomData.FileSize <
+			mFormat.GetBankByteSize())
 		{
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleConfirm");
-			string resourceString2 = ResourceUtility.GetResourceString(ResourceType, "Resources.ConfirmCutOffSmallFile");
-			if (mSetting.SmallFileSaveSize == Settings.ConfigSmallFileSaveSize.ShowDialog)
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.TitleConfirm");
+			string resourceString2 = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.ConfirmCutOffSmallFile");
+
+			if (mSetting.SmallFileSaveSize ==
+				Settings.ConfigSmallFileSaveSize.ShowDialog)
 			{
-				switch (MsgBox.Show(this, resourceString2, resourceString, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+				switch (MsgBox.Show(this, resourceString2, resourceString,
+					MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
 				{
 				case DialogResult.Cancel:
 					return;
@@ -2546,33 +2292,30 @@ public class MainForm : Form
 					break;
 				}
 			}
-			else if (mSetting.SmallFileSaveSize == Settings.ConfigSmallFileSaveSize.AutoExpand)
-			{
+			else if (mSetting.SmallFileSaveSize ==
+				Settings.ConfigSmallFileSaveSize.AutoExpand)
 				flag = true;
-			}
-			else if (mSetting.SmallFileSaveSize == Settings.ConfigSmallFileSaveSize.NoExpand)
-			{
+			else if (mSetting.SmallFileSaveSize ==
+				Settings.ConfigSmallFileSaveSize.NoExpand)
 				flag = false;
-			}
 		}
+
 		try
 		{
 			if (!flag)
 			{
-				mDataFileManager.RomData.SaveToFile(filename, mDataFileManager.RomData.FileSize);
-				mDataFileManager.RomData.LoadFromFile(filename, clearUndoBuffer: false);
+				mDataFileManager.RomData.SaveToFile(filename,
+					mDataFileManager.RomData.FileSize);
+				mDataFileManager.RomData.LoadFromFile(filename,
+					clearUndoBuffer: false);
 				CheckMinimumFileBufferLength();
 			}
-			else
-			{
-				mDataFileManager.RomData.SaveToFile(filename);
-			}
+			else mDataFileManager.RomData.SaveToFile(filename);
+
 			if (mSetting.SaveClearUndoBuffer)
 			{
 				if (TabIsRom)
-				{
 					mDataFileManager.RomData.ClearUndoBuffer();
-				}
 				else if (TabIsBmp)
 				{
 					mBmpUndoManager.ClearUndoBuffer();
@@ -2587,6 +2330,7 @@ public class MainForm : Form
 		{
 			MsgBox.Show(this, ex.Message, "YY-CHR.NET");
 		}
+
 		RedrawFormat();
 	}
 
@@ -2594,29 +2338,37 @@ public class MainForm : Form
 	{
 		string text = "";
 		string text2 = "";
-		text = ((string.IsNullOrWhiteSpace(mSetting.BmpPath) || !Directory.Exists(mSetting.BmpPath)) ? Directory.GetCurrentDirectory() : mSetting.BmpPath);
+		text = ((string.IsNullOrWhiteSpace(mSetting.BmpPath) ||
+			!Directory.Exists(mSetting.BmpPath))
+				? Directory.GetCurrentDirectory()
+				: mSetting.BmpPath);
 		text2 = GetScreenshotFilename(newFile: false);
 		int filterIndex = 1;
 		string text3 = "bmp";
+
 		if (mSetting.DefaultImageType == ImageFileType.Bmp)
 		{
 			filterIndex = 1;
 			text3 = "bmp";
 		}
+
 		if (mSetting.DefaultImageType == ImageFileType.Png)
 		{
 			filterIndex = 2;
 			text3 = "png";
 		}
+
 		openBitmapDialog.FilterIndex = filterIndex;
 		openBitmapDialog.DefaultExt = text3;
 		openBitmapDialog.InitialDirectory = text;
 		openBitmapDialog.FileName = Path.ChangeExtension(text2, text3);
+
 		if (openBitmapDialog.ShowDialog() == DialogResult.OK)
 		{
 			string fileName = openBitmapDialog.FileName;
 			LoadImageFile(fileName);
-			if (string.IsNullOrWhiteSpace(mSetting.BmpPath) || !File.Exists(mSetting.BmpPath))
+			if (string.IsNullOrWhiteSpace(mSetting.BmpPath) ||
+				!File.Exists(mSetting.BmpPath))
 			{
 				string fullPath = Path.GetFullPath(fileName);
 				mSetting.BmpPath = Path.GetDirectoryName(fullPath);
@@ -2628,77 +2380,69 @@ public class MainForm : Form
 	{
 		string text = Directory.GetCurrentDirectory() + "\\";
 		string result = string.Empty;
+
 		for (int i = 0; i <= 999; i++)
 		{
 			string text2 = "CHR" + i.ToString("D3") + ".bmp";
 			string path = text + text2;
+
 			if (newFile)
 			{
 				result = text2;
-				if (!File.Exists(path))
-				{
-					break;
-				}
+				if (!File.Exists(path)) break;
 			}
 			else
 			{
-				if (!File.Exists(path))
-				{
-					break;
-				}
+				if (!File.Exists(path)) break;
 				result = text2;
 			}
 		}
+
 		return result;
 	}
 
 	private void LoadImageFile(string filename)
 	{
-		if (TabIsBmp)
-		{
-			LoadBitmapTabBmp(filename);
-			UpdatePalPalette();
-			UpdateDatPalette();
-			SetBytemapPalette();
-			RedrawFormat();
-		}
-		else
-		{
-			LoadBitmap(filename);
-			UpdatePalPalette();
-			UpdateDatPalette();
-			SetBytemapPalette();
-			RedrawFormat();
-		}
+		if (TabIsBmp) LoadBitmapTabBmp(filename);
+		else LoadBitmap(filename);
+
+		UpdatePalPalette();
+		UpdateDatPalette();
+		SetBytemapPalette();
+		RedrawFormat();
 	}
 
 	private Bytemap GetBytemapFromImageFile(string filename)
 	{
 		Bytemap bytemap = null;
 		string text = "";
+
 		if (File.Exists(filename))
 		{
 			using Bitmap bitmap = new Bitmap(filename);
 			if (bitmap.PixelFormat == PixelFormat.Format8bppIndexed)
 			{
 				bytemap = new Bytemap(bitmap.Size);
-				BytemapConvertor.UpdateBytemapPaletteFromBitmap(bitmap, bytemap);
+				BytemapConvertor.UpdateBytemapPaletteFromBitmap(
+					bitmap, bytemap);
 				BytemapConvertor.UpdateBytemapFromBitmap(bitmap, bytemap);
 			}
 			else
-			{
-				text = ResourceUtility.GetResourceString(ResourceType, "Resources.MessageFileNotSupported");
-			}
+				text = ResourceUtility.GetResourceString(
+					ResourceType, "Resources.MessageFileNotSupported");
 		}
 		else
-		{
-			text = ResourceUtility.GetResourceString(ResourceType, "Resources.MessageFileNotExist");
-		}
+			text = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.MessageFileNotExist");
+
 		if (bytemap == null)
 		{
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleError");
-			MsgBox.Show(this, text, resourceString, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.TitleError");
+			MsgBox.Show(this, text, resourceString,
+				MessageBoxButtons.OK, MessageBoxIcon.Hand);
 		}
+
 		return bytemap;
 	}
 
@@ -3033,19 +2777,18 @@ public class MainForm : Form
 			SystemSounds.Beep.Play();
 			return;
 		}
-		if ((bitmapFromClipboard.PixelFormat == PixelFormat.Format4bppIndexed || bitmapFromClipboard.PixelFormat == PixelFormat.Format8bppIndexed || bitmapFromClipboard.PixelFormat == PixelFormat.Format1bppIndexed) && bitmapFromClipboard.Palette != null)
-		{
+
+		if ((bitmapFromClipboard.PixelFormat == PixelFormat.Format4bppIndexed ||
+			bitmapFromClipboard.PixelFormat == PixelFormat.Format8bppIndexed ||
+			bitmapFromClipboard.PixelFormat == PixelFormat.Format1bppIndexed) &&
+			bitmapFromClipboard.Palette != null)
 			_ = bitmapFromClipboard.Palette.Entries.Length;
-		}
+
 		_ = mFormat.ColorNum;
 		if (bitmapFromClipboard.PixelFormat == PixelFormat.Format8bppIndexed)
-		{
 			PaseWithoutOptimize(bitmapFromClipboard);
-		}
-		else
-		{
-			PasteOptimizedImage(bitmapFromClipboard);
-		}
+		else PasteOptimizedImage(bitmapFromClipboard);
+
 		bitmapFromClipboard.Dispose();
 	}
 
@@ -3057,6 +2800,7 @@ public class MainForm : Form
 			SystemSounds.Beep.Play();
 			return;
 		}
+
 		PasteOptimizedImage(bitmapFromClipboard);
 		bitmapFromClipboard.Dispose();
 	}
@@ -3068,16 +2812,13 @@ public class MainForm : Form
 			SystemSounds.Beep.Play();
 			return;
 		}
+
 		try
 		{
-			if (indexedBitmap == null || indexedBitmap.PixelFormat != PixelFormat.Format8bppIndexed)
-			{
+			if (indexedBitmap == null ||
+				indexedBitmap.PixelFormat != PixelFormat.Format8bppIndexed)
 				SystemSounds.Beep.Play();
-			}
-			else
-			{
-				PasteFromIndexedBitmap(indexedBitmap);
-			}
+			else PasteFromIndexedBitmap(indexedBitmap);
 		}
 		catch (Exception ex)
 		{
@@ -3149,23 +2890,17 @@ public class MainForm : Form
 	{
 		Rectangle srcRect = new Rectangle(new Point(0, 0), cbBitmap.Size);
 		if (srcRect.Width > mSourceBitmap.Width)
-		{
 			srcRect.Width = mSourceBitmap.Width;
-		}
 		if (srcRect.Height > mSourceBitmap.Height)
-		{
 			srcRect.Height = mSourceBitmap.Height;
-		}
+
 		Bytemap bytemap = new Bytemap(cbBitmap.Width, cbBitmap.Height);
 		BytemapConvertor.UpdateBytemapFromBitmap(cbBitmap, bytemap);
+
 		if (TabIsRom)
-		{
 			bytemap.SetPaletteSet((byte)mFormat.ColorNum, 0);
-		}
-		else
-		{
-			_ = TabIsBmp;
-		}
+		else _ = TabIsBmp;
+		
 		mSourceBytemap.CopyRect(mSourceRect.Location, bytemap, srcRect);
 		ConvertBytemapToFile();
 		ConvertBytemapToBitmap();
@@ -3176,6 +2911,7 @@ public class MainForm : Form
 	{
 		_ = datPaletteSelector.SelectedIndex;
 		mSourceBytemap.FillRect(mSourceRect, 0);
+
 		ConvertBytemapToFile();
 		ConvertBytemapToBitmap();
 		RefreshBitmapFromBytemap();
@@ -3673,54 +3409,46 @@ public class MainForm : Form
 			{
 				num = 0;
 			}
+
 			AddressChange addressChange = AddressChange.None;
-			if (num == 0)
+			switch (num)
 			{
+			case 0:
 				addressChange = AddressChange.Begin;
-			}
-			if (num == 1)
-			{
+				int num2 = Address = mFormat.GetDataAddress(
+					mDataFileManager.RomData.Data);
+				return;
+			case 1:
 				addressChange = AddressChange.BlockM100;
-			}
-			if (num == 2)
-			{
+				break;
+			case 2:
 				addressChange = AddressChange.BlockM10;
-			}
-			if (num == 3)
-			{
+				break;
+			case 3:
 				addressChange = AddressChange.BlockM1;
-			}
-			if (num == 4)
-			{
+				break;
+			case 4:
 				addressChange = AddressChange.ByteM1;
-			}
-			if (num == 5)
-			{
+				break;
+			case 5:
 				addressChange = AddressChange.ByteP1;
-			}
-			if (num == 6)
-			{
+				break;
+			case 6:
 				addressChange = AddressChange.BlockP1;
-			}
-			if (num == 7)
-			{
+				break;
+			case 7:
 				addressChange = AddressChange.BlockP10;
-			}
-			if (num == 8)
-			{
+				break;
+			case 8:
 				addressChange = AddressChange.BlockP100;
-			}
-			if (num == 9)
-			{
+				break;
+			case 9:
 				addressChange = AddressChange.End;
 			}
-			if (num == 0)
-			{
-				int num2 = (Address = mFormat.GetDataAddress(mDataFileManager.RomData.Data));
-				return;
-			}
+
 			int address = Address;
-			int num3 = (Address = mFormat.GetAddress(address, mDataFileManager.RomData.Data.Length, addressChange));
+			int num3 = Address = mFormat.GetAddress(address,
+				mDataFileManager.RomData.Data.Length, addressChange);
 		}
 	}
 
@@ -3730,14 +3458,11 @@ public class MainForm : Form
 		{
 			AddressInputForm addressInputForm = new AddressInputForm();
 			addressInputForm.Address = Address;
+
 			if (addressInputForm.ShowDialog(this) == DialogResult.OK)
-			{
 				Address = addressInputForm.Address;
-			}
 			if (scrollPanelRom.CanSelect)
-			{
 				scrollPanelRom.Focus();
-			}
 		}
 	}
 
@@ -3788,20 +3513,25 @@ public class MainForm : Form
 	{
 		int num = -1;
 		int charactorByteSize = mFormat.GetCharactorByteSize();
+
 		if (mBytemapForFind == null)
-		{
 			mBytemapForFind = new Bytemap(mFormat.CharSize);
-		}
+
 		Point pt = new Point(0, 0);
 		mFindingAddr = mFindAddr + mFindAddAddr;
+
 		while (mFindingAddr >= 0 && mFindingAddr < mFindSize)
 		{
-			if (mFindingAddr + charactorByteSize < mFindSize && ((mFindingAddr & 0xF) == 0 || mFindAdvanceSearch))
+			if (mFindingAddr + charactorByteSize < mFindSize &&
+				((mFindingAddr & 0xF) == 0 || mFindAdvanceSearch))
 			{
-				mFormat.ConvertMemToChr(mFindData, mFindingAddr, mBytemapForFind, pt);
+				mFormat.ConvertMemToChr(mFindData, mFindingAddr,
+					mBytemapForFind, pt);
+
 				byte b = mBytemapForFind.Data[0];
 				bool flag = true;
 				byte[] data = mBytemapForFind.Data;
+
 				foreach (byte b2 in data)
 				{
 					if (b != b2)
@@ -3810,6 +3540,7 @@ public class MainForm : Form
 						break;
 					}
 				}
+
 				if (flag)
 				{
 					num = mFindingAddr;
@@ -3831,6 +3562,7 @@ public class MainForm : Form
 		miJumpListAdd = new ToolStripMenuItem("");
 		miJumpListRemove = new ToolStripMenuItem();
 		miJumpListSeparator = new ToolStripSeparator();
+
 		miJumpListAdd.Click += ActionAddressJumpListAddClick;
 		miJumpListRemove.Click += ActionAddressJumpListRemoveClick;
 		ResetJumpListMenuText();
@@ -3838,8 +3570,10 @@ public class MainForm : Form
 
 	private void ResetJumpListMenuText()
 	{
-		miJumpListAdd.Text = ResourceUtility.GetResourceString(ResourceType, "Resources.JumpListMenuAdd");
-		miJumpListRemove.Text = ResourceUtility.GetResourceString(ResourceType, "Resources.JumpListMenuRemove");
+		miJumpListAdd.Text = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.JumpListMenuAdd");
+		miJumpListRemove.Text = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.JumpListMenuRemove");
 	}
 
 	private void ActionAddressJumpList(object sender, EventArgs e)
@@ -3848,13 +3582,16 @@ public class MainForm : Form
 		popupJumpListMenu.Items.Add(miJumpListAdd);
 		popupJumpListMenu.Items.Add(miJumpListRemove);
 		popupJumpListMenu.Items.Add(miJumpListSeparator);
+
 		foreach (JumpListInfo jump in mDataFileManager.JumpListFile.JumpList)
 		{
-			ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(jump.Name);
+			ToolStripMenuItem toolStripMenuItem =
+				new ToolStripMenuItem(jump.Name);
 			toolStripMenuItem.Tag = jump;
 			toolStripMenuItem.Click += ActionAddressJumpListitemClick;
 			popupJumpListMenu.Items.Add(toolStripMenuItem);
 		}
+
 		int num = tbAddressJumpList.Bounds.Location.X + tbAddressJumpList.Width;
 		int num2 = tbAddressJumpList.Bounds.Location.Y;
 		popupJumpListMenu.Show(tbAddressJumpList.Owner, num, num2);
@@ -3867,18 +3604,25 @@ public class MainForm : Form
 			string fileName = mDataFileManager.RomData.FileName;
 			mDataFileManager.JumpListFile.Initialize(fileName);
 		}
-		string textValue = Path.GetFileName(mDataFileManager.RomData.FileName) + " [" + Address.ToString("X6") + "]";
+
+		string textValue = 
+			Path.GetFileName(mDataFileManager.RomData.FileName) +
+			" [" + Address.ToString("X6") + "]";
+
 		InputTextForm inputTextForm = new InputTextForm();
 		inputTextForm.TextName = "Title";
 		inputTextForm.TextValue = textValue;
+
 		if (inputTextForm.ShowDialog() == DialogResult.OK)
 		{
 			textValue = inputTextForm.TextValue;
-			JumpListInfo jumpListInfo = new JumpListInfo();
-			jumpListInfo.Address = Address;
-			jumpListInfo.Format = comboBoxFormat.SelectedIndex;
-			jumpListInfo.Pattern = comboBoxPattern.SelectedIndex;
-			jumpListInfo.Name = textValue;
+			JumpListInfo jumpListInfo = new JumpListInfo() {
+				Address = Address,
+				Format = comboBoxFormat.SelectedIndex,
+				Pattern = comboBoxPattern.SelectedIndex,
+				Name = textValue
+			};
+
 			mDataFileManager.JumpListFile.JumpList.Add(jumpListInfo);
 			mDataFileManager.JumpListFile.Save();
 			mDataFileManager.JumpListFile.Load();
@@ -3892,12 +3636,16 @@ public class MainForm : Form
 			string fileName = mDataFileManager.RomData.FileName;
 			mDataFileManager.JumpListFile.Initialize(fileName);
 		}
+
 		SelectComboBoxForm selectComboBoxForm = new SelectComboBoxForm();
 		selectComboBoxForm.TextName = "Remove ";
+
 		ComboBox.ObjectCollection items = selectComboBoxForm.ComboBox.Items;
 		object[] items2 = mDataFileManager.JumpListFile.JumpList.ToArray();
 		items.AddRange(items2);
-		if (selectComboBoxForm.ShowDialog() == DialogResult.OK && selectComboBoxForm.ComboBox.SelectedItem is JumpListInfo item)
+
+		if (selectComboBoxForm.ShowDialog() == DialogResult.OK
+			&& selectComboBoxForm.ComboBox.SelectedItem is JumpListInfo item)
 		{
 			mDataFileManager.JumpListFile.JumpList.Remove(item);
 			mDataFileManager.JumpListFile.Save();
@@ -3917,7 +3665,8 @@ public class MainForm : Form
 			if (jumpListInfo != null)
 			{
 				ProcessSelectJumpList(jumpListInfo);
-				mDataFileManager.JumpListFile.SelectIndexFromInfo(jumpListInfo);
+				mDataFileManager.JumpListFile
+					.SelectIndexFromInfo(jumpListInfo);
 			}
 		}
 	}
@@ -4074,10 +3823,9 @@ public class MainForm : Form
 	private void UpdateMenuOption()
 	{
 		miOptionShowAllMenu.Checked = mSetting.OptionShowAllMenu;
-		bool optionShowAllMenu = mSetting.OptionShowAllMenu;
-		miPen.Visible = optionShowAllMenu;
-		miAddress.Visible = optionShowAllMenu;
-		miPalettePaletteType.Visible = optionShowAllMenu;
+		miPen.Visible = mSetting.OptionShowAllMenu;
+		miAddress.Visible = mSetting.OptionShowAllMenu;
+		miPalettePaletteType.Visible = mSetting.OptionShowAllMenu;
 	}
 
 	private void ActionOptionRunFile(object sender, EventArgs e)
@@ -4085,15 +3833,21 @@ public class MainForm : Form
 		try
 		{
 			if (!CheckSaveModifiedData())
-			{
-				Process.Start(new ProcessStartInfo(mDataFileManager.RomData.FileName));
-			}
+				Process.Start(
+					new ProcessStartInfo(mDataFileManager.RomData.FileName));
 		}
 		catch
 		{
-			string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleError");
-			string text = ResourceUtility.GetResourceString(ResourceType, "Resources.MessageExecuteError").Replace("\\r", "\r").Replace("\\n", "\n") + mDataFileManager.RomData.FileName;
-			MsgBox.Show(this, text, resourceString, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			string resourceString = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.TitleError");
+			string text = ResourceUtility.GetResourceString(
+				ResourceType, "Resources.MessageExecuteError")
+					.Replace("\\r", "\r")
+					.Replace("\\n", "\n")
+						+ mDataFileManager.RomData.FileName;
+
+			MsgBox.Show(this, text, resourceString,
+				MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
@@ -4101,23 +3855,38 @@ public class MainForm : Form
 	{
 		NaviList.Clear();
 		NaviList.Add("");
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviBankL"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviBankR"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviBankLAlt"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviBankRAlt"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviBankW"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviBankL"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviBankR"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviBankLAlt"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviBankRAlt"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviBankW"));
 		NaviList.Add("");
 		NaviList.Add("");
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviEditW_Scroll"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviEditW_Pen"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviEditW_Palette"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviEditW_Size"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviDatL"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviDatR"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviDatW"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviPalL"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviPalR"));
-		NaviList.Add(ResourceUtility.GetResourceString(ResourceType, "Resources.NaviPalW"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviEditW_Scroll"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviEditW_Pen"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviEditW_Palette"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviEditW_Size"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviDatL"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviDatR"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviDatW"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviPalL"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviPalR"));
+		NaviList.Add(ResourceUtility.GetResourceString(
+			ResourceType, "Resources.NaviPalW"));
 	}
 
 	private string GetNavi(NaviType navitype)
@@ -4159,32 +3928,28 @@ public class MainForm : Form
 	private void ActionOptionLanguageSet(object sender, EventArgs e)
 	{
 		if (sender == miLanguageLngFile)
-		{
 			LoadLanguageFile();
-		}
 		else
 		{
 			CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
 			try
 			{
-				if (sender == miLanguageSystem)
+				switch (sender)
 				{
+				case miLanguageSystem:
 					culture = CultureInfo.InstalledUICulture;
-				}
-				if (sender == miLanguageEnglish)
-				{
+					break;
+				case miLanguageEnglish:
 					culture = CultureInfo.GetCultureInfo("");
-				}
-				if (sender == miLanguageJapanese)
-				{
+					break;
+				case miLanguageJapanese:
 					culture = CultureInfo.GetCultureInfo("ja");
 				}
+				
 				ResourceUtility.LoadFromLngFile = false;
 				ReloadResource(culture);
 			}
-			catch
-			{
-			}
+			catch {}
 		}
 		UpdateLanguageMenuState();
 	}
@@ -4196,10 +3961,12 @@ public class MainForm : Form
 			SetGuiCulture(culture);
 			LoadNaviText();
 			mPenManager.InitFunctionList();
+
 			CreatePenToolBar();
 			SelectEditPanelPen(mPenManager.SelectedFunction);
 			UpdateMenuPenColSetVisible();
 			ResetJumpListMenuText();
+
 			UpdateBuildDateLabel();
 			UpdateMenuAll();
 			UpdateEditRectSize();
@@ -4222,9 +3989,13 @@ public class MainForm : Form
 			Thread.CurrentThread.CurrentUICulture = culture;
 			try
 			{
-				ResourceUtility.ChangeLanguage(this, toolTip, Thread.CurrentThread.CurrentUICulture);
-				ResourceUtility.ChangeLanguage(mPaletteEditorForm, mPaletteEditorForm.ToolTip, culture);
-				if (mPropertyEditorForm != null && !mPropertyEditorForm.IsDisposed && !mPropertyEditorForm.Disposing)
+				ResourceUtility.ChangeLanguage(this, toolTip,
+					Thread.CurrentThread.CurrentUICulture);
+				ResourceUtility.ChangeLanguage(mPaletteEditorForm,
+					mPaletteEditorForm.ToolTip, culture);
+				if (mPropertyEditorForm != null &&
+					!mPropertyEditorForm.IsDisposed &&
+					!mPropertyEditorForm.Disposing)
 				{
 					mPropertyEditorForm.Close();
 					mPropertyEditorForm.Dispose();
@@ -4233,9 +4004,11 @@ public class MainForm : Form
 			}
 			catch (Exception ex)
 			{
-				string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleError");
+				string resourceString = ResourceUtility.GetResourceString(
+					ResourceType, "Resources.TitleError");
 				string text = "Exception \r\n\r\n" + ex.ToString();
-				MsgBox.Show(this, text, resourceString, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+				MsgBox.Show(this, text, resourceString,
+					MessageBoxButtons.OK, MessageBoxIcon.Hand);
 			}
 		}
 		catch (Exception ex2)
@@ -4246,25 +4019,39 @@ public class MainForm : Form
 
 	private void miLanguageOutputLng_Click(object sender, EventArgs e)
 	{
-		CultureInfo culture = new CultureInfo(Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName);
-		string path = Environment.GetCommandLineArgs()[0].Replace(".vshost", "");
+		CultureInfo culture = new CultureInfo(
+			Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName);
+		string path = Environment
+			.GetCommandLineArgs()[0]
+			.Replace(".vshost", "");
 		string text = Path.ChangeExtension(path, ".output.lng");
 		string directoryName = Path.GetDirectoryName(path);
+
 		ResourceUtility.CreateNewLngList();
 		string fileName = Path.GetFileName(path);
+
 		Assembly assembly = Assembly.LoadFile(directoryName + "\\" + fileName);
-		ResourceManager rm = new ResourceManager("YYCHR.Properties.Resources", assembly);
+		ResourceManager rm = new ResourceManager(
+			"YYCHR.Properties.Resources", assembly);
 		AddPropertiesResourceTextToList(fileName, culture, rm);
 		AddControlResourceTextToList(assembly, culture);
+
 		string text2 = "ControlLib.dll";
 		Assembly assembly2 = Assembly.LoadFile(directoryName + "\\" + text2);
-		ResourceManager rm2 = new ResourceManager("ControlLib.Properties.Resources", assembly2);
+		ResourceManager rm2 = new ResourceManager(
+			"ControlLib.Properties.Resources", assembly2);
 		AddPropertiesResourceTextToList(text2, culture, rm2);
 		AddControlResourceTextToList(assembly2, culture);
+
 		ResourceUtility.SaveLngFile(text);
-		string resourceString = ResourceUtility.GetResourceString(ResourceType, "Resources.TitleInformation");
-		string text3 = ResourceUtility.GetResourceString(ResourceType, "Resources.MessageLngFileExported") + "\r\n\r\n" + text;
-		MsgBox.Show(this, text3, resourceString, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+		string resourceString = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.TitleInformation");
+		string text3 = ResourceUtility.GetResourceString(
+			ResourceType, "Resources.MessageLngFileExported") +
+			"\r\n\r\n" + text;
+		MsgBox.Show(this, text3, resourceString,
+			MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 	}
 
 	private void AddPropertiesResourceTextToList(string targetName, CultureInfo culture, ResourceManager rm)
@@ -4304,24 +4091,24 @@ public class MainForm : Form
 	{
 		List<Type> list = new List<Type>();
 		Type[] types = asm.GetTypes();
+
 		foreach (Type type in types)
 		{
 			if (type.IsSubclassOf(typeof(Control)))
-			{
 				list.Add(type);
-			}
 		}
+
 		foreach (Type item in list)
 		{
-			string name = item.Name;
 			ComponentResourceManager rm = new ComponentResourceManager(item);
-			AddPropertiesResourceTextToList(name, culture, rm);
+			AddPropertiesResourceTextToList(item.Name, culture, rm);
 		}
 	}
 
 	private void LoadLanguageFile()
 	{
-		string lngFile = Path.ChangeExtension(Environment.GetCommandLineArgs()[0].Replace(".vshost", ""), "lng");
+		string lngFile = Path.ChangeExtension(
+			Environment.GetCommandLineArgs()[0].Replace(".vshost", ""), "lng");
 		LoadLanguageFile(lngFile);
 	}
 
@@ -4677,35 +4464,37 @@ public class MainForm : Form
 	{
 		workSpaceSelector1.WsInfo.UnSelectAll();
 		if (!TabIsRom)
-		{
 			return;
-		}
-		int address = Address;
+
 		int charactorByteSize = mFormat.GetCharactorByteSize();
 		Rectangle selectedRect = cellSelectorRom.SelectedRect;
 		int num = selectedRect.X / 8;
 		int num2 = selectedRect.Y / 8;
 		int num3 = selectedRect.Width / 8;
 		int num4 = selectedRect.Height / 8;
+
 		for (int i = 0; i < num4; i++)
 		{
 			for (int j = 0; j < num3; j++)
 			{
-				byte b = 0;
 				int num5 = (num2 + i) * 16 + (num + j);
-				b = mFormat.AdfPattern.Pattern[num5];
-				PatternInfo patternInfo = new PatternInfo();
-				patternInfo.Address = address + b * charactorByteSize;
-				patternInfo.Format = 0;
-				patternInfo.PalSet = 0;
-				patternInfo.X = j * 8;
-				patternInfo.Y = i * 8;
-				patternInfo.Rotate = RotateType.None;
-				patternInfo.Mirror = MirrorType.None;
-				patternInfo.Selected = true;
+				byte b = mFormat.AdfPattern.Pattern[num5];
+
+				PatternInfo patternInfo = new PatternInfo() {
+					Address = Address + b * charactorByteSize,
+					Format = 0,
+					PalSet = 0,
+					X = j * 8,
+					Y = i * 8,
+					Rotate = RotateType.None,
+					Mirror = MirrorType.None,
+					Selected = true
+				};
+
 				workSpaceSelector1.WsInfo.AddPattern(patternInfo, mFormat);
 			}
 		}
+
 		tabControl.SelectedTab = tabWorkSpace;
 	}
 
@@ -5045,284 +4834,353 @@ public class MainForm : Form
 
 	private void InitializeComponent()
 	{
-		this.components = new System.ComponentModel.Container();
-		System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YYCHR.MainForm));
+		this.components = new Container();
+		ComponentResourceManager resources =
+			new ComponentResourceManager(typeof(YYCHR.MainForm));
+
 		this.toolStripView = new ControlLib.OneClickToolStrip();
-		this.tbViewGuiRate = new System.Windows.Forms.ToolStripDropDownButton();
-		this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbViewEditSize = new System.Windows.Forms.ToolStripDropDownButton();
-		this.tbViewEditorSize8 = new System.Windows.Forms.ToolStripMenuItem();
-		this.tbViewEditorSize16 = new System.Windows.Forms.ToolStripMenuItem();
-		this.tbViewEditorSize32 = new System.Windows.Forms.ToolStripMenuItem();
-		this.tbViewEditorSize64 = new System.Windows.Forms.ToolStripMenuItem();
-		this.tbViewEditorSize128 = new System.Windows.Forms.ToolStripMenuItem();
-		this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbViewGridStyle = new System.Windows.Forms.ToolStripDropDownButton();
-		this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbViewGridBank = new System.Windows.Forms.ToolStripButton();
-		this.tbViewGridEditor = new System.Windows.Forms.ToolStripButton();
-		this.statusStrip = new System.Windows.Forms.StatusStrip();
-		this.slAddr = new System.Windows.Forms.ToolStripStatusLabel();
-		this.slXY = new System.Windows.Forms.ToolStripStatusLabel();
-		this.slChr = new System.Windows.Forms.ToolStripStatusLabel();
-		this.slRightSpace = new System.Windows.Forms.ToolStripStatusLabel();
+
+		this.tbViewGuiRate = new ToolStripDropDownButton();
+		this.toolStripSeparator1 = new ToolStripSeparator();
+
+		this.tbViewEditSize = new ToolStripDropDownButton();
+		this.tbViewEditorSize8 = new ToolStripMenuItem();
+		this.tbViewEditorSize16 = new ToolStripMenuItem();
+		this.tbViewEditorSize32 = new ToolStripMenuItem();
+		this.tbViewEditorSize64 = new ToolStripMenuItem();
+		this.tbViewEditorSize128 = new ToolStripMenuItem();
+
+		this.toolStripSeparator2 = new ToolStripSeparator();
+		this.tbViewGridStyle = new ToolStripDropDownButton();
+		this.toolStripSeparator3 = new ToolStripSeparator();
+		this.tbViewGridBank = new ToolStripButton();
+		this.tbViewGridEditor = new ToolStripButton();
+
+		this.statusStrip = new StatusStrip();
+
+		this.slAddr = new ToolStripStatusLabel();
+		this.slXY = new ToolStripStatusLabel();
+		this.slChr = new ToolStripStatusLabel();
+		this.slRightSpace = new ToolStripStatusLabel();
 		this.slKeyCtrl = new ControlLib.ToolStripStatusLabelEx();
 		this.slKeyShift = new ControlLib.ToolStripStatusLabelEx();
 		this.slKeyAlt = new ControlLib.ToolStripStatusLabelEx();
+
 		this.slHintMouseButtonL = new ControlLib.ToolStripStatusLabelEx();
 		this.slHintMouseWheel = new ControlLib.ToolStripStatusLabelEx();
 		this.slHintMouseButtonR = new ControlLib.ToolStripStatusLabelEx();
-		this.tabControl = new System.Windows.Forms.TabControl();
-		this.tabPageChrRom = new System.Windows.Forms.TabPage();
-		this.panelChr = new System.Windows.Forms.Panel();
-		this.panelForPlugin = new System.Windows.Forms.Panel();
-		this.panelChrSetting = new System.Windows.Forms.Panel();
-		this.labelFormat = new System.Windows.Forms.Label();
+
+		this.tabControl = new TabControl();
+		this.tabPageChrRom = new TabPage();
+
+		this.panelChr = new Panel();
+		this.panelForPlugin = new Panel();
+		this.panelChrSetting = new Panel();
+
+		this.labelFormat = new Label();
 		this.buttonPatternEdit = new ControlLib.ButtonNoFocus();
 		this.comboBoxFormat = new Controls.ComboBoxEx();
 		this.buttonFormatInfo = new ControlLib.ButtonNoFocus();
 		this.comboBoxMirror = new Controls.ComboBoxEx();
-		this.labelPattern = new System.Windows.Forms.Label();
+		this.labelPattern = new Label();
 		this.comboBoxPattern = new Controls.ComboBoxEx();
-		this.labelMirror = new System.Windows.Forms.Label();
+		this.labelMirror = new Label();
 		this.comboBoxRotate = new Controls.ComboBoxEx();
-		this.labelRotate = new System.Windows.Forms.Label();
-		this.panelToolStripAddress = new System.Windows.Forms.Panel();
+		this.labelRotate = new Label();
+		this.panelToolStripAddress = new Panel();
 		this.toolStripAddress = new ControlLib.OneClickToolStrip();
-		this.tbAddres0 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres1 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres2 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres3 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres4 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres5 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres6 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres7 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres8 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddres9 = new System.Windows.Forms.ToolStripButton();
-		this.tbAddresSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbAddresInputAddress = new System.Windows.Forms.ToolStripButton();
-		this.tbAddressJumpList = new System.Windows.Forms.ToolStripButton();
-		this.tbAddressJumpListPrev = new System.Windows.Forms.ToolStripButton();
-		this.tbAddressJumpListNext = new System.Windows.Forms.ToolStripButton();
-		this.tbAddresSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbAddressFindPrevious = new System.Windows.Forms.ToolStripButton();
-		this.tbAddressFindNext = new System.Windows.Forms.ToolStripButton();
+
+		this.tbAddres0 = new ToolStripButton();
+		this.tbAddres1 = new ToolStripButton();
+		this.tbAddres2 = new ToolStripButton();
+		this.tbAddres3 = new ToolStripButton();
+		this.tbAddres4 = new ToolStripButton();
+		this.tbAddres5 = new ToolStripButton();
+		this.tbAddres6 = new ToolStripButton();
+		this.tbAddres7 = new ToolStripButton();
+		this.tbAddres8 = new ToolStripButton();
+		this.tbAddres9 = new ToolStripButton();
+		this.tbAddresSep0 = new ToolStripSeparator();
+
+		this.tbAddresInputAddress = new ToolStripButton();
+		this.tbAddressJumpList = new ToolStripButton();
+		this.tbAddressJumpListPrev = new ToolStripButton();
+		this.tbAddressJumpListNext = new ToolStripButton();
+		this.tbAddresSep1 = new ToolStripSeparator();
+		this.tbAddressFindPrevious = new ToolStripButton();
+		this.tbAddressFindNext = new ToolStripButton();
+
 		this.scrollPanelRom = new ControlLib.ScrollPanel();
 		this.cellSelectorRom = new ControlLib.CellSelector();
-		this.tabPageBitmap = new System.Windows.Forms.TabPage();
+		this.tabPageBitmap = new TabPage();
 		this.scrollPanelBmp = new ControlLib.ScrollPanelHV();
 		this.cellSelectorBmp = new ControlLib.CellSelector();
-		this.tabWorkSpace = new System.Windows.Forms.TabPage();
-		this.panelWorkSpace = new System.Windows.Forms.Panel();
+
+		this.tabWorkSpace = new TabPage();
+		this.panelWorkSpace = new Panel();
 		this.workSpaceSelector1 = new ControlLib.WorkSpaceSelector();
-		this.rightPanel = new System.Windows.Forms.Panel();
-		this.panelPalette = new System.Windows.Forms.Panel();
+
+		this.rightPanel = new Panel();
+		this.panelPalette = new Panel();
+
 		this.toolStripPalette = new ControlLib.OneClickToolStrip();
-		this.tbPaletteTypeDat = new System.Windows.Forms.ToolStripButton();
-		this.tbPaletteTypePal = new System.Windows.Forms.ToolStripButton();
-		this.tbPaletteTypeBmp = new System.Windows.Forms.ToolStripButton();
-		this.tbPaletteSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbPaletteOpenState = new System.Windows.Forms.ToolStripButton();
+		this.tbPaletteTypeDat = new ToolStripButton();
+		this.tbPaletteTypePal = new ToolStripButton();
+		this.tbPaletteTypeBmp = new ToolStripButton();
+		this.tbPaletteSep1 = new ToolStripSeparator();
+		this.tbPaletteOpenState = new ToolStripButton();
+
 		this.palPaletteSelector = new ControlLib.PaletteSelector();
 		this.datPaletteSelector = new ControlLib.PaletteSelector();
-		this.panelEdit = new System.Windows.Forms.Panel();
+
+		this.panelEdit = new Panel();
 		this.toolStripPen = new ControlLib.OneClickToolStrip();
 		this.editPanel = new ControlLib.EditPanel();
 		this.toolStripMain = new ControlLib.OneClickToolStrip();
-		this.tbFileNew = new System.Windows.Forms.ToolStripButton();
-		this.tbFileSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbFileOpenRom = new System.Windows.Forms.ToolStripButton();
-		this.tbFileSaveRom = new System.Windows.Forms.ToolStripButton();
-		this.tbFileOpenBmp = new System.Windows.Forms.ToolStripButton();
-		this.tbFileSaveBmp = new System.Windows.Forms.ToolStripButton();
-		this.tbFileSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbEditCut = new System.Windows.Forms.ToolStripButton();
-		this.tbEditCopy = new System.Windows.Forms.ToolStripButton();
-		this.tbEditPaste = new System.Windows.Forms.ToolStripButton();
-		this.tbEditClear = new System.Windows.Forms.ToolStripButton();
-		this.tbEditSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbEditUndo = new System.Windows.Forms.ToolStripButton();
-		this.tbEditRedo = new System.Windows.Forms.ToolStripButton();
-		this.tbEditSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbEditMirrorHorizontal = new System.Windows.Forms.ToolStripButton();
-		this.tbEditMirrorVertical = new System.Windows.Forms.ToolStripButton();
-		this.tbEditRotateLeft = new System.Windows.Forms.ToolStripButton();
-		this.tbEditRotateRight = new System.Windows.Forms.ToolStripButton();
-		this.tbEditShiftUp = new System.Windows.Forms.ToolStripButton();
-		this.tbEditShiftDown = new System.Windows.Forms.ToolStripButton();
-		this.tbEditShiftLeft = new System.Windows.Forms.ToolStripButton();
-		this.tbEditShiftRight = new System.Windows.Forms.ToolStripButton();
-		this.tbEditSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbEditReplaceColor = new System.Windows.Forms.ToolStripButton();
-		this.tbEditSep3 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbPaletteLoadEmulatorState = new System.Windows.Forms.ToolStripButton();
-		this.tbPaletteSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbFileQuickSaveBitmap = new System.Windows.Forms.ToolStripButton();
-		this.tbFileSep3 = new System.Windows.Forms.ToolStripSeparator();
-		this.tbOptionExecuteFile = new System.Windows.Forms.ToolStripButton();
-		this.tbWorkspaceLoad = new System.Windows.Forms.ToolStripButton();
-		this.tbWorkspaceSave = new System.Windows.Forms.ToolStripButton();
-		this.tbWorkspaceRemovePattern = new System.Windows.Forms.ToolStripButton();
-		this.tbWorkspaceAdd = new System.Windows.Forms.ToolStripButton();
-		this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-		this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-		this.openDataFileDialog = new System.Windows.Forms.OpenFileDialog();
-		this.saveDataFileDialog = new System.Windows.Forms.SaveFileDialog();
-		this.openBitmapDialog = new System.Windows.Forms.OpenFileDialog();
-		this.saveBitmapDialog = new System.Windows.Forms.SaveFileDialog();
-		this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-		this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+
+		this.tbFileNew = new ToolStripButton();
+		this.tbFileSep0 = new ToolStripSeparator();
+
+		this.tbFileOpenRom = new ToolStripButton();
+		this.tbFileSaveRom = new ToolStripButton();
+		this.tbFileOpenBmp = new ToolStripButton();
+		this.tbFileSaveBmp = new ToolStripButton();
+		this.tbFileSep1 = new ToolStripSeparator();
+
+		this.tbEditCut = new ToolStripButton();
+		this.tbEditCopy = new ToolStripButton();
+		this.tbEditPaste = new ToolStripButton();
+		this.tbEditClear = new ToolStripButton();
+		this.tbEditSep0 = new ToolStripSeparator();
+
+		this.tbEditUndo = new ToolStripButton();
+		this.tbEditRedo = new ToolStripButton();
+		this.tbEditSep1 = new ToolStripSeparator();
+
+		this.tbEditMirrorHorizontal = new ToolStripButton();
+		this.tbEditMirrorVertical = new ToolStripButton();
+		this.tbEditRotateLeft = new ToolStripButton();
+		this.tbEditRotateRight = new ToolStripButton();
+		this.tbEditShiftUp = new ToolStripButton();
+		this.tbEditShiftDown = new ToolStripButton();
+		this.tbEditShiftLeft = new ToolStripButton();
+		this.tbEditShiftRight = new ToolStripButton();
+		this.tbEditSep2 = new ToolStripSeparator();
+
+		this.tbEditReplaceColor = new ToolStripButton();
+		this.tbEditSep3 = new ToolStripSeparator();
+
+		this.tbPaletteLoadEmulatorState = new ToolStripButton();
+		this.tbPaletteSep0 = new ToolStripSeparator();
+
+		this.tbFileQuickSaveBitmap = new ToolStripButton();
+		this.tbFileSep3 = new ToolStripSeparator();
+
+		this.tbOptionExecuteFile = new ToolStripButton();
+		this.tbWorkspaceLoad = new ToolStripButton();
+		this.tbWorkspaceSave = new ToolStripButton();
+		this.tbWorkspaceRemovePattern = new ToolStripButton();
+		this.tbWorkspaceAdd = new ToolStripButton();
+
+		this.configurationToolStripMenuItem = new ToolStripMenuItem();
+		this.optionToolStripMenuItem = new ToolStripMenuItem();
+
+		this.openDataFileDialog = new OpenFileDialog();
+		this.saveDataFileDialog = new SaveFileDialog();
+		this.openBitmapDialog = new OpenFileDialog();
+		this.saveBitmapDialog = new SaveFileDialog();
+		this.openFileDialog = new OpenFileDialog();
+		this.saveFileDialog = new SaveFileDialog();
+
 		this.menuStripMain = new ControlLib.OneClickMenuStrip();
-		this.miFile = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileNew = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileOpenRom = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileReload = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileSaveRom = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileSaveAsRom = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miFileOpenBmp = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileSaveBmp = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileQuickSaveBitmap = new System.Windows.Forms.ToolStripMenuItem();
-		this.miFileSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.miFileExit = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEdit = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditUndo = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditRedo = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditCut = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditCopy = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditPaste = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditPasteOptimizedImage = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditClear = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditMirrorHorizontal = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditMirrorVertical = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep3 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditRotateRight = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep4 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditShiftUp = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditShiftDown = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditShiftLeft = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditShiftRight = new System.Windows.Forms.ToolStripMenuItem();
-		this.miEditSep5 = new System.Windows.Forms.ToolStripSeparator();
-		this.miEditReplaceColor = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress0 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress1 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress2 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress3 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress4 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress5 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress6 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress7 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress8 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddress9 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddressSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miAddressInputAddress = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddressSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miAddressFindPrevious = new System.Windows.Forms.ToolStripMenuItem();
-		this.miAddressFindNext = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPen = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPalette = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPalettePaletteType = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteTypeDat = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteTypePal = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteTypeBmp = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectPalette = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPalettePrev = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteNext = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPaletteSelect0 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect1 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect2 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect3 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect4 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect5 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect6 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect7 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect8 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelect9 = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectA = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectB = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectC = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectD = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectE = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSelectF = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPaletteLoadEmulatorState = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPalettePalOpen = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteLoadRGBPaletteFromCommon = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPalettePalSave = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteQuickSaveRGBPalette = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPaletteDatOpen = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteLoadPaletteTableFromCommon = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteDatSave = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteQuickSavePaletteTable = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSep3 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPaletteOpenADF = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteLoadADFPatternFromCommon = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSaveADF = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteQuickSaveADFPattern = new System.Windows.Forms.ToolStripMenuItem();
-		this.miPaletteSep4 = new System.Windows.Forms.ToolStripSeparator();
-		this.miPaletteLoadDefaultSetting = new System.Windows.Forms.ToolStripMenuItem();
-		this.miOption = new System.Windows.Forms.ToolStripMenuItem();
-		this.miOptionSetting = new System.Windows.Forms.ToolStripMenuItem();
-		this.miOptionShowAllMenu = new System.Windows.Forms.ToolStripMenuItem();
-		this.miOptionSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miOptionExecuteFile = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelpOpenWiki = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelpSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miHelpOpenWebsite = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelpReportBugs = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelpSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miHelpPropertyEditor = new System.Windows.Forms.ToolStripMenuItem();
-		this.miHelpSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-		this.miOptionLanguage = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageSystem = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageSep0 = new System.Windows.Forms.ToolStripSeparator();
-		this.miLanguageEnglish = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageJapanese = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageSep1 = new System.Windows.Forms.ToolStripSeparator();
-		this.miLanguageLngFile = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageSep2 = new System.Windows.Forms.ToolStripSeparator();
-		this.miLanguageSettingAutoLoadLng = new System.Windows.Forms.ToolStripMenuItem();
-		this.miLanguageExportLng = new System.Windows.Forms.ToolStripMenuItem();
-		this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-		this.popupJumpListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+
+		this.miFile = new ToolStripMenuItem();
+		this.miFileNew = new ToolStripMenuItem();
+		this.miFileOpenRom = new ToolStripMenuItem();
+		this.miFileReload = new ToolStripMenuItem();
+		this.miFileSaveRom = new ToolStripMenuItem();
+		this.miFileSaveAsRom = new ToolStripMenuItem();
+		this.miFileSep1 = new ToolStripSeparator();
+
+		this.miFileOpenBmp = new ToolStripMenuItem();
+		this.miFileSaveBmp = new ToolStripMenuItem();
+		this.miFileQuickSaveBitmap = new ToolStripMenuItem();
+		this.miFileSep2 = new ToolStripSeparator();
+
+		this.miFileExit = new ToolStripMenuItem();
+		this.miEdit = new ToolStripMenuItem();
+		this.miEditUndo = new ToolStripMenuItem();
+		this.miEditRedo = new ToolStripMenuItem();
+		this.miEditSep0 = new ToolStripSeparator();
+
+		this.miEditCut = new ToolStripMenuItem();
+		this.miEditCopy = new ToolStripMenuItem();
+		this.miEditPaste = new ToolStripMenuItem();
+		this.miEditPasteOptimizedImage = new ToolStripMenuItem();
+		this.miEditClear = new ToolStripMenuItem();
+		this.miEditSelectAll = new ToolStripMenuItem();
+		this.miEditSep1 = new ToolStripSeparator();
+
+		this.miEditClearClipboard = new ToolStripMenuItem();
+		this.miEditSep2 = new ToolStripSeparator();
+
+		this.miEditMirrorHorizontal = new ToolStripMenuItem();
+		this.miEditMirrorVertical = new ToolStripMenuItem();
+		this.miEditSep3 = new ToolStripSeparator();
+
+		this.miEditRotateLeft = new ToolStripMenuItem();
+		this.miEditRotateRight = new ToolStripMenuItem();
+		this.miEditSep4 = new ToolStripSeparator();
+
+		this.miEditShiftUp = new ToolStripMenuItem();
+		this.miEditShiftDown = new ToolStripMenuItem();
+		this.miEditShiftLeft = new ToolStripMenuItem();
+		this.miEditShiftRight = new ToolStripMenuItem();
+		this.miEditSep5 = new ToolStripSeparator();
+
+		this.miEditReplaceColor = new ToolStripMenuItem();
+
+		this.miAddress = new ToolStripMenuItem();
+		this.miAddress0 = new ToolStripMenuItem();
+		this.miAddress1 = new ToolStripMenuItem();
+		this.miAddress2 = new ToolStripMenuItem();
+		this.miAddress3 = new ToolStripMenuItem();
+		this.miAddress4 = new ToolStripMenuItem();
+		this.miAddress5 = new ToolStripMenuItem();
+		this.miAddress6 = new ToolStripMenuItem();
+		this.miAddress7 = new ToolStripMenuItem();
+		this.miAddress8 = new ToolStripMenuItem();
+		this.miAddress9 = new ToolStripMenuItem();
+		this.miAddressSep0 = new ToolStripSeparator();
+
+		this.miAddressInputAddress = new ToolStripMenuItem();
+		this.miAddressSep1 = new ToolStripSeparator();
+
+		this.miAddressFindPrevious = new ToolStripMenuItem();
+		this.miAddressFindNext = new ToolStripMenuItem();
+		this.miPen = new ToolStripMenuItem();
+		this.miPalette = new ToolStripMenuItem();
+		this.miPalettePaletteType = new ToolStripMenuItem();
+		this.miPaletteTypeDat = new ToolStripMenuItem();
+		this.miPaletteTypePal = new ToolStripMenuItem();
+		this.miPaletteTypeBmp = new ToolStripMenuItem();
+		this.miPaletteSelectPalette = new ToolStripMenuItem();
+		this.miPalettePrev = new ToolStripMenuItem();
+		this.miPaletteNext = new ToolStripMenuItem();
+		this.miPaletteSelectSep0 = new ToolStripSeparator();
+
+		this.miPaletteSelect0 = new ToolStripMenuItem();
+		this.miPaletteSelect1 = new ToolStripMenuItem();
+		this.miPaletteSelect2 = new ToolStripMenuItem();
+		this.miPaletteSelect3 = new ToolStripMenuItem();
+		this.miPaletteSelect4 = new ToolStripMenuItem();
+		this.miPaletteSelect5 = new ToolStripMenuItem();
+		this.miPaletteSelect6 = new ToolStripMenuItem();
+		this.miPaletteSelect7 = new ToolStripMenuItem();
+		this.miPaletteSelect8 = new ToolStripMenuItem();
+		this.miPaletteSelect9 = new ToolStripMenuItem();
+		this.miPaletteSelectA = new ToolStripMenuItem();
+		this.miPaletteSelectB = new ToolStripMenuItem();
+		this.miPaletteSelectC = new ToolStripMenuItem();
+		this.miPaletteSelectD = new ToolStripMenuItem();
+		this.miPaletteSelectE = new ToolStripMenuItem();
+		this.miPaletteSelectF = new ToolStripMenuItem();
+		this.miPaletteSep0 = new ToolStripSeparator();
+
+		this.miPaletteLoadEmulatorState = new ToolStripMenuItem();
+		this.miPaletteSep1 = new ToolStripSeparator();
+
+		this.miPalettePalOpen = new ToolStripMenuItem();
+		this.miPaletteLoadRGBPaletteFromCommon = new ToolStripMenuItem();
+		this.miPalettePalSave = new ToolStripMenuItem();
+		this.miPaletteQuickSaveRGBPalette = new ToolStripMenuItem();
+		this.miPaletteSep2 = new ToolStripSeparator();
+
+		this.miPaletteDatOpen = new ToolStripMenuItem();
+		this.miPaletteLoadPaletteTableFromCommon = new ToolStripMenuItem();
+		this.miPaletteDatSave = new ToolStripMenuItem();
+		this.miPaletteQuickSavePaletteTable = new ToolStripMenuItem();
+		this.miPaletteSep3 = new ToolStripSeparator();
+
+		this.miPaletteOpenADF = new ToolStripMenuItem();
+		this.miPaletteLoadADFPatternFromCommon = new ToolStripMenuItem();
+		this.miPaletteSaveADF = new ToolStripMenuItem();
+		this.miPaletteQuickSaveADFPattern = new ToolStripMenuItem();
+		this.miPaletteSep4 = new ToolStripSeparator();
+		this.miPaletteLoadDefaultSetting = new ToolStripMenuItem();
+
+		this.miOption = new ToolStripMenuItem();
+		this.miOptionSetting = new ToolStripMenuItem();
+		this.miOptionShowAllMenu = new ToolStripMenuItem();
+		this.miOptionSep0 = new ToolStripSeparator();
+		this.miOptionExecuteFile = new ToolStripMenuItem();
+
+		this.miHelp = new ToolStripMenuItem();
+		this.miHelpOpenWiki = new ToolStripMenuItem();
+		this.miHelpSep0 = new ToolStripSeparator();
+
+		this.miHelpOpenWebsite = new ToolStripMenuItem();
+		this.miHelpReportBugs = new ToolStripMenuItem();
+		this.miHelpSep1 = new ToolStripSeparator();
+
+		this.miHelpPropertyEditor = new ToolStripMenuItem();
+		this.miHelpSep2 = new ToolStripSeparator();
+		this.miHelpAbout = new ToolStripMenuItem();
+		this.miOptionLanguage = new ToolStripMenuItem();
+
+		this.miLanguageSystem = new ToolStripMenuItem();
+		this.miLanguageSep0 = new ToolStripSeparator();
+
+		this.miLanguageEnglish = new ToolStripMenuItem();
+		this.miLanguageJapanese = new ToolStripMenuItem();
+		this.miLanguageSep1 = new ToolStripSeparator();
+
+		this.miLanguageLngFile = new ToolStripMenuItem();
+		this.miLanguageSep2 = new ToolStripSeparator();
+		this.miLanguageSettingAutoLoadLng = new ToolStripMenuItem();
+		this.miLanguageExportLng = new ToolStripMenuItem();
+
+		this.toolTip = new ToolTip(this.components);
+		this.popupJumpListMenu = new ContextMenuStrip(this.components);
+
 		this.tsWoekSpace = new ControlLib.OneClickToolStrip();
-		this.panelWorkSpaceTS = new System.Windows.Forms.Panel();
-		this.contextMenuStripChr = new System.Windows.Forms.ContextMenuStrip(this.components);
-		this.cmiEditCut = new System.Windows.Forms.ToolStripMenuItem();
-		this.cmiEditCopy = new System.Windows.Forms.ToolStripMenuItem();
-		this.cmiEditPaste = new System.Windows.Forms.ToolStripMenuItem();
-		this.cmiEditClear = new System.Windows.Forms.ToolStripMenuItem();
-		this.cmiEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-		this.lVersion = new System.Windows.Forms.Label();
-		this.mFindWorker = new System.ComponentModel.BackgroundWorker();
+		this.panelWorkSpaceTS = new Panel();
+
+		this.contextMenuStripChr = new ContextMenuStrip(this.components);
+		this.cmiEditCut = new ToolStripMenuItem();
+		this.cmiEditCopy = new ToolStripMenuItem();
+		this.cmiEditPaste = new ToolStripMenuItem();
+		this.cmiEditClear = new ToolStripMenuItem();
+		this.cmiEditSelectAll = new ToolStripMenuItem();
+
+		this.lVersion = new Label();
+
+		this.mFindWorker = new BackgroundWorker();
+
 		this.toolStripView.SuspendLayout();
 		this.statusStrip.SuspendLayout();
 		this.tabControl.SuspendLayout();
 		this.tabPageChrRom.SuspendLayout();
+
 		this.panelChr.SuspendLayout();
 		this.panelChrSetting.SuspendLayout();
 		this.panelToolStripAddress.SuspendLayout();
+
 		this.toolStripAddress.SuspendLayout();
 		this.scrollPanelRom.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)this.cellSelectorRom).BeginInit();
+
+		((ISupportInitialize)this.cellSelectorRom).BeginInit();
+
 		this.tabPageBitmap.SuspendLayout();
 		this.scrollPanelBmp.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)this.cellSelectorBmp).BeginInit();
+
+		((ISupportInitialize)this.cellSelectorBmp).BeginInit();
+
 		this.tabWorkSpace.SuspendLayout();
 		this.panelWorkSpace.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)this.workSpaceSelector1).BeginInit();
+
+		((ISupportInitialize)this.workSpaceSelector1).BeginInit();
+
 		this.rightPanel.SuspendLayout();
 		this.panelPalette.SuspendLayout();
 		this.toolStripPalette.SuspendLayout();
@@ -5334,17 +5192,22 @@ public class MainForm : Form
 		this.contextMenuStripChr.SuspendLayout();
 		base.SuspendLayout();
 		resources.ApplyResources(this.toolStripView, "toolStripView");
-		this.toolStripView.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-		this.toolStripView.Items.AddRange(new System.Windows.Forms.ToolStripItem[8] { this.tbViewGuiRate, this.toolStripSeparator1, this.tbViewEditSize, this.toolStripSeparator2, this.tbViewGridStyle, this.toolStripSeparator3, this.tbViewGridBank, this.tbViewGridEditor });
+		this.toolStripView.GripStyle = ToolStripGripStyle.Hidden;
+		this.toolStripView.Items.AddRange(new ToolStripItem[8] {
+			this.tbViewGuiRate, this.toolStripSeparator1,
+			this.tbViewEditSize, this.toolStripSeparator2,
+			this.tbViewGridStyle, this.toolStripSeparator3,
+			this.tbViewGridBank, this.tbViewGridEditor
+		});
 		this.toolStripView.Name = "toolStripView";
-		this.toolStripView.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.toolStripView.RenderMode = ToolStripRenderMode.System;
 		resources.ApplyResources(this.tbViewGuiRate, "tbViewGuiRate");
 		this.tbViewGuiRate.Image = YYCHR.Properties.Resources.IconOptionSetting;
 		this.tbViewGuiRate.Name = "tbViewGuiRate";
 		this.toolStripSeparator1.Name = "toolStripSeparator1";
 		resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
 		resources.ApplyResources(this.tbViewEditSize, "tbViewEditSize");
-		this.tbViewEditSize.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[5] { this.tbViewEditorSize8, this.tbViewEditorSize16, this.tbViewEditorSize32, this.tbViewEditorSize64, this.tbViewEditorSize128 });
+		this.tbViewEditSize.DropDownItems.AddRange(new ToolStripItem[5] { this.tbViewEditorSize8, this.tbViewEditorSize16, this.tbViewEditorSize32, this.tbViewEditorSize64, this.tbViewEditorSize128 });
 		this.tbViewEditSize.Image = YYCHR.Properties.Resources.IconOptionSetting;
 		this.tbViewEditSize.Name = "tbViewEditSize";
 		this.tbViewEditorSize8.Name = "tbViewEditorSize8";
@@ -5376,62 +5239,62 @@ public class MainForm : Form
 		resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
 		this.tbViewGridBank.Checked = true;
 		this.tbViewGridBank.CheckOnClick = true;
-		this.tbViewGridBank.CheckState = System.Windows.Forms.CheckState.Checked;
-		this.tbViewGridBank.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbViewGridBank.CheckState = CheckState.Checked;
+		this.tbViewGridBank.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbViewGridBank.Image = YYCHR.Properties.Resources.TbGridChr;
 		resources.ApplyResources(this.tbViewGridBank, "tbViewGridBank");
 		this.tbViewGridBank.Name = "tbViewGridBank";
 		this.tbViewGridBank.Click += new System.EventHandler(ActionViewGridPict);
 		this.tbViewGridEditor.Checked = true;
 		this.tbViewGridEditor.CheckOnClick = true;
-		this.tbViewGridEditor.CheckState = System.Windows.Forms.CheckState.Checked;
-		this.tbViewGridEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbViewGridEditor.CheckState = CheckState.Checked;
+		this.tbViewGridEditor.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbViewGridEditor.Image = YYCHR.Properties.Resources.TbGridEdit;
 		resources.ApplyResources(this.tbViewGridEditor, "tbViewGridEditor");
 		this.tbViewGridEditor.Name = "tbViewGridEditor";
 		this.tbViewGridEditor.Click += new System.EventHandler(ActionViewGridEdit);
-		this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[10] { this.slAddr, this.slXY, this.slChr, this.slRightSpace, this.slKeyCtrl, this.slKeyShift, this.slKeyAlt, this.slHintMouseButtonL, this.slHintMouseWheel, this.slHintMouseButtonR });
+		this.statusStrip.Items.AddRange(new ToolStripItem[10] { this.slAddr, this.slXY, this.slChr, this.slRightSpace, this.slKeyCtrl, this.slKeyShift, this.slKeyAlt, this.slHintMouseButtonL, this.slHintMouseWheel, this.slHintMouseButtonR });
 		resources.ApplyResources(this.statusStrip, "statusStrip");
 		this.statusStrip.Name = "statusStrip";
 		this.statusStrip.ShowItemToolTips = true;
 		this.statusStrip.SizingGrip = false;
-		this.slAddr.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
+		this.slAddr.BorderSides = ToolStripStatusLabelBorderSides.All;
 		resources.ApplyResources(this.slAddr, "slAddr");
-		this.slAddr.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+		this.slAddr.Margin = new Padding(0, 3, 0, 0);
 		this.slAddr.Name = "slAddr";
 		resources.ApplyResources(this.slXY, "slXY");
-		this.slXY.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
-		this.slXY.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+		this.slXY.BorderSides = ToolStripStatusLabelBorderSides.All;
+		this.slXY.Margin = new Padding(0, 3, 0, 0);
 		this.slXY.Name = "slXY";
 		resources.ApplyResources(this.slChr, "slChr");
-		this.slChr.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
-		this.slChr.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+		this.slChr.BorderSides = ToolStripStatusLabelBorderSides.All;
+		this.slChr.Margin = new Padding(0, 3, 0, 0);
 		this.slChr.Name = "slChr";
 		this.slRightSpace.Name = "slRightSpace";
 		resources.ApplyResources(this.slRightSpace, "slRightSpace");
 		this.slRightSpace.Spring = true;
-		this.slKeyCtrl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.slKeyCtrl.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.slKeyCtrl.Image = YYCHR.Properties.Resources.ControlKeyControl;
 		resources.ApplyResources(this.slKeyCtrl, "slKeyCtrl");
 		this.slKeyCtrl.Name = "slKeyCtrl";
-		this.slKeyShift.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.slKeyShift.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.slKeyShift.Image = YYCHR.Properties.Resources.ControlKeyShift;
 		resources.ApplyResources(this.slKeyShift, "slKeyShift");
 		this.slKeyShift.Name = "slKeyShift";
-		this.slKeyAlt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.slKeyAlt.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.slKeyAlt.Image = YYCHR.Properties.Resources.ControlKeyAlt;
 		resources.ApplyResources(this.slKeyAlt, "slKeyAlt");
 		this.slKeyAlt.Name = "slKeyAlt";
 		resources.ApplyResources(this.slHintMouseButtonL, "slHintMouseButtonL");
-		this.slHintMouseButtonL.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
+		this.slHintMouseButtonL.BorderSides = ToolStripStatusLabelBorderSides.All;
 		this.slHintMouseButtonL.Image = YYCHR.Properties.Resources.ControlMouseButtonL;
 		this.slHintMouseButtonL.Name = "slHintMouseButtonL";
 		resources.ApplyResources(this.slHintMouseWheel, "slHintMouseWheel");
-		this.slHintMouseWheel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
+		this.slHintMouseWheel.BorderSides = ToolStripStatusLabelBorderSides.All;
 		this.slHintMouseWheel.Image = YYCHR.Properties.Resources.ControlMouseWheel;
 		this.slHintMouseWheel.Name = "slHintMouseWheel";
 		resources.ApplyResources(this.slHintMouseButtonR, "slHintMouseButtonR");
-		this.slHintMouseButtonR.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.All;
+		this.slHintMouseButtonR.BorderSides = ToolStripStatusLabelBorderSides.All;
 		this.slHintMouseButtonR.Image = YYCHR.Properties.Resources.ControlMouseButtonR;
 		this.slHintMouseButtonR.Name = "slHintMouseButtonR";
 		resources.ApplyResources(this.tabControl, "tabControl");
@@ -5473,7 +5336,7 @@ public class MainForm : Form
 		this.buttonPatternEdit.Name = "buttonPatternEdit";
 		this.buttonPatternEdit.UseVisualStyleBackColor = true;
 		this.buttonPatternEdit.Click += new System.EventHandler(actionPatternEdit);
-		this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+		this.comboBoxFormat.DropDownStyle = ComboBoxStyle.DropDownList;
 		this.comboBoxFormat.DropDownWidth = 160;
 		this.comboBoxFormat.FormattingEnabled = true;
 		resources.ApplyResources(this.comboBoxFormat, "comboBoxFormat");
@@ -5482,20 +5345,20 @@ public class MainForm : Form
 		this.buttonFormatInfo.Name = "buttonFormatInfo";
 		this.buttonFormatInfo.UseVisualStyleBackColor = true;
 		this.buttonFormatInfo.Click += new System.EventHandler(ActionShowFormatInfo);
-		this.comboBoxMirror.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+		this.comboBoxMirror.DropDownStyle = ComboBoxStyle.DropDownList;
 		this.comboBoxMirror.FormattingEnabled = true;
 		resources.ApplyResources(this.comboBoxMirror, "comboBoxMirror");
 		this.comboBoxMirror.Name = "comboBoxMirror";
 		resources.ApplyResources(this.labelPattern, "labelPattern");
 		this.labelPattern.Name = "labelPattern";
-		this.comboBoxPattern.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+		this.comboBoxPattern.DropDownStyle = ComboBoxStyle.DropDownList;
 		this.comboBoxPattern.DropDownWidth = 160;
 		this.comboBoxPattern.FormattingEnabled = true;
 		resources.ApplyResources(this.comboBoxPattern, "comboBoxPattern");
 		this.comboBoxPattern.Name = "comboBoxPattern";
 		resources.ApplyResources(this.labelMirror, "labelMirror");
 		this.labelMirror.Name = "labelMirror";
-		this.comboBoxRotate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+		this.comboBoxRotate.DropDownStyle = ComboBoxStyle.DropDownList;
 		this.comboBoxRotate.FormattingEnabled = true;
 		resources.ApplyResources(this.comboBoxRotate, "comboBoxRotate");
 		this.comboBoxRotate.Name = "comboBoxRotate";
@@ -5506,127 +5369,127 @@ public class MainForm : Form
 		this.panelToolStripAddress.Name = "panelToolStripAddress";
 		resources.ApplyResources(this.toolStripAddress, "toolStripAddress");
 		this.toolStripAddress.CanOverflow = false;
-		this.toolStripAddress.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-		this.toolStripAddress.Items.AddRange(new System.Windows.Forms.ToolStripItem[18]
+		this.toolStripAddress.GripStyle = ToolStripGripStyle.Hidden;
+		this.toolStripAddress.Items.AddRange(new ToolStripItem[18]
 		{
 			this.tbAddres0, this.tbAddres1, this.tbAddres2, this.tbAddres3, this.tbAddres4, this.tbAddres5, this.tbAddres6, this.tbAddres7, this.tbAddres8, this.tbAddres9,
 			this.tbAddresSep0, this.tbAddresInputAddress, this.tbAddressJumpList, this.tbAddressJumpListPrev, this.tbAddressJumpListNext, this.tbAddresSep1, this.tbAddressFindPrevious, this.tbAddressFindNext
 		});
-		this.toolStripAddress.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+		this.toolStripAddress.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
 		this.toolStripAddress.Name = "toolStripAddress";
-		this.toolStripAddress.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.toolStripAddress.RenderMode = ToolStripRenderMode.System;
 		resources.ApplyResources(this.tbAddres0, "tbAddres0");
-		this.tbAddres0.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres0.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres0.Image = YYCHR.Properties.Resources.Addr0;
-		this.tbAddres0.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres0.Margin = new Padding(0);
 		this.tbAddres0.Name = "tbAddres0";
 		this.tbAddres0.Tag = "0";
 		this.tbAddres0.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres1, "tbAddres1");
-		this.tbAddres1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres1.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres1.Image = YYCHR.Properties.Resources.Addr1;
-		this.tbAddres1.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres1.Margin = new Padding(0);
 		this.tbAddres1.Name = "tbAddres1";
 		this.tbAddres1.Tag = "1";
 		this.tbAddres1.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres2, "tbAddres2");
-		this.tbAddres2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres2.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres2.Image = YYCHR.Properties.Resources.Addr2;
-		this.tbAddres2.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres2.Margin = new Padding(0);
 		this.tbAddres2.Name = "tbAddres2";
 		this.tbAddres2.Tag = "2";
 		this.tbAddres2.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres3, "tbAddres3");
-		this.tbAddres3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres3.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres3.Image = YYCHR.Properties.Resources.Addr3;
-		this.tbAddres3.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres3.Margin = new Padding(0);
 		this.tbAddres3.Name = "tbAddres3";
 		this.tbAddres3.Tag = "3";
 		this.tbAddres3.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres4, "tbAddres4");
-		this.tbAddres4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres4.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres4.Image = YYCHR.Properties.Resources.Addr4;
-		this.tbAddres4.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres4.Margin = new Padding(0);
 		this.tbAddres4.Name = "tbAddres4";
 		this.tbAddres4.Tag = "4";
 		this.tbAddres4.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres5, "tbAddres5");
-		this.tbAddres5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres5.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres5.Image = YYCHR.Properties.Resources.Addr5;
-		this.tbAddres5.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres5.Margin = new Padding(0);
 		this.tbAddres5.Name = "tbAddres5";
 		this.tbAddres5.Tag = "5";
 		this.tbAddres5.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres6, "tbAddres6");
-		this.tbAddres6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres6.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres6.Image = YYCHR.Properties.Resources.Addr6;
-		this.tbAddres6.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres6.Margin = new Padding(0);
 		this.tbAddres6.Name = "tbAddres6";
 		this.tbAddres6.Tag = "6";
 		this.tbAddres6.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres7, "tbAddres7");
-		this.tbAddres7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres7.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres7.Image = YYCHR.Properties.Resources.Addr7;
-		this.tbAddres7.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres7.Margin = new Padding(0);
 		this.tbAddres7.Name = "tbAddres7";
 		this.tbAddres7.Tag = "7";
 		this.tbAddres7.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres8, "tbAddres8");
-		this.tbAddres8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres8.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres8.Image = YYCHR.Properties.Resources.Addr8;
-		this.tbAddres8.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres8.Margin = new Padding(0);
 		this.tbAddres8.Name = "tbAddres8";
 		this.tbAddres8.Tag = "8";
 		this.tbAddres8.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddres9, "tbAddres9");
-		this.tbAddres9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddres9.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddres9.Image = YYCHR.Properties.Resources.Addr9;
-		this.tbAddres9.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddres9.Margin = new Padding(0);
 		this.tbAddres9.Name = "tbAddres9";
 		this.tbAddres9.Tag = "9";
 		this.tbAddres9.Click += new System.EventHandler(ActionAddresChange);
 		resources.ApplyResources(this.tbAddresSep0, "tbAddresSep0");
 		this.tbAddresSep0.Name = "tbAddresSep0";
 		resources.ApplyResources(this.tbAddresInputAddress, "tbAddresInputAddress");
-		this.tbAddresInputAddress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddresInputAddress.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddresInputAddress.Image = YYCHR.Properties.Resources.AddrA;
-		this.tbAddresInputAddress.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddresInputAddress.Margin = new Padding(0);
 		this.tbAddresInputAddress.Name = "tbAddresInputAddress";
 		this.tbAddresInputAddress.Tag = "10";
 		this.tbAddresInputAddress.Click += new System.EventHandler(ActionAddressInputAddress);
 		resources.ApplyResources(this.tbAddressJumpList, "tbAddressJumpList");
-		this.tbAddressJumpList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddressJumpList.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddressJumpList.Image = YYCHR.Properties.Resources.AddrJumpList;
-		this.tbAddressJumpList.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddressJumpList.Margin = new Padding(0);
 		this.tbAddressJumpList.Name = "tbAddressJumpList";
 		this.tbAddressJumpList.Click += new System.EventHandler(ActionAddressJumpList);
 		resources.ApplyResources(this.tbAddressJumpListPrev, "tbAddressJumpListPrev");
-		this.tbAddressJumpListPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddressJumpListPrev.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddressJumpListPrev.Image = YYCHR.Properties.Resources.AddrJumpListPrev;
-		this.tbAddressJumpListPrev.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddressJumpListPrev.Margin = new Padding(0);
 		this.tbAddressJumpListPrev.Name = "tbAddressJumpListPrev";
 		this.tbAddressJumpListPrev.Click += new System.EventHandler(ActionAddressJumpListPrevNext);
 		resources.ApplyResources(this.tbAddressJumpListNext, "tbAddressJumpListNext");
-		this.tbAddressJumpListNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddressJumpListNext.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddressJumpListNext.Image = YYCHR.Properties.Resources.AddrJumpListNext;
-		this.tbAddressJumpListNext.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddressJumpListNext.Margin = new Padding(0);
 		this.tbAddressJumpListNext.Name = "tbAddressJumpListNext";
 		this.tbAddressJumpListNext.Click += new System.EventHandler(ActionAddressJumpListPrevNext);
 		resources.ApplyResources(this.tbAddresSep1, "tbAddresSep1");
 		this.tbAddresSep1.Name = "tbAddresSep1";
 		resources.ApplyResources(this.tbAddressFindPrevious, "tbAddressFindPrevious");
-		this.tbAddressFindPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddressFindPrevious.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddressFindPrevious.Image = YYCHR.Properties.Resources.AddrFindPrev;
-		this.tbAddressFindPrevious.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddressFindPrevious.Margin = new Padding(0);
 		this.tbAddressFindPrevious.Name = "tbAddressFindPrevious";
 		this.tbAddressFindPrevious.Click += new System.EventHandler(ActionAddressFindPrevious);
 		resources.ApplyResources(this.tbAddressFindNext, "tbAddressFindNext");
-		this.tbAddressFindNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbAddressFindNext.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbAddressFindNext.Image = YYCHR.Properties.Resources.AddrFindNext;
-		this.tbAddressFindNext.Margin = new System.Windows.Forms.Padding(0);
+		this.tbAddressFindNext.Margin = new Padding(0);
 		this.tbAddressFindNext.Name = "tbAddressFindNext";
 		this.tbAddressFindNext.Click += new System.EventHandler(ActionAddressFindNext);
-		this.scrollPanelRom.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.scrollPanelRom.BorderStyle = BorderStyle.Fixed3D;
 		this.scrollPanelRom.ClientAreaSize = new System.Drawing.Size(256, 256);
 		this.scrollPanelRom.Controls.Add(this.cellSelectorRom);
 		this.scrollPanelRom.LargeChange = 10;
@@ -5641,8 +5504,8 @@ public class MainForm : Form
 		this.scrollPanelRom.Value = 0;
 		this.scrollPanelRom.WheelRate = 4;
 		this.scrollPanelRom.Scrolled += new System.EventHandler(scrollPanelRom_Scrolled);
-		this.scrollPanelRom.KeyDown += new System.Windows.Forms.KeyEventHandler(scrollPanel_KeyDown);
-		this.scrollPanelRom.WheelSizeChange += new System.Windows.Forms.MouseEventHandler(ActionBankWheelSizeChange);
+		this.scrollPanelRom.KeyDown += new KeyEventHandler(scrollPanel_KeyDown);
+		this.scrollPanelRom.WheelSizeChange += new MouseEventHandler(ActionBankWheelSizeChange);
 		this.cellSelectorRom.DefaultSelectSize = new System.Drawing.Size(16, 16);
 		this.cellSelectorRom.EnableRightDragSelect = true;
 		this.cellSelectorRom.FreeSelect = false;
@@ -5660,14 +5523,14 @@ public class MainForm : Form
 		this.cellSelectorRom.SelectedRect = new System.Drawing.Rectangle(8, 8, 16, 16);
 		this.cellSelectorRom.TabStop = false;
 		this.cellSelectorRom.ZoomRate = 2;
-		this.cellSelectorRom.Selected += new System.Windows.Forms.MouseEventHandler(cellSelector_Selected);
+		this.cellSelectorRom.Selected += new MouseEventHandler(cellSelector_Selected);
 		this.cellSelectorRom.MouseEnter += new System.EventHandler(ActionControlNavigationUpdate_MouseEnter);
 		this.cellSelectorRom.MouseLeave += new System.EventHandler(ActionControlNavigationUpdate_MouseLeave);
 		this.tabPageBitmap.BackColor = System.Drawing.SystemColors.Control;
 		this.tabPageBitmap.Controls.Add(this.scrollPanelBmp);
 		resources.ApplyResources(this.tabPageBitmap, "tabPageBitmap");
 		this.tabPageBitmap.Name = "tabPageBitmap";
-		this.scrollPanelBmp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.scrollPanelBmp.BorderStyle = BorderStyle.Fixed3D;
 		this.scrollPanelBmp.ClientAreaSize = new System.Drawing.Size(576, 576);
 		this.scrollPanelBmp.Controls.Add(this.cellSelectorBmp);
 		this.scrollPanelBmp.LargeChange = 10;
@@ -5675,8 +5538,8 @@ public class MainForm : Form
 		this.scrollPanelBmp.Name = "scrollPanelBmp";
 		this.scrollPanelBmp.SmallChange = 8;
 		this.scrollPanelBmp.WheelRate = 4;
-		this.scrollPanelBmp.WheelSizeChange += new System.Windows.Forms.MouseEventHandler(ActionBankWheelSizeChange);
-		this.scrollPanelBmp.KeyDown += new System.Windows.Forms.KeyEventHandler(scrollPanel_KeyDown);
+		this.scrollPanelBmp.WheelSizeChange += new MouseEventHandler(ActionBankWheelSizeChange);
+		this.scrollPanelBmp.KeyDown += new KeyEventHandler(scrollPanel_KeyDown);
 		this.cellSelectorBmp.DefaultSelectSize = new System.Drawing.Size(16, 16);
 		this.cellSelectorBmp.EnableRightDragSelect = true;
 		this.cellSelectorBmp.FreeSelect = false;
@@ -5694,14 +5557,14 @@ public class MainForm : Form
 		this.cellSelectorBmp.SelectedRect = new System.Drawing.Rectangle(0, 0, 16, 16);
 		this.cellSelectorBmp.TabStop = false;
 		this.cellSelectorBmp.ZoomRate = 2;
-		this.cellSelectorBmp.Selected += new System.Windows.Forms.MouseEventHandler(cellSelector_Selected);
+		this.cellSelectorBmp.Selected += new MouseEventHandler(cellSelector_Selected);
 		this.cellSelectorBmp.MouseEnter += new System.EventHandler(ActionControlNavigationUpdate_MouseEnter);
 		this.cellSelectorBmp.MouseLeave += new System.EventHandler(ActionControlNavigationUpdate_MouseLeave);
 		this.tabWorkSpace.Controls.Add(this.panelWorkSpace);
 		resources.ApplyResources(this.tabWorkSpace, "tabWorkSpace");
 		this.tabWorkSpace.Name = "tabWorkSpace";
 		this.tabWorkSpace.UseVisualStyleBackColor = true;
-		this.panelWorkSpace.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.panelWorkSpace.BorderStyle = BorderStyle.Fixed3D;
 		this.panelWorkSpace.Controls.Add(this.workSpaceSelector1);
 		resources.ApplyResources(this.panelWorkSpace, "panelWorkSpace");
 		this.panelWorkSpace.Name = "panelWorkSpace";
@@ -5725,7 +5588,7 @@ public class MainForm : Form
 		this.workSpaceSelector1.SelectedRect = new System.Drawing.Rectangle(0, 0, 16, 16);
 		this.workSpaceSelector1.TabStop = false;
 		this.workSpaceSelector1.ZoomRate = 2;
-		this.workSpaceSelector1.Selected += new System.Windows.Forms.MouseEventHandler(cellSelector_Selected);
+		this.workSpaceSelector1.Selected += new MouseEventHandler(cellSelector_Selected);
 		this.rightPanel.Controls.Add(this.panelPalette);
 		this.rightPanel.Controls.Add(this.panelEdit);
 		resources.ApplyResources(this.rightPanel, "rightPanel");
@@ -5736,45 +5599,45 @@ public class MainForm : Form
 		resources.ApplyResources(this.panelPalette, "panelPalette");
 		this.panelPalette.Name = "panelPalette";
 		resources.ApplyResources(this.toolStripPalette, "toolStripPalette");
-		this.toolStripPalette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-		this.toolStripPalette.Items.AddRange(new System.Windows.Forms.ToolStripItem[5] { this.tbPaletteTypeDat, this.tbPaletteTypePal, this.tbPaletteTypeBmp, this.tbPaletteSep1, this.tbPaletteOpenState });
+		this.toolStripPalette.GripStyle = ToolStripGripStyle.Hidden;
+		this.toolStripPalette.Items.AddRange(new ToolStripItem[5] { this.tbPaletteTypeDat, this.tbPaletteTypePal, this.tbPaletteTypeBmp, this.tbPaletteSep1, this.tbPaletteOpenState });
 		this.toolStripPalette.Name = "toolStripPalette";
-		this.toolStripPalette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.toolStripPalette.RenderMode = ToolStripRenderMode.System;
 		resources.ApplyResources(this.tbPaletteTypeDat, "tbPaletteTypeDat");
 		this.tbPaletteTypeDat.Checked = true;
 		this.tbPaletteTypeDat.CheckOnClick = true;
-		this.tbPaletteTypeDat.CheckState = System.Windows.Forms.CheckState.Checked;
-		this.tbPaletteTypeDat.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbPaletteTypeDat.CheckState = CheckState.Checked;
+		this.tbPaletteTypeDat.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbPaletteTypeDat.Image = YYCHR.Properties.Resources.PaletteTypePalTable;
-		this.tbPaletteTypeDat.Margin = new System.Windows.Forms.Padding(0);
+		this.tbPaletteTypeDat.Margin = new Padding(0);
 		this.tbPaletteTypeDat.Name = "tbPaletteTypeDat";
 		this.tbPaletteTypeDat.Tag = "0";
 		this.tbPaletteTypeDat.Click += new System.EventHandler(ActionPaletteType);
 		resources.ApplyResources(this.tbPaletteTypePal, "tbPaletteTypePal");
 		this.tbPaletteTypePal.CheckOnClick = true;
-		this.tbPaletteTypePal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbPaletteTypePal.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbPaletteTypePal.Image = YYCHR.Properties.Resources.PaletteTypePal;
-		this.tbPaletteTypePal.Margin = new System.Windows.Forms.Padding(0);
+		this.tbPaletteTypePal.Margin = new Padding(0);
 		this.tbPaletteTypePal.Name = "tbPaletteTypePal";
 		this.tbPaletteTypePal.Tag = "1";
 		this.tbPaletteTypePal.Click += new System.EventHandler(ActionPaletteType);
 		resources.ApplyResources(this.tbPaletteTypeBmp, "tbPaletteTypeBmp");
 		this.tbPaletteTypeBmp.CheckOnClick = true;
-		this.tbPaletteTypeBmp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbPaletteTypeBmp.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbPaletteTypeBmp.Image = YYCHR.Properties.Resources.PaletteTypeBmp;
-		this.tbPaletteTypeBmp.Margin = new System.Windows.Forms.Padding(0);
+		this.tbPaletteTypeBmp.Margin = new Padding(0);
 		this.tbPaletteTypeBmp.Name = "tbPaletteTypeBmp";
 		this.tbPaletteTypeBmp.Tag = "2";
 		this.tbPaletteTypeBmp.Click += new System.EventHandler(ActionPaletteType);
 		this.tbPaletteSep1.Name = "tbPaletteSep1";
 		resources.ApplyResources(this.tbPaletteSep1, "tbPaletteSep1");
 		resources.ApplyResources(this.tbPaletteOpenState, "tbPaletteOpenState");
-		this.tbPaletteOpenState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbPaletteOpenState.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbPaletteOpenState.Image = YYCHR.Properties.Resources.PaletteOpenState;
-		this.tbPaletteOpenState.Margin = new System.Windows.Forms.Padding(0);
+		this.tbPaletteOpenState.Margin = new Padding(0);
 		this.tbPaletteOpenState.Name = "tbPaletteOpenState";
 		this.tbPaletteOpenState.Click += new System.EventHandler(ActionPaletteLoadEmulatorState);
-		this.palPaletteSelector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.palPaletteSelector.BorderStyle = BorderStyle.Fixed3D;
 		this.palPaletteSelector.CellColumnCount = 16;
 		this.palPaletteSelector.CellColumnView = 16;
 		this.palPaletteSelector.CellHeight = 16;
@@ -5786,275 +5649,21 @@ public class MainForm : Form
 		this.palPaletteSelector.LabelItem = ControlLib.LabelItem.Index;
 		this.palPaletteSelector.LabelStyle = ControlLib.LabelStyle.Selected;
 		this.palPaletteSelector.Name = "palPaletteSelector";
-		this.palPaletteSelector.Palette = new System.Drawing.Color[256]
-		{
-			System.Drawing.Color.White,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty
-		};
-		this.palPaletteSelector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+		this.palPaletteSelector.Palette = new System.Drawing.Color[256];
+		this.palPaletteSelector.Palette[0] = Color.White;
+		for (int i = 1; i < 256; ++i)
+			this.palPaletteSelector.Palette[i] = Color.Empty;
+
+		this.palPaletteSelector.ScrollBars = ScrollBars.Vertical;
 		this.palPaletteSelector.SelectedIndex = 0;
 		this.palPaletteSelector.SetSize = 0;
 		this.palPaletteSelector.ShowSetRect = true;
 		this.palPaletteSelector.OnPaletteSelect += new ControlLib.PaletteSelector.OnPaletteSelectHandler(ActionPalPaletteSelected);
 		this.palPaletteSelector.PopupEditor += new System.EventHandler(ActionPopupRgbEditorFromPal);
-		this.palPaletteSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(ActionPaletteSelector_MouseDown);
+		this.palPaletteSelector.MouseDown += new MouseEventHandler(ActionPaletteSelector_MouseDown);
 		this.palPaletteSelector.MouseEnter += new System.EventHandler(ActionControlNavigationUpdate_MouseEnter);
 		this.palPaletteSelector.MouseLeave += new System.EventHandler(ActionControlNavigationUpdate_MouseLeave);
-		this.datPaletteSelector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.datPaletteSelector.BorderStyle = BorderStyle.Fixed3D;
 		this.datPaletteSelector.CellColumnCount = 16;
 		this.datPaletteSelector.CellColumnView = 16;
 		this.datPaletteSelector.CellHeight = 16;
@@ -6066,273 +5675,19 @@ public class MainForm : Form
 		this.datPaletteSelector.LabelItem = ControlLib.LabelItem.LabelsProperty;
 		this.datPaletteSelector.LabelStyle = ControlLib.LabelStyle.SelectedAll;
 		this.datPaletteSelector.Name = "datPaletteSelector";
-		this.datPaletteSelector.Palette = new System.Drawing.Color[256]
-		{
-			System.Drawing.Color.White,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty,
-			System.Drawing.Color.Empty
-		};
-		this.datPaletteSelector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+		this.datPaletteSelector.Palette = new System.Drawing.Color[256];
+		this.datPaletteSelector.Palette[0] = Color.White;
+		for (int i = 1; i < 256; ++i)
+			this.datPaletteSelector.Palette[i] = Color.Empty;
+
+		this.datPaletteSelector.ScrollBars = ScrollBars.Vertical;
 		this.datPaletteSelector.SelectedIndex = 0;
 		this.datPaletteSelector.SetSize = 4;
 		this.datPaletteSelector.ShowSetRect = true;
 		this.datPaletteSelector.OnPaletteSelect += new ControlLib.PaletteSelector.OnPaletteSelectHandler(ActionDatPaletteSelected);
 		this.datPaletteSelector.OnPaletteSetChanged += new ControlLib.PaletteSelector.OnPaletteSetChangedHandler(ActionPaletteSetChanged);
 		this.datPaletteSelector.PopupEditor += new System.EventHandler(ActionPopupRgbEditorFromDat);
-		this.datPaletteSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(ActionPaletteSelector_MouseDown);
+		this.datPaletteSelector.MouseDown += new MouseEventHandler(ActionPaletteSelector_MouseDown);
 		this.datPaletteSelector.MouseEnter += new System.EventHandler(ActionControlNavigationUpdate_MouseEnter);
 		this.datPaletteSelector.MouseLeave += new System.EventHandler(ActionControlNavigationUpdate_MouseLeave);
 		this.panelEdit.Controls.Add(this.toolStripPen);
@@ -6340,10 +5695,10 @@ public class MainForm : Form
 		resources.ApplyResources(this.panelEdit, "panelEdit");
 		this.panelEdit.Name = "panelEdit";
 		resources.ApplyResources(this.toolStripPen, "toolStripPen");
-		this.toolStripPen.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+		this.toolStripPen.GripStyle = ToolStripGripStyle.Hidden;
 		this.toolStripPen.Name = "toolStripPen";
-		this.toolStripPen.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-		this.editPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+		this.toolStripPen.RenderMode = ToolStripRenderMode.System;
+		this.editPanel.BorderStyle = BorderStyle.Fixed3D;
 		this.editPanel.ClipboardBitmap = null;
 		this.editPanel.EditFunction = null;
 		this.editPanel.GridColor1 = System.Drawing.Color.FromArgb(128, 255, 255, 255);
@@ -6357,14 +5712,14 @@ public class MainForm : Form
 		this.editPanel.OnEdited += new System.EventHandler(Edited);
 		this.editPanel.OnPicked += new System.EventHandler(editPanel_OnPicked);
 		this.editPanel.OnNaviUpdated += new System.EventHandler(editPanel_OnNaviUpdated);
-		this.editPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(editPanel_MouseDown);
+		this.editPanel.MouseDown += new MouseEventHandler(editPanel_MouseDown);
 		this.editPanel.MouseEnter += new System.EventHandler(ActionControlNavigationUpdate_MouseEnter);
 		this.editPanel.MouseLeave += new System.EventHandler(ActionControlNavigationUpdate_MouseLeave);
-		this.editPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(editPanel_MouseUp);
+		this.editPanel.MouseUp += new MouseEventHandler(editPanel_MouseUp);
 		resources.ApplyResources(this.toolStripMain, "toolStripMain");
 		this.toolStripMain.CanOverflow = false;
-		this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-		this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[31]
+		this.toolStripMain.GripStyle = ToolStripGripStyle.Hidden;
+		this.toolStripMain.Items.AddRange(new ToolStripItem[31]
 		{
 			this.tbFileNew, this.tbFileSep0, this.tbFileOpenRom, this.tbFileSaveRom, this.tbFileOpenBmp, this.tbFileSaveBmp, this.tbFileSep1, this.tbEditCut, this.tbEditCopy, this.tbEditPaste,
 			this.tbEditClear, this.tbEditSep0, this.tbEditUndo, this.tbEditRedo, this.tbEditSep1, this.tbEditMirrorHorizontal, this.tbEditMirrorVertical, this.tbEditRotateLeft, this.tbEditRotateRight, this.tbEditShiftUp,
@@ -6372,188 +5727,188 @@ public class MainForm : Form
 			this.tbOptionExecuteFile
 		});
 		this.toolStripMain.Name = "toolStripMain";
-		this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.toolStripMain.RenderMode = ToolStripRenderMode.System;
 		this.toolStripMain.Stretch = true;
 		resources.ApplyResources(this.tbFileNew, "tbFileNew");
-		this.tbFileNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileNew.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileNew.Image = YYCHR.Properties.Resources.FileNew;
-		this.tbFileNew.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileNew.Margin = new Padding(0);
 		this.tbFileNew.Name = "tbFileNew";
 		this.tbFileNew.Click += new System.EventHandler(ActionFileNew);
 		this.tbFileSep0.Name = "tbFileSep0";
 		resources.ApplyResources(this.tbFileSep0, "tbFileSep0");
 		resources.ApplyResources(this.tbFileOpenRom, "tbFileOpenRom");
-		this.tbFileOpenRom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileOpenRom.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileOpenRom.Image = YYCHR.Properties.Resources.FileOpen;
-		this.tbFileOpenRom.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileOpenRom.Margin = new Padding(0);
 		this.tbFileOpenRom.Name = "tbFileOpenRom";
 		this.tbFileOpenRom.Click += new System.EventHandler(ActionFileOpen);
 		resources.ApplyResources(this.tbFileSaveRom, "tbFileSaveRom");
-		this.tbFileSaveRom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileSaveRom.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileSaveRom.Image = YYCHR.Properties.Resources.FileSave;
-		this.tbFileSaveRom.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileSaveRom.Margin = new Padding(0);
 		this.tbFileSaveRom.Name = "tbFileSaveRom";
 		this.tbFileSaveRom.Click += new System.EventHandler(ActionFileSave);
 		resources.ApplyResources(this.tbFileOpenBmp, "tbFileOpenBmp");
-		this.tbFileOpenBmp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileOpenBmp.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileOpenBmp.Image = YYCHR.Properties.Resources.FileOpenBmp;
-		this.tbFileOpenBmp.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileOpenBmp.Margin = new Padding(0);
 		this.tbFileOpenBmp.Name = "tbFileOpenBmp";
 		this.tbFileOpenBmp.Click += new System.EventHandler(ActionFileOpenBitmap);
 		resources.ApplyResources(this.tbFileSaveBmp, "tbFileSaveBmp");
-		this.tbFileSaveBmp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileSaveBmp.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileSaveBmp.Image = YYCHR.Properties.Resources.FileSaveBmp;
-		this.tbFileSaveBmp.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileSaveBmp.Margin = new Padding(0);
 		this.tbFileSaveBmp.Name = "tbFileSaveBmp";
 		this.tbFileSaveBmp.Click += new System.EventHandler(ActionFileSaveBitmap);
 		this.tbFileSep1.Name = "tbFileSep1";
 		resources.ApplyResources(this.tbFileSep1, "tbFileSep1");
 		resources.ApplyResources(this.tbEditCut, "tbEditCut");
-		this.tbEditCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditCut.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditCut.Image = YYCHR.Properties.Resources.EditCut;
-		this.tbEditCut.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditCut.Margin = new Padding(0);
 		this.tbEditCut.Name = "tbEditCut";
 		this.tbEditCut.Click += new System.EventHandler(ActionEditCut);
 		resources.ApplyResources(this.tbEditCopy, "tbEditCopy");
-		this.tbEditCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditCopy.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditCopy.Image = YYCHR.Properties.Resources.EditCopy;
-		this.tbEditCopy.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditCopy.Margin = new Padding(0);
 		this.tbEditCopy.Name = "tbEditCopy";
 		this.tbEditCopy.Click += new System.EventHandler(ActionEditCopy);
 		resources.ApplyResources(this.tbEditPaste, "tbEditPaste");
-		this.tbEditPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditPaste.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditPaste.Image = YYCHR.Properties.Resources.EditPaste;
-		this.tbEditPaste.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditPaste.Margin = new Padding(0);
 		this.tbEditPaste.Name = "tbEditPaste";
 		this.tbEditPaste.Click += new System.EventHandler(ActionEditPaste);
 		resources.ApplyResources(this.tbEditClear, "tbEditClear");
-		this.tbEditClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditClear.Image = YYCHR.Properties.Resources.EditDelete;
-		this.tbEditClear.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditClear.Margin = new Padding(0);
 		this.tbEditClear.Name = "tbEditClear";
 		this.tbEditClear.Click += new System.EventHandler(ActionEditClear);
 		this.tbEditSep0.Name = "tbEditSep0";
 		resources.ApplyResources(this.tbEditSep0, "tbEditSep0");
 		resources.ApplyResources(this.tbEditUndo, "tbEditUndo");
-		this.tbEditUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditUndo.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditUndo.Image = YYCHR.Properties.Resources.EditUndo;
-		this.tbEditUndo.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditUndo.Margin = new Padding(0);
 		this.tbEditUndo.Name = "tbEditUndo";
 		this.tbEditUndo.Click += new System.EventHandler(ActionEditUndo);
 		resources.ApplyResources(this.tbEditRedo, "tbEditRedo");
-		this.tbEditRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditRedo.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditRedo.Image = YYCHR.Properties.Resources.EditRedo;
-		this.tbEditRedo.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditRedo.Margin = new Padding(0);
 		this.tbEditRedo.Name = "tbEditRedo";
 		this.tbEditRedo.Click += new System.EventHandler(ActionEditRedo);
 		this.tbEditSep1.Name = "tbEditSep1";
 		resources.ApplyResources(this.tbEditSep1, "tbEditSep1");
 		resources.ApplyResources(this.tbEditMirrorHorizontal, "tbEditMirrorHorizontal");
-		this.tbEditMirrorHorizontal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditMirrorHorizontal.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditMirrorHorizontal.Image = YYCHR.Properties.Resources.EditMirrorH;
-		this.tbEditMirrorHorizontal.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditMirrorHorizontal.Margin = new Padding(0);
 		this.tbEditMirrorHorizontal.Name = "tbEditMirrorHorizontal";
 		this.tbEditMirrorHorizontal.Click += new System.EventHandler(ActionEditMirror);
 		resources.ApplyResources(this.tbEditMirrorVertical, "tbEditMirrorVertical");
-		this.tbEditMirrorVertical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditMirrorVertical.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditMirrorVertical.Image = YYCHR.Properties.Resources.EditMirrorV;
-		this.tbEditMirrorVertical.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditMirrorVertical.Margin = new Padding(0);
 		this.tbEditMirrorVertical.Name = "tbEditMirrorVertical";
 		this.tbEditMirrorVertical.Click += new System.EventHandler(ActionEditMirror);
 		resources.ApplyResources(this.tbEditRotateLeft, "tbEditRotateLeft");
-		this.tbEditRotateLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditRotateLeft.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditRotateLeft.Image = YYCHR.Properties.Resources.EditRotateL;
-		this.tbEditRotateLeft.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditRotateLeft.Margin = new Padding(0);
 		this.tbEditRotateLeft.Name = "tbEditRotateLeft";
 		this.tbEditRotateLeft.Click += new System.EventHandler(ActionEditRotate);
 		resources.ApplyResources(this.tbEditRotateRight, "tbEditRotateRight");
-		this.tbEditRotateRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditRotateRight.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditRotateRight.Image = YYCHR.Properties.Resources.EditRotateR;
-		this.tbEditRotateRight.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditRotateRight.Margin = new Padding(0);
 		this.tbEditRotateRight.Name = "tbEditRotateRight";
 		this.tbEditRotateRight.Click += new System.EventHandler(ActionEditRotate);
 		resources.ApplyResources(this.tbEditShiftUp, "tbEditShiftUp");
-		this.tbEditShiftUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditShiftUp.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditShiftUp.Image = YYCHR.Properties.Resources.EditShiftU;
-		this.tbEditShiftUp.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditShiftUp.Margin = new Padding(0);
 		this.tbEditShiftUp.Name = "tbEditShiftUp";
 		this.tbEditShiftUp.Click += new System.EventHandler(ActionEditShift);
 		resources.ApplyResources(this.tbEditShiftDown, "tbEditShiftDown");
-		this.tbEditShiftDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditShiftDown.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditShiftDown.Image = YYCHR.Properties.Resources.EditShiftD;
-		this.tbEditShiftDown.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditShiftDown.Margin = new Padding(0);
 		this.tbEditShiftDown.Name = "tbEditShiftDown";
 		this.tbEditShiftDown.Click += new System.EventHandler(ActionEditShift);
 		resources.ApplyResources(this.tbEditShiftLeft, "tbEditShiftLeft");
-		this.tbEditShiftLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditShiftLeft.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditShiftLeft.Image = YYCHR.Properties.Resources.EditShiftL;
-		this.tbEditShiftLeft.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditShiftLeft.Margin = new Padding(0);
 		this.tbEditShiftLeft.Name = "tbEditShiftLeft";
 		this.tbEditShiftLeft.Click += new System.EventHandler(ActionEditShift);
 		resources.ApplyResources(this.tbEditShiftRight, "tbEditShiftRight");
-		this.tbEditShiftRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditShiftRight.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditShiftRight.Image = YYCHR.Properties.Resources.EditShiftR;
-		this.tbEditShiftRight.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditShiftRight.Margin = new Padding(0);
 		this.tbEditShiftRight.Name = "tbEditShiftRight";
 		this.tbEditShiftRight.Click += new System.EventHandler(ActionEditShift);
 		this.tbEditSep2.Name = "tbEditSep2";
 		resources.ApplyResources(this.tbEditSep2, "tbEditSep2");
 		resources.ApplyResources(this.tbEditReplaceColor, "tbEditReplaceColor");
-		this.tbEditReplaceColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbEditReplaceColor.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbEditReplaceColor.Image = YYCHR.Properties.Resources.EditParetteReplace;
-		this.tbEditReplaceColor.Margin = new System.Windows.Forms.Padding(0);
+		this.tbEditReplaceColor.Margin = new Padding(0);
 		this.tbEditReplaceColor.Name = "tbEditReplaceColor";
 		this.tbEditReplaceColor.Click += new System.EventHandler(ActionEditReplaceColor);
 		this.tbEditSep3.Name = "tbEditSep3";
 		resources.ApplyResources(this.tbEditSep3, "tbEditSep3");
 		resources.ApplyResources(this.tbPaletteLoadEmulatorState, "tbPaletteLoadEmulatorState");
-		this.tbPaletteLoadEmulatorState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbPaletteLoadEmulatorState.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbPaletteLoadEmulatorState.Image = YYCHR.Properties.Resources.PaletteOpenState;
-		this.tbPaletteLoadEmulatorState.Margin = new System.Windows.Forms.Padding(0);
+		this.tbPaletteLoadEmulatorState.Margin = new Padding(0);
 		this.tbPaletteLoadEmulatorState.Name = "tbPaletteLoadEmulatorState";
 		this.tbPaletteLoadEmulatorState.Click += new System.EventHandler(ActionPaletteLoadEmulatorState);
 		this.tbPaletteSep0.Name = "tbPaletteSep0";
 		resources.ApplyResources(this.tbPaletteSep0, "tbPaletteSep0");
 		resources.ApplyResources(this.tbFileQuickSaveBitmap, "tbFileQuickSaveBitmap");
-		this.tbFileQuickSaveBitmap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbFileQuickSaveBitmap.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbFileQuickSaveBitmap.Image = YYCHR.Properties.Resources.FileSaveBmp;
-		this.tbFileQuickSaveBitmap.Margin = new System.Windows.Forms.Padding(0);
+		this.tbFileQuickSaveBitmap.Margin = new Padding(0);
 		this.tbFileQuickSaveBitmap.Name = "tbFileQuickSaveBitmap";
 		this.tbFileQuickSaveBitmap.Click += new System.EventHandler(ActionFileQuickSaveBitmap);
 		this.tbFileSep3.Name = "tbFileSep3";
 		resources.ApplyResources(this.tbFileSep3, "tbFileSep3");
-		this.tbOptionExecuteFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbOptionExecuteFile.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbOptionExecuteFile.Image = YYCHR.Properties.Resources.EtcShortcut;
 		resources.ApplyResources(this.tbOptionExecuteFile, "tbOptionExecuteFile");
 		this.tbOptionExecuteFile.Name = "tbOptionExecuteFile";
 		this.tbOptionExecuteFile.Click += new System.EventHandler(ActionOptionRunFile);
 		resources.ApplyResources(this.tbWorkspaceLoad, "tbWorkspaceLoad");
-		this.tbWorkspaceLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbWorkspaceLoad.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbWorkspaceLoad.Image = YYCHR.Properties.Resources.FileOpen;
-		this.tbWorkspaceLoad.Margin = new System.Windows.Forms.Padding(0);
+		this.tbWorkspaceLoad.Margin = new Padding(0);
 		this.tbWorkspaceLoad.Name = "tbWorkspaceLoad";
 		this.tbWorkspaceLoad.Click += new System.EventHandler(ActionWorkspaceLoad);
 		resources.ApplyResources(this.tbWorkspaceSave, "tbWorkspaceSave");
-		this.tbWorkspaceSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbWorkspaceSave.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbWorkspaceSave.Image = YYCHR.Properties.Resources.FileSave;
-		this.tbWorkspaceSave.Margin = new System.Windows.Forms.Padding(0);
+		this.tbWorkspaceSave.Margin = new Padding(0);
 		this.tbWorkspaceSave.Name = "tbWorkspaceSave";
 		this.tbWorkspaceSave.Click += new System.EventHandler(ActionWorkspaceSave);
 		resources.ApplyResources(this.tbWorkspaceRemovePattern, "tbWorkspaceRemovePattern");
-		this.tbWorkspaceRemovePattern.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbWorkspaceRemovePattern.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbWorkspaceRemovePattern.Image = YYCHR.Properties.Resources.EditDelete;
-		this.tbWorkspaceRemovePattern.Margin = new System.Windows.Forms.Padding(0);
+		this.tbWorkspaceRemovePattern.Margin = new Padding(0);
 		this.tbWorkspaceRemovePattern.Name = "tbWorkspaceRemovePattern";
 		this.tbWorkspaceRemovePattern.Click += new System.EventHandler(ActionWorkspaceRemove);
 		resources.ApplyResources(this.tbWorkspaceAdd, "tbWorkspaceAdd");
-		this.tbWorkspaceAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+		this.tbWorkspaceAdd.DisplayStyle = ToolStripItemDisplayStyle.Image;
 		this.tbWorkspaceAdd.Image = YYCHR.Properties.Resources.PenStomp;
-		this.tbWorkspaceAdd.Margin = new System.Windows.Forms.Padding(0);
+		this.tbWorkspaceAdd.Margin = new Padding(0);
 		this.tbWorkspaceAdd.Name = "tbWorkspaceAdd";
 		this.tbWorkspaceAdd.Click += new System.EventHandler(ActionWorkspaceAdd);
 		this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
 		resources.ApplyResources(this.configurationToolStripMenuItem, "configurationToolStripMenuItem");
-		this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[1] { this.configurationToolStripMenuItem });
+		this.optionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[1] { this.configurationToolStripMenuItem });
 		this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
 		resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
 		this.openBitmapDialog.DefaultExt = "bmp";
@@ -6563,11 +5918,11 @@ public class MainForm : Form
 		this.openFileDialog.DefaultExt = "chr";
 		resources.ApplyResources(this.openFileDialog, "openFileDialog");
 		resources.ApplyResources(this.menuStripMain, "menuStripMain");
-		this.menuStripMain.GripMargin = new System.Windows.Forms.Padding(2, 0, 0, 0);
-		this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[8] { this.miFile, this.miEdit, this.miAddress, this.miPen, this.miPalette, this.miOption, this.miHelp, this.miOptionLanguage });
+		this.menuStripMain.GripMargin = new Padding(2, 0, 0, 0);
+		this.menuStripMain.Items.AddRange(new ToolStripItem[8] { this.miFile, this.miEdit, this.miAddress, this.miPen, this.miPalette, this.miOption, this.miHelp, this.miOptionLanguage });
 		this.menuStripMain.Name = "menuStripMain";
-		this.menuStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-		this.miFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[11]
+		this.menuStripMain.RenderMode = ToolStripRenderMode.System;
+		this.miFile.DropDownItems.AddRange(new ToolStripItem[11]
 		{
 			this.miFileNew, this.miFileOpenRom, this.miFileReload, this.miFileSaveRom, this.miFileSaveAsRom, this.miFileSep1, this.miFileOpenBmp, this.miFileSaveBmp, this.miFileQuickSaveBitmap, this.miFileSep2,
 			this.miFileExit
@@ -6613,7 +5968,7 @@ public class MainForm : Form
 		resources.ApplyResources(this.miFileExit, "miFileExit");
 		this.miFileExit.Name = "miFileExit";
 		this.miFileExit.Click += new System.EventHandler(ActionFileExit);
-		this.miEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[24]
+		this.miEdit.DropDownItems.AddRange(new ToolStripItem[24]
 		{
 			this.miEditUndo, this.miEditRedo, this.miEditSep0, this.miEditCut, this.miEditCopy, this.miEditPaste, this.miEditPasteOptimizedImage, this.miEditClear, this.miEditSelectAll, this.miEditSep1,
 			this.miEditClearClipboard, this.miEditSep2, this.miEditMirrorHorizontal, this.miEditMirrorVertical, this.miEditSep3, this.miEditRotateLeft, this.miEditRotateRight, this.miEditSep4, this.miEditShiftUp, this.miEditShiftDown,
@@ -6703,7 +6058,7 @@ public class MainForm : Form
 		resources.ApplyResources(this.miEditReplaceColor, "miEditReplaceColor");
 		this.miEditReplaceColor.Name = "miEditReplaceColor";
 		this.miEditReplaceColor.Click += new System.EventHandler(ActionEditReplaceColor);
-		this.miAddress.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[15]
+		this.miAddress.DropDownItems.AddRange(new ToolStripItem[15]
 		{
 			this.miAddress0, this.miAddress1, this.miAddress2, this.miAddress3, this.miAddress4, this.miAddress5, this.miAddress6, this.miAddress7, this.miAddress8, this.miAddress9,
 			this.miAddressSep0, this.miAddressInputAddress, this.miAddressSep1, this.miAddressFindPrevious, this.miAddressFindNext
@@ -6779,7 +6134,7 @@ public class MainForm : Form
 		this.miAddressFindNext.Click += new System.EventHandler(ActionAddressFindNext);
 		this.miPen.Name = "miPen";
 		resources.ApplyResources(this.miPen, "miPen");
-		this.miPalette.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[21]
+		this.miPalette.DropDownItems.AddRange(new ToolStripItem[21]
 		{
 			this.miPalettePaletteType, this.miPaletteSelectPalette, this.miPaletteSep0, this.miPaletteLoadEmulatorState, this.miPaletteSep1, this.miPalettePalOpen, this.miPaletteLoadRGBPaletteFromCommon, this.miPalettePalSave, this.miPaletteQuickSaveRGBPalette, this.miPaletteSep2,
 			this.miPaletteDatOpen, this.miPaletteLoadPaletteTableFromCommon, this.miPaletteDatSave, this.miPaletteQuickSavePaletteTable, this.miPaletteSep3, this.miPaletteOpenADF, this.miPaletteLoadADFPatternFromCommon, this.miPaletteSaveADF, this.miPaletteQuickSaveADFPattern, this.miPaletteSep4,
@@ -6787,7 +6142,7 @@ public class MainForm : Form
 		});
 		this.miPalette.Name = "miPalette";
 		resources.ApplyResources(this.miPalette, "miPalette");
-		this.miPalettePaletteType.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[3] { this.miPaletteTypeDat, this.miPaletteTypePal, this.miPaletteTypeBmp });
+		this.miPalettePaletteType.DropDownItems.AddRange(new ToolStripItem[3] { this.miPaletteTypeDat, this.miPaletteTypePal, this.miPaletteTypeBmp });
 		this.miPalettePaletteType.Name = "miPalettePaletteType";
 		resources.ApplyResources(this.miPalettePaletteType, "miPalettePaletteType");
 		this.miPaletteTypeDat.Image = YYCHR.Properties.Resources.PaletteTypePalTable;
@@ -6805,7 +6160,7 @@ public class MainForm : Form
 		this.miPaletteTypeBmp.Name = "miPaletteTypeBmp";
 		this.miPaletteTypeBmp.Tag = "2";
 		this.miPaletteTypeBmp.Click += new System.EventHandler(ActionPaletteType);
-		this.miPaletteSelectPalette.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[19]
+		this.miPaletteSelectPalette.DropDownItems.AddRange(new ToolStripItem[19]
 		{
 			this.miPalettePrev, this.miPaletteNext, this.miPaletteSelectSep0, this.miPaletteSelect0, this.miPaletteSelect1, this.miPaletteSelect2, this.miPaletteSelect3, this.miPaletteSelect4, this.miPaletteSelect5, this.miPaletteSelect6,
 			this.miPaletteSelect7, this.miPaletteSelect8, this.miPaletteSelect9, this.miPaletteSelectA, this.miPaletteSelectB, this.miPaletteSelectC, this.miPaletteSelectD, this.miPaletteSelectE, this.miPaletteSelectF
@@ -6946,7 +6301,7 @@ public class MainForm : Form
 		this.miPaletteLoadDefaultSetting.Name = "miPaletteLoadDefaultSetting";
 		resources.ApplyResources(this.miPaletteLoadDefaultSetting, "miPaletteLoadDefaultSetting");
 		this.miPaletteLoadDefaultSetting.Click += new System.EventHandler(actionPaletteLoadDefault);
-		this.miOption.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[4] { this.miOptionSetting, this.miOptionShowAllMenu, this.miOptionSep0, this.miOptionExecuteFile });
+		this.miOption.DropDownItems.AddRange(new ToolStripItem[4] { this.miOptionSetting, this.miOptionShowAllMenu, this.miOptionSep0, this.miOptionExecuteFile });
 		this.miOption.Name = "miOption";
 		resources.ApplyResources(this.miOption, "miOption");
 		this.miOptionSetting.Image = YYCHR.Properties.Resources.IconOptionSetting;
@@ -6963,7 +6318,7 @@ public class MainForm : Form
 		resources.ApplyResources(this.miOptionExecuteFile, "miOptionExecuteFile");
 		this.miOptionExecuteFile.Name = "miOptionExecuteFile";
 		this.miOptionExecuteFile.Click += new System.EventHandler(ActionOptionRunFile);
-		this.miHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[8] { this.miHelpOpenWiki, this.miHelpSep0, this.miHelpOpenWebsite, this.miHelpReportBugs, this.miHelpSep1, this.miHelpPropertyEditor, this.miHelpSep2, this.miHelpAbout });
+		this.miHelp.DropDownItems.AddRange(new ToolStripItem[8] { this.miHelpOpenWiki, this.miHelpSep0, this.miHelpOpenWebsite, this.miHelpReportBugs, this.miHelpSep1, this.miHelpPropertyEditor, this.miHelpSep2, this.miHelpAbout });
 		this.miHelp.Name = "miHelp";
 		resources.ApplyResources(this.miHelp, "miHelp");
 		resources.ApplyResources(this.miHelpOpenWiki, "miHelpOpenWiki");
@@ -6991,7 +6346,7 @@ public class MainForm : Form
 		resources.ApplyResources(this.miHelpAbout, "miHelpAbout");
 		this.miHelpAbout.Name = "miHelpAbout";
 		this.miHelpAbout.Click += new System.EventHandler(ActionHelpAbout);
-		this.miOptionLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[9] { this.miLanguageSystem, this.miLanguageSep0, this.miLanguageEnglish, this.miLanguageJapanese, this.miLanguageSep1, this.miLanguageLngFile, this.miLanguageSep2, this.miLanguageSettingAutoLoadLng, this.miLanguageExportLng });
+		this.miOptionLanguage.DropDownItems.AddRange(new ToolStripItem[9] { this.miLanguageSystem, this.miLanguageSep0, this.miLanguageEnglish, this.miLanguageJapanese, this.miLanguageSep1, this.miLanguageLngFile, this.miLanguageSep2, this.miLanguageSettingAutoLoadLng, this.miLanguageExportLng });
 		this.miOptionLanguage.Name = "miOptionLanguage";
 		resources.ApplyResources(this.miOptionLanguage, "miOptionLanguage");
 		resources.ApplyResources(this.miLanguageSystem, "miLanguageSystem");
@@ -7023,18 +6378,18 @@ public class MainForm : Form
 		this.miLanguageExportLng.Click += new System.EventHandler(miLanguageOutputLng_Click);
 		this.toolTip.ShowAlways = true;
 		this.popupJumpListMenu.Name = "popupJumpListMenu";
-		this.popupJumpListMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.popupJumpListMenu.RenderMode = ToolStripRenderMode.System;
 		resources.ApplyResources(this.popupJumpListMenu, "popupJumpListMenu");
 		resources.ApplyResources(this.tsWoekSpace, "tsWoekSpace");
-		this.tsWoekSpace.Items.AddRange(new System.Windows.Forms.ToolStripItem[4] { this.tbWorkspaceLoad, this.tbWorkspaceSave, this.tbWorkspaceRemovePattern, this.tbWorkspaceAdd });
+		this.tsWoekSpace.Items.AddRange(new ToolStripItem[4] { this.tbWorkspaceLoad, this.tbWorkspaceSave, this.tbWorkspaceRemovePattern, this.tbWorkspaceAdd });
 		this.tsWoekSpace.Name = "tsWoekSpace";
-		this.tsWoekSpace.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.tsWoekSpace.RenderMode = ToolStripRenderMode.System;
 		this.panelWorkSpaceTS.Controls.Add(this.tsWoekSpace);
 		resources.ApplyResources(this.panelWorkSpaceTS, "panelWorkSpaceTS");
 		this.panelWorkSpaceTS.Name = "panelWorkSpaceTS";
-		this.contextMenuStripChr.Items.AddRange(new System.Windows.Forms.ToolStripItem[5] { this.cmiEditCut, this.cmiEditCopy, this.cmiEditPaste, this.cmiEditClear, this.cmiEditSelectAll });
+		this.contextMenuStripChr.Items.AddRange(new ToolStripItem[5] { this.cmiEditCut, this.cmiEditCopy, this.cmiEditPaste, this.cmiEditClear, this.cmiEditSelectAll });
 		this.contextMenuStripChr.Name = "contextMenuStripChr";
-		this.contextMenuStripChr.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+		this.contextMenuStripChr.RenderMode = ToolStripRenderMode.System;
 		resources.ApplyResources(this.contextMenuStripChr, "contextMenuStripChr");
 		this.cmiEditCut.Image = YYCHR.Properties.Resources.EditCut;
 		resources.ApplyResources(this.cmiEditCut, "cmiEditCut");
@@ -7059,11 +6414,11 @@ public class MainForm : Form
 		this.lVersion.ForeColor = System.Drawing.Color.Red;
 		this.lVersion.Name = "lVersion";
 		this.mFindWorker.WorkerReportsProgress = true;
-		this.mFindWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(mFindWorker_DoWork);
-		this.mFindWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(mFindWorker_ProgressChanged);
-		this.mFindWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(mFindWorker_RunWorkerCompleted);
+		this.mFindWorker.DoWork += new DoWorkEventHandler(mFindWorker_DoWork);
+		this.mFindWorker.ProgressChanged += new ProgressChangedEventHandler(mFindWorker_ProgressChanged);
+		this.mFindWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(mFindWorker_RunWorkerCompleted);
 		this.AllowDrop = true;
-		base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+		base.AutoScaleMode = AutoScaleMode.None;
 		resources.ApplyResources(this, "$this");
 		base.Controls.Add(this.lVersion);
 		base.Controls.Add(this.panelWorkSpaceTS);
@@ -7074,19 +6429,19 @@ public class MainForm : Form
 		base.Controls.Add(this.toolStripView);
 		base.Controls.Add(this.statusStrip);
 		this.DoubleBuffered = true;
-		base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+		base.FormBorderStyle = FormBorderStyle.FixedSingle;
 		base.KeyPreview = true;
 		base.MainMenuStrip = this.menuStripMain;
 		base.MaximizeBox = false;
 		base.Name = "MainForm";
 		base.Activated += new System.EventHandler(MainForm_Activated);
-		base.FormClosing += new System.Windows.Forms.FormClosingEventHandler(MainForm_FormClosing);
-		base.FormClosed += new System.Windows.Forms.FormClosedEventHandler(MainForm_FormClosed);
+		base.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
+		base.FormClosed += new FormClosedEventHandler(MainForm_FormClosed);
 		base.Load += new System.EventHandler(MainForm_Load);
-		base.DragDrop += new System.Windows.Forms.DragEventHandler(MainForm_DragDrop);
-		base.DragEnter += new System.Windows.Forms.DragEventHandler(MainForm_DragEnter);
-		base.KeyDown += new System.Windows.Forms.KeyEventHandler(MainForm_KeyDown);
-		base.KeyUp += new System.Windows.Forms.KeyEventHandler(MainForm_KeyUp);
+		base.DragDrop += new DragEventHandler(MainForm_DragDrop);
+		base.DragEnter += new DragEventHandler(MainForm_DragEnter);
+		base.KeyDown += new KeyEventHandler(MainForm_KeyDown);
+		base.KeyUp += new KeyEventHandler(MainForm_KeyUp);
 		this.toolStripView.ResumeLayout(false);
 		this.toolStripView.PerformLayout();
 		this.statusStrip.ResumeLayout(false);
@@ -7100,27 +6455,30 @@ public class MainForm : Form
 		this.toolStripAddress.ResumeLayout(false);
 		this.toolStripAddress.PerformLayout();
 		this.scrollPanelRom.ResumeLayout(false);
-		((System.ComponentModel.ISupportInitialize)this.cellSelectorRom).EndInit();
+		((ISupportInitialize)this.cellSelectorRom).EndInit();
 		this.tabPageBitmap.ResumeLayout(false);
 		this.scrollPanelBmp.ResumeLayout(false);
-		((System.ComponentModel.ISupportInitialize)this.cellSelectorBmp).EndInit();
+		((ISupportInitialize)this.cellSelectorBmp).EndInit();
 		this.tabWorkSpace.ResumeLayout(false);
 		this.panelWorkSpace.ResumeLayout(false);
-		((System.ComponentModel.ISupportInitialize)this.workSpaceSelector1).EndInit();
+		((ISupportInitialize)this.workSpaceSelector1).EndInit();
 		this.rightPanel.ResumeLayout(false);
 		this.panelPalette.ResumeLayout(false);
 		this.toolStripPalette.ResumeLayout(false);
 		this.toolStripPalette.PerformLayout();
 		this.panelEdit.ResumeLayout(false);
+
 		this.toolStripMain.ResumeLayout(false);
 		this.toolStripMain.PerformLayout();
 		this.menuStripMain.ResumeLayout(false);
 		this.menuStripMain.PerformLayout();
+
 		this.tsWoekSpace.ResumeLayout(false);
 		this.tsWoekSpace.PerformLayout();
 		this.panelWorkSpaceTS.ResumeLayout(false);
 		this.panelWorkSpaceTS.PerformLayout();
 		this.contextMenuStripChr.ResumeLayout(false);
+
 		base.ResumeLayout(false);
 		base.PerformLayout();
 	}
