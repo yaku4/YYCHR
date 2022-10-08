@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IconOptionSetting" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAKgEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAABc1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAAd0SU1FB+MLBAgiFBfNpi8AAACsSURBVDhPtZPRDcIwDEQzWwboGnz2q5OwQGfqAvwwCPeiM40wAtKKk05xzhenSdzyN9RaJ/FuTpY/Q8arOHdxFFitzejECSRshpt46+bEaDHPRSRSPQzf2L4yQYnYhR0Xy+iLNXKb5R0SubC1M7XFGi/QMUWiON79Yp140hqLQ4siydfwLqFxqABH4BV+PQLe3BsSj10iUOLcM0o810iAhHislV8h4/jPNI5SHgwzzPFi8PhbAAAAAElFTkSuQmCCCw==</value>
+  </data>
+  <data name="PenNameFillEllipse">
+    <value>Fill Ellipse</value>
+  </data>
+  <data name="LabelReadOnly">
+    <value>Unable to edit\nFile is ReadOnly</value>
+  </data>
+  <data name="PenNameDrawRect">
+    <value>Draw Rectangle</value>
+  </data>
+  <data name="PenNameSetPalette">
+    <value>ColSet</value>
+  </data>
+  <data name="PenNamePen">
+    <value>Pen</value>
+  </data>
+  <data name="PenIconStamp" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA9AAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB/SURBVDhPpZBRDsAgCEM5++LZ/NmhmCVhqXOg0SYNROEJiorqiQ0g0kJzuUqac6PbACiYOQX4K5m5ib0MWF4BhfWuFrO8A+Cge2kigEKAXf4Id65hAm+GowlSAE8QAVjhCh4hB35zaJiAHf0BKwVsrcAGAAWIWf7We7LrQ4DqA1Pw0UyDl728AAAAAElFTkSuQmCCCw==</value>
+  </data>
+  <data name="PenIconPaint" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA+AAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACDSURBVDhPpY4BDoAgDAN5u/HfkzUUKi4DleQU6HparJj9YSkopY5UosxJBSj6dkfAL3GYZS7NFAgYcgBvWXrmDKnnZ/k8zpB59iZ4UyahwGEhK8v9uJTfWpa3BJoRLbfZEVJAycxcTgUt7ERlzOigBiQrI8cjEThZDgE2iSCjC75hdgEskEugzeKl4gAAAABJRU5ErkJgggs=</value>
+  </data>
+  <data name="PenIconFillEllipse" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAxgAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAABRSURBVDhP7YxJCgAgDAP7/0/H5SCtHQQR8eJhoA2TmEw6AQfMagygmwIoepIfHigQoTMOEFf8gRsD/QGRCB3/9AAKnuTPQYOKDXTnYJfXA1IB5GoOD52cGTUAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="NaviEditL">
+    <value>Draw : %PEN%</value>
+  </data>
+  <data name="NaviEditR">
+    <value>Pickup color</value>
+  </data>
+  <data name="IconFindNext" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAOAEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIAgAAAJCRaDYAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACuSURBVDhPhZHZEcMgDESpjnrySStJHW7En2khTZBFT9EIgpNlZzj0lsMuvfRvt9bKRxrn0hrIaK3VRym2BijfHuf9+cIas+gAHWZ76G7KGQ6ZArZRWWhMyfA5oHsTgNPeHMh7DJ8DEmgOcCXJ8BTIb1gyWt+8YcxMkQlacoAOH8dBDf35D0FnTgoUeyAgDVi58mhXtKaLHDJ4vzel0FjhU25pDCr5VO0HjYPupb8BbDN0LDK6V8EAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="IconFindPrev" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAMgEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIAgAAAJCRaDYAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACoSURBVDhPjZHLEcMgDERVHfXkSCtJHTTiY1pwE2TRI1iQj71oBll6C2Js1epn5JztLeWxtRoimlLqWbCtBtq3x3Z/7oRyih1gIzgeurqih0smgx9kC03Qcnw2aG4McDqbC3mP47NBAo0GRpIcD4b4hsWj+pc3tC/X8Axa6gAbUUqhh07+w6AjJw2U6IYBKaHyK9o6peMlxwB/aAA+24hXaKRKWxfpJrMX8Ht04DqPa9IAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="PenNameLine">
+    <value>Line</value>
+  </data>
+  <data name="NaviEditStampL2">
+    <value>Push stamp (drag)</value>
+  </data>
+  <data name="NaviEditStampL1">
+    <value>Select Stamp area</value>
+  </data>
+  <data name="PenNameFillRect">
+    <value>Fill Rectangle</value>
+  </data>
+  <data name="PenIconPen" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA7gAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB5SURBVDhPpYzBDYAwDAMzO2IVpuHDi3WCHBFU3BQSeByijn2iovqHkkAEH8o4GIHxMs2dJCXw8bavdcHT2O4ctLyNrcOBkxmDUJAdg05QGYOboDoGoSA7BpcAI8ez6NZiNy7xO8I71rt+zgOXPR9hAi9lRy0m+I7qAbfgn7cHjlteAAAAAElFTkSuQmCCCw==</value>
+  </data>
+  <data name="IconFind" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAALwEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIAgAAAJCRaDYAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAClSURBVDhPjZHLEcMgDESpjnpypBWnDhrJMS24CbLoEUWQZMx6Z/joLYhxaql9u5SS3tI8ltZARHPOYxZia4Dy7f44nifWnM0BMGCOh26mmOGSKWAHpYXGlAyfA+qbAJzO5kLeY/gckEBjgJYkw0MgvmHJaP/HG/rK5BmnpQEw4ForNXTxH5yOnOQoHgGHNGHnn/u3T8ufBnZoube4T8ujJV9fOLUXsWqPIF4ucdoAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="IconForm" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA9AEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAFqSURBVDhPpZPNSwJBGIf3P4oOHbp1rUPH6Gx0i6AOBoFEIHYQIigMjJIMEwv6EKwUjFJSCT0YxXYoIs10BTMtdf0Yf83s0q4fQW0eHmaWl3nm/djhwAG9wJn3smjFtJvFwrYA/UYGU2tpCd3yaxvjSymMLr5gcDYhC+wBwHbRhNVPYPE2sOKpw3xUg3G/CoNT7GLOXsbMZgn9k7H2DIwOAfM2AdPr8q1jppTCiCGpMKRPSrf36SLgnCdRWgxASBPVGkG5QlD8bCBXqCOdqyGRFbvWh1QF/HMZA8MT4HbcETQIwPNPCtEo3/bdCYvfPJZkwdZBENV6UwkwXC6fsv8JKX7/IQusrnOURKJZELorygKLw4cCrblT8BuBeEEWrNpPpYZpzcAfe1cFGdpdrYKz67wqSAiiZoEn/KYK2Fy/A3/l+KpFwH6KOJ0rG03otohL2iBWo5em6Qnnu1Y3PXwYzKkCtvkvPT5n4AuKLR28z6y3fAAAAABJRU5ErkJgggs=</value>
+  </data>
+  <data name="PenNameStamp">
+    <value>Stamp</value>
+  </data>
+  <data name="PenNamePaint">
+    <value>Fill</value>
+  </data>
+  <data name="PenIconPatternRect" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAsAAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAA7SURBVDhPY/jP8P8/JXiQGMDAAGaRTIPZcAaRmmA0DI+6AISQBEmlwWw4g0hNMBqGqecCcvGQN+D/fwDmcIeVie88QAAAAABJRU5ErkJgggs=</value>
+  </data>
+  <data name="PenIconSetPalette" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA5wAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAABySURBVDhPtZALCsAwCEN7/0u7RbGEzJV+Nuib5rUIs1kzO4EGILkh1GnG8QadJ6kjFxQDEnZcsw/+GMB15ILNJSY49+eELwcguZGc1G5yiQwciFwMqB++edkBjFvq2ekbnC71knsGDkReXOLznfzCKmYXu7mjedHyT24AAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="IconFolder" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAVgIAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIAgAAAJCRaDYAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHMSURBVDhPY/jP8J8kRLqGh/durVnSj4we3LmKpggZMQBVvHmy6cfbbUD07c3Kzw8nrVrYi0cPA1AaGa2Y371sTuey2Z1LZrUvntm2YFoLCE1tBqL+llKQhhULun9+2AdHPz5t+f1m1e+XC/48nfrnftfvG/U/LpV8OZXx8UBsVUEySAPQPJA6sJO+f1j9682i38+m/nnY+edO7a/L+d/PJH8+HPp+p+f5mZJQDUB7IRp+vdvw6/USuOqfVwu/n039fCQCqPr5StPj/TzZyeEgDfOnNgM1AM3+/Wbp7+czgKp/362Hq/6w2/vNJtvHS3T2d/HEBHuCNMyZ2AA0HuTuF7P/PO7/fbcRpPpcxpej0R/2+AJVv1hp9GieypYmAW9na5CGGX21315t+P1y/p8nk4Cqf10rBak+FgtSvcXxxSrTZ4u17kyTXVkjam2iC9Iwtavq24tVwDD5fb8FpPpCFkj1vgCo6iXa92cpXJ8gNr9cWlddAaRhUnv5h/uLXp0teLTD8/Y685srdS8tVDs+Q3FPn8K6ZrnV9ZJAs4GqpxXJK8qIgTQAo6O1Kqc8NyEtNjDEx8nRytBASxkoJyHMh4lAGoCQJESiBob/AJyC6oN7Vx9YAAAAAElFTkSuQmCCCw==</value>
+  </data>
+  <data name="PenNamePatternRect">
+    <value>Rect (Pattern)</value>
+  </data>
+  <data name="PenNamePatternLine">
+    <value>Line (Pattern)</value>
+  </data>
+  <data name="IconControl" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAhgEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAD8SURBVDhPY/jP8P8/JRhuQPeqVyi4bdmr//ULX/4vm/3if86U5/+T+p79j2h/+t+v8cl/y6JHNDBg8qLtQMb//3///vv/89ff/9++//3/6cuf/28//v7//O2v/49e/fh/5+n3/9cffvvvHV+B3YA/f///v3z5Mk6848DF/5fufsVtwM/f/+AKseGJi3f+P3PjM24Dvv74S5kBH4F+BhlQX18P1oBOEzQAFGCEDNh79gNuA14AQ5uQF3aceo/bgEcvfxA0YOvxd7gNAMUzTCEuvPEoHgNAieQiMJ5BAXXsyiewf2F4E1AjCK8//Ba3ASAJYjGGAeRiCg34/x8Ag5kNwXqHayQAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="PenNamePatternPen">
+    <value>Pen (Pattern)</value>
+  </data>
+  <data name="PenIconDrawEllipse" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAzAAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAABXSURBVDhP7Yw5DsAgEMT2/5+esEggWBwOUaSJhAsGY5NJN2DALM0AusPwIjr01gVmnwvRqYGdz4XW/QN+YFyBgXzZiESnC+RhEqG3IeC4SKAbh1O+DkgP8WG9X7pQLsIAAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="PenNamePatternEllipse">
+    <value>Ellipse (Pattern)</value>
+  </data>
+  <data name="PenIconPatternPen" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA7gAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB5SURBVDhPpY7LDYAwDEMzO2IVpuHCiXWCHMlVSEtJ4PD6ceOniorqH0oCESwhi8ETKG/L2klSApaPc68LZmV7j4HnrWwzMSCZMhgKsmXQCSplcBNUy2AoyJZBE6BEmHmYx/dOwDuz2W7ndngZ9iWPCbLDI9oPvqF6Ae6KsaUVQlOtAAAAAElFTkSuQmCCCw==</value>
+  </data>
+  <data name="PenIconLine" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA2gAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAABlSURBVDhPpY9BCsAwCAT9/6etu9BgrbHGHgaMMgMRFdU/jAIiphmc/aGDl/m+hw5R5s4/KjKZ+7jI2Mm8xUWkkkEZ+JLBNtCRQRroyuAVOJHBI3AqgxWYyICBqQzMm8tgfWGG6gXnLcVXdmZGjwAAAABJRU5ErkJgggs=</value>
+  </data>
+  <data name="IconDocument" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA+wEAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAADsIAAA7CARUoSoAAAAFxSURBVDhPpZD7SgJBGMV9qXqHeo16o6g/IvqjDBHBQKHQwlKxu6WspmlprqWmed27eznNjLgk62rQB4cZGM5vzvk88AD/kQ0IJYpzFYzl4I88wRu+RfqZnzFTzQDcxiLaC1xiZW0DvnBiPuD4Ik8uzrGIWzcsbHsjiKZyE0go7gQEzrLM8HtMatYtqJqJrYNTrK5v2nIAfCcPzMRxHJNpAslkkkmQDfRFnUGmIAfgMHTDAHQMYtZ0EzL5eSQZ6I10tPs6Gt8aA9AaDsB+MEn6WnYCSTXtBFNVW6o7YNcfY8uifUXFxEA00B3qaPXG+GirqDYVlHjZHbBzFGWRpwk6g7EjAVeV3AH0gS7L7tvRUGtpKH8qKNRkcBUR6ZKwGNAl5mmC96bqSHCdXwJo9TTUSd9KQ8VLXUGeRM6UJdwXBVzlR0hkh4sB/JeGN2Iu8gqJLOGxLOKuICCVGyGeGeI8PVgMeCV96blMrgD68FdNfMAPL2st3TE/Hg0AAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="PenIconDrawRect" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAApAAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAvSURBVDhPY/jP8P8/JXiQGMDAAKRIxBgGwASIwaMGANHgNIBUjGIAJXjIG/D/PwD63K1vf+u1HwAAAABJRU5ErkJgggs=</value>
+  </data>
+  <data name="PenIconFillRect" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAnAAAAAKJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAEZ0FNQQAAsY8L/GEFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAnSURBVDhPY/jP8P8/JXiQGMDAAKRIxKMGjBoAwigGUIKHvAH//wMAV0YUCXceNx0AAAAASUVORK5CYIIL</value>
+  </data>
+  <data name="PenNameDrawEllipse">
+    <value>Draw Ellipse</value>
+  </data>
+</root>
